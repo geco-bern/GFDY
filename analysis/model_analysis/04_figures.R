@@ -803,7 +803,7 @@ fig2g_dbh <- ggplot() +
                      values = c("#009E73", "#0072B2", "#D55E00")) +
   scale_shape_manual("Level of LUE", breaks = c("0-15%","0-30%"), 
                      values = c(16,17)) +  
-  labs(x = expression(frac(dG, G)), y = expression(frac(dk, k)), title = "Changes in C turnover rate") + 
+  labs(x = expression(frac(dG, G)), y = expression(frac(dk, k)), title = "Changes in C decay rate") + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -893,7 +893,7 @@ fig3g_gr <- ggplot() +
                      values = c("#009E73", "#0072B2", "#D55E00")) +
   scale_shape_manual("Level of LUE", breaks = c("0-15%","0-30%"), 
                      values = c(16,17)) +  
-  labs(x = expression(frac(dG, G)), y = expression(frac(dk, k)),title = "Changes in C turnover rate") + 
+  labs(x = expression(frac(dG, G)), y = expression(frac(dk, k)),title = "Changes in C decay rate") + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -932,7 +932,7 @@ fig2gg_dbh <- ggplot() +
                         values = c("dotted","longdash","solid"),
                         guide = guide_legend(override.aes = list(color = "black", size=.5))) +
   labs(x = "Year", y = expression(paste(tau)), 
-       title = "Carbon turnover time with size-dependent mortality") + 
+       title = "Carbon residence time with size-dependent mortality") + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -970,7 +970,7 @@ fig3gg_gr <- ggplot() +
                         values = c("dotted","longdash","solid"),
                         guide = guide_legend(override.aes = list(color = "black", size=.5))) +
   labs(x = "Year", y = expression(paste(tau)), 
-       title = "Carbon turnover time with size-dependent mortality") + 
+       title = "Carbon residence time with size-dependent mortality") + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),

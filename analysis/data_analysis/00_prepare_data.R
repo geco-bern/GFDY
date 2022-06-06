@@ -191,6 +191,10 @@ aggEFM <- as_tibble(aggEFMpos)
 aggNFI <- as_tibble(aggNFIpos)
 aggNFR <- as_tibble(aggNFRpos)
 
+length(unique(aggEFM$PlotID))
+length(unique(aggNFI$PlotID))
+length(unique(aggNFR$PlotID))
+
 aggData <- rbind(aggEFM,aggNFI,aggNFR)
 # Convert NPP from BiomassIncrement_Kg_ha_year to BiomassIncrement_Kg_m2_year
 aggData <- aggData %>% mutate(BiomassIncrement_Kg_m2_year=BiomassIncrement_Kg_ha_year/10000)

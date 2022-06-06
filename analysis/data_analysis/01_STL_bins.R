@@ -22,7 +22,7 @@ ggplot(aggData_QMDbins, aes(x = Density, y = QMD_bins, fill = factor(stat(quanti
 
 # Select from each QMD bins the number of plots with higher density
 # Includes a sensitivity analysis using quantiles from 0.5 to 0.9
-valueQuantile = 0.75
+valueQuantile = 0.55
 quantileX <- aggData_QMDbins %>% group_by(QMD_bins) %>% summarise(quantile(Density, c(valueQuantile))) 
 max(quantileX$`quantile(Density, c(valueQuantile))`)
 aggData_QMDbins <- aggData_QMDbins %>% left_join(quantileX)
@@ -41,6 +41,10 @@ ggplot(data = aggData_QMDbinsRest, aes(x = logQMD, y = logDensity)) + geom_point
   geom_point(data = aggData, aes(x = logQMD, y = logDensity), alpha=0.2) +
   theme_bw() + labs(x = "Stand size", y = "Tree Density",color = "Time period") + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),legend.position = "bottom")
+
+length(unique(aggData$PlotID))
+length(unique(aggData_QMDbinsDen$PlotID))
+length(unique(aggData_QMDbinsRest$PlotID))
 
 # Residuals Growth ~ QMD or growth anomalies ####
 # To analyse the effect of growth enhancement (growth anomalies, i.e., residuals) in STL relationships.
@@ -82,3 +86,4 @@ aggData_QMDbinsDen <- aggData_QMDbinsDen %>%
          Res_Growth30 = GrowthPlus30 - predict0)
 
 save(aggData_QMDbinsDen, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen.RData")
+

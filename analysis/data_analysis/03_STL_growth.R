@@ -22,41 +22,28 @@ Fit_ResBio = lmer(logDensity ~ scale(logQMD) + scale(Res_Growth0) + (1|PlotID) +
 summary(Fit_ResBio)
 r.squaredGLMM(Fit_ResBio)
 plot(allEffects(Fit_ResBio))
-plot_model(Fit_ResBio, type = "pred",terms = c("logQMD","Res_Growth0"))
-
-hist(aggData_QMDbinsDen$Res_Growth0)
-hist_Res <- ggplot(aggData_QMDbinsDen, aes(x=Res_Growth0)) + geom_histogram(color="#FFDB6D", fill="#FFDB6D") + theme_bw() + 
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        axis.text = element_text(size = 8),axis.title = element_text(size = 8),
-        plot.margin = unit(c(-.5,.1,.1,.1), "cm")) + ggtitle("") +
-  scale_x_continuous("Growth anomalies", breaks = c(-0.50,0.25,1.00)) +
-  scale_y_continuous("Frequency", limits = c(0,100), breaks = seq(0,100,20))
-hist_Res
-
-sjplot_pal(pal = "flat")
-
-plot75Res <- plot_model(Fit_ResBio, type = "pred",show.data=F, dot.size=1.5,line.size=.5,
-                        terms = c("logQMD","Res_Growth0[-0.50,0.25,1.00]"),title = "STL changes as a function of growth anomalies",
-                        axis.title = c("Ln QMD","Ln N"),legend.title = "Growth anomalies") + 
-  geom_point(data = aggData_QMDbinsDen, aes(x = logQMD, y = logDensity), alpha=0.3, size = 1,col="black", shape = 16, inherit.aes = FALSE) + 
-  geom_point(data = aggData_QMDbinsRest, aes(x = logQMD, y = logDensity), alpha=0.2, size = 1,col="grey",shape = 16, inherit.aes = FALSE) +   
-  theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                                  axis.text = element_text(size = 10),axis.title = element_text(size = 11),
-                                  legend.text = element_text(size = 9),legend.title = element_text(size = 9),
-                                  plot.title = element_text(size = 11),
-                                  legend.position = c(.11, .11),
-                                  legend.direction="vertical",
-                                  legend.margin = margin(2, 2, 2, 2),
-                                  #legend.box.background = element_rect(color="black",size=0.2),
-                                  legend.key.size = unit(.5, 'cm'),
-                                  legend.box.margin = margin(1, 1, 1, 1)) + 
-  scale_x_continuous(limits = c(2,4.5),breaks = seq(2,4.5,0.5)) +
-  scale_y_continuous(limits = c(4.5,9.2)) 
-plot75Res
+plot_model(Fit_ResBio, type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logQMD","Res_Growth0[-0.50,0.25,1.00]"))
+min(aggData_QMDbinsDen$Res_Growth0,na.rm=T)
+max(aggData_QMDbinsDen$Res_Growth0,na.rm=T)
 
 pred <- ggpredict(Fit_ResBio, terms = c("logQMD","Res_Growth0[-0.5,0.25,1.00]"), full.data = TRUE)
+pred <- ggpredict(Fit_ResBio, terms = c("logQMD","Res_Growth0[-0.6,1.6]"), full.data = TRUE)
 plot(pred, add.data = F) 
 preddata <- as.data.frame(pred)
+
+preddata <- preddata %>% group_by(x) %>% 
+  mutate(STL_Plus1=predicted-lag(predicted)) %>%
+  mutate(STL_Plus2=predicted-lag(lag(predicted)))
+
+NPlus1 <- preddata %>%
+  filter(group==0.25) %>%
+  ungroup(x) %>%
+  summarise(STL_Plus1=mean(STL_Plus1,na.rm=T)) %>% pull()
+
+NPlus2 <- preddata %>%
+  filter(group==1) %>%
+  ungroup(x) %>%
+  summarise(STL_Plus2=mean(STL_Plus2)) %>% pull()
 
 plot75Res <- ggplot() + 
   geom_point(data = aggData_QMDbinsDen, aes(x = logQMD, y = logDensity), alpha=0.3, size = .8,col="black", shape = 16, inherit.aes = FALSE) + 
@@ -81,6 +68,15 @@ plot75Res <- ggplot() +
   scale_x_continuous(limits = c(2,4.5),breaks = seq(2,4.5,0.5))+
   scale_y_continuous(limits = c(4.5,9.2))
 plot75Res
+
+hist(aggData_QMDbinsDen$Res_Growth0)
+hist_Res <- ggplot(aggData_QMDbinsDen, aes(x=Res_Growth0)) + geom_histogram(color="#FFDB6D", fill="#FFDB6D") + theme_bw() + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 8),axis.title = element_text(size = 8),
+        plot.margin = unit(c(-.5,.1,.1,.1), "cm")) + ggtitle("") +
+  scale_x_continuous("Growth anomalies", breaks = c(-0.50,0.25,1.00)) +
+  scale_y_continuous("Frequency", limits = c(0,100), breaks = seq(0,100,20))
+hist_Res
 
 gg2 <- plot75Res + inset_element(hist_Res, left = 0.65, bottom = 0.5, right = 0.99, top = 0.99)
 gg2

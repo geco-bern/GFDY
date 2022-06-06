@@ -21,41 +21,53 @@ Fit_Year = lmer(logDensity ~ scale(logQMD) + scale(Year) + (1|PlotID) + (1|Speci
 summary(Fit_Year)
 r.squaredGLMM(Fit_Year)
 plot(allEffects(Fit_Year))
-plot_model(Fit_Year,type = "pred",terms = c("logQMD","Year"))
-
-hist(aggData_QMDbinsDen$Year)
-hist_Year <- ggplot(aggData_QMDbinsDen, aes(x=Year)) + geom_histogram(color="#FFDB6D", fill="#FFDB6D") + theme_bw() + 
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        axis.text = element_text(size = 8),axis.title = element_text(size = 8),
-        plot.margin = unit(c(-.5,.1,.1,.1), "cm")) + ggtitle("") +
-  scale_x_continuous("Year", limits = c(1960,2021), breaks = c(1962,1990,2019)) +
-  scale_y_continuous("Frequency", limits = c(0,100), breaks = seq(0,100,20))
-hist_Year
-
-# type = "pred" to plot predicted values (marginal effects) for specific model terms.
-plot75Year <- plot_model(Fit_Year, type = "pred",show.data=F, dot.size=1.5,line.size=.5,
-                         terms = c("logQMD","Year[1962,1990,2019]"),title = "STL changes as a function of calendar year",
-                         axis.title = c("Ln QMD","Ln N"),legend.title = "Year",
-                         colors = c("#FC4E07", "#00AFBB", "#E7B800")) + 
-  geom_point(data = aggData_QMDbinsDen, aes(x = logQMD, y = logDensity), alpha=0.3, size = 1,col="black", shape = 18, inherit.aes = FALSE) + 
-  geom_point(data = aggData_QMDbinsRest, aes(x = logQMD, y = logDensity), alpha=0.2, size = 1,col="grey",shape = 18, inherit.aes = FALSE) + 
-  theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                     axis.text = element_text(size = 10),axis.title = element_text(size = 11),
-                     legend.text = element_text(size = 8),legend.title = element_text(size = 8),
-                     plot.title = element_text(size = 10),
-                     legend.position = c(.11, .20),
-                     legend.direction="vertical",
-                     legend.margin = margin(2, 2, 2, 2),
-                     legend.key.size = unit(.6, 'cm'),
-                     #legend.box.background = element_rect(color="black",size=0.2),
-                     legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(2,4.5),breaks = seq(2,4.5,0.5))+
-  scale_y_continuous(limits = c(4.5,9.2)) 
-plot75Year
+plot_model(Fit_Year,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logQMD","Year[1962,1990,2019]"))
+min(aggData_QMDbinsDen$Year)
+max(aggData_QMDbinsDen$Year)
 
 pred <- ggpredict(Fit_Year, terms = c("logQMD","Year[1962,1990,2019]"), full.data = TRUE)
 plot(pred, add.data = F) 
 preddata <- as.data.frame(pred)
+
+preddata <- preddata %>% group_by(x) %>% 
+  mutate(STL_Plus1=predicted-lag(predicted)) %>%
+  mutate(STL_Plus2=predicted-lag(lag(predicted)))
+
+NPlus1 <- preddata %>%
+  filter(group==1991) %>%
+  ungroup(x) %>%
+  summarise(STL_Plus1=mean(STL_Plus1,na.rm=T)) %>% pull()
+
+NPlus2 <- preddata %>%
+  filter(group==1992) %>%
+  ungroup(x) %>%
+  summarise(STL_Plus2=mean(STL_Plus2)) %>% pull()
+
+# Get upward shift
+# predict y for a given x
+pred <- ggpredict(Fit_Year, terms = c("logQMD[3]","Year[1990,1991]"), full.data = TRUE)
+preddata <- as.data.frame(pred)
+preddata <- preddata %>%
+  mutate(upSTL=predicted-lag(predicted),
+         e_upSTL=exp(predicted-lag(predicted))) 
+preddata
+upSTL75 <- preddata$e_upSTL[2]
+upSTL55 <- preddata$e_upSTL[2]
+upSTL90 <- preddata$e_upSTL[2]
+
+# Get rightward shift
+# predict x for a given y
+Fit_Year = lmer(logDensity ~ logQMD + Year + (1|PlotID) + (1|Species), data = aggData_QMDbinsDen, na.action = "na.exclude")
+intercept <- coef(summary(Fit_Year))[,"Estimate"][[1]]
+a <- coef(summary(Fit_Year))[,"Estimate"][[2]]
+b <- coef(summary(Fit_Year))[,"Estimate"][[3]]
+rightSTL75 <- exp((intercept - 7 + b*1991)/abs(a) - (intercept - 7 + b*1990)/abs(a))
+rightSTL55 <- exp((intercept - 7 + b*1991)/abs(a) - (intercept - 7 + b*1990)/abs(a))
+rightSTL90 <- exp((intercept - 7 + b*1991)/abs(a) - (intercept - 7 + b*1990)/abs(a))
+
+shifts <- data.frame(change=c("up55","up75","up90"),up=c(upSTL55,upSTL75,upSTL90),right=c(rightSTL55,rightSTL75,rightSTL90))
+ggplot() + geom_col(data = shifts, aes(change,up))
+ggplot() + geom_col(data = shifts, aes(change,right))
 
 plot75Year <- ggplot() + 
   geom_point(data = aggData_QMDbinsDen, aes(x = logQMD, y = logDensity), alpha=0.3, size = .8,col="black", shape = 16, inherit.aes = FALSE) + 
@@ -79,6 +91,15 @@ plot75Year <- ggplot() +
   scale_x_continuous(limits = c(2,4.5),breaks = seq(2,4.5,0.5))+
   scale_y_continuous(limits = c(4.5,9.2))
 plot75Year
+
+hist(aggData_QMDbinsDen$Year)
+hist_Year <- ggplot(aggData_QMDbinsDen, aes(x=Year)) + geom_histogram(color="#FFDB6D", fill="#FFDB6D") + theme_bw() + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 8),axis.title = element_text(size = 8),
+        plot.margin = unit(c(-.5,.1,.1,.1), "cm")) + ggtitle("") +
+  scale_x_continuous("Year", limits = c(1960,2021), breaks = c(1962,1990,2019)) +
+  scale_y_continuous("Frequency", limits = c(0,100), breaks = seq(0,100,20))
+hist_Year
 
 gg1 <- plot75Year + inset_element(hist_Year, left = 0.65, bottom = 0.5, right = 0.99, top = 0.99)
 gg1
