@@ -22,7 +22,7 @@ ggplot(aggData_QMDbins, aes(x = Density, y = QMD_bins, fill = factor(stat(quanti
 
 # Select from each QMD bins the number of plots with higher density
 # Includes a sensitivity analysis using quantiles from 0.5 to 0.9
-valueQuantile = 0.55
+valueQuantile = 0.90
 quantileX <- aggData_QMDbins %>% group_by(QMD_bins) %>% summarise(quantile(Density, c(valueQuantile))) 
 max(quantileX$`quantile(Density, c(valueQuantile))`)
 aggData_QMDbins <- aggData_QMDbins %>% left_join(quantileX)

@@ -2020,12 +2020,12 @@ ggsave("~/GFDY/manuscript/figures/fig_S3.png",width = 8.5, height = 4.2, dpi=300
 # Box 1 ####
 xx <- rep(0.5,3)
 yy <- c(0,0.25,0.5)
-oo <- as.factor(c("Constant self-thinning","Intermediate changes","Constant turnover"))
+oo <- as.factor(c("Constant self-thinning","Intermediate change","Constant decay rate"))
 df <- data.frame(oo,xx,yy)
 df
 str(df)
 levels(df$oo) 
-df$oo <- factor(df$oo, levels = c("Constant turnover","Intermediate changes","Constant self-thinning"))
+df$oo <- factor(df$oo, levels = c("Constant decay rate","Intermediate change","Constant self-thinning"))
 
 fig00a <- ggplot() + 
   geom_abline(slope=1, intercept = 0.0, linetype="dashed") +
@@ -2055,6 +2055,8 @@ fig00b <- ggplot() +
   geom_abline(slope=-1, intercept = 2.7, linetype="solid",color="darkgrey") +
   geom_abline(slope=-1, intercept = 2.9, linetype="solid") +
   labs(x = "ln QMD", y = "ln N",title="Changes in the STL from changes in growth") + 
+  scale_x_continuous(limits = c(0,3),breaks=seq(0,3,0.1),expand=c(0,0)) + 
+  scale_y_continuous(limits = c(0,3),breaks=seq(0,3,0.1),expand=c(0,0)) +
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.ticks = element_blank(),
                      axis.text = element_blank(),axis.title = element_text(size = 9),
@@ -2067,9 +2069,7 @@ fig00b <- ggplot() +
                      legend.margin = margin(.2, .2, .2, .2),
                      legend.key.size = unit(.9, 'lines'),
                      legend.box.margin = margin(1, 1, 1, 1),
-                     panel.border = element_rect(colour = "black", fill=NA,size=.9)) + 
-  scale_x_continuous(limits = c(0,3),breaks=seq(0,3,0.1),expand=c(0,0)) + 
-  scale_y_continuous(limits = c(0,3),breaks=seq(0,3,0.1),expand=c(0,0)) 
+                     panel.border = element_rect(colour = "black", fill=NA,size=.9)) 
 fig00b
 
 ff_box <- fig00a + fig00b +
