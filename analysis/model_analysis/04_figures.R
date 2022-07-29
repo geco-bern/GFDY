@@ -72,7 +72,7 @@ fig2a_dbh <- ggplot(data.frame(x = c(0, 1.2)), aes(x)) +
                      labels =c(expression(paste(italic("r")[italic("S1")]~ "= 1.5")),
                                expression(paste(italic("r")[italic("S2")]~ "= 2.5")),
                                expression(paste(italic("r")[italic("S3")]~ "= 4.0")))) +
-  labs(x='DBH', y='m',title="Mortality rate") + 
+  labs(x='Diameter (m)', y='m',title=expression(paste("Mortality rate (", yr^-1, ") "))) + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -99,7 +99,7 @@ fig3a_gr <- ggplot(data.frame(x = c(0, 20)), aes(x)) +
                      labels =c(expression(paste(italic("r")[italic("GR1")]~ "= -0.5")),
                                expression(paste(italic("r")[italic("GR2")]~ "= -0.8")),
                                expression(paste(italic("r")[italic("GR3")]~ "= -1.4")))) +
-  labs(x='GR', y='m',title="Mortality rate") + 
+  labs(x=expression(paste("Growth rate (", yr^-1, ") ")), y='m',title=expression(paste("Mortality rate (", yr^-1, ") "))) + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -129,7 +129,7 @@ fig2b_dbh <- ggplot() +
   scale_linetype_manual("Level of LUE", breaks = c("+15%", "+30%"), 
                         values = c("dashed","solid"),
                         guide = guide_legend(override.aes = list(color = "black"))) +
-  labs(x = "t", y = "B",title="Total biomass") + 
+  labs(x = "t", y = "B",title=expression(paste("Biomass (Kg C ", m^-2, ") "))) + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -147,24 +147,24 @@ fig2b_dbh <- ggplot() +
 fig2b_dbh
 
 # Changes in biomass
-B_DBH_ea1p1 <- ea1sa1DBHp1gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(plantC))
-B_DBH_ea2p1 <- ea2sa1DBHp1gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(plantC))
-B_DBH_ea3p1 <- ea3sa1DBHp1gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(plantC))
+B_DBH_ea1p1 <- ea1sa1DBHp1gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
+B_DBH_ea2p1 <- ea2sa1DBHp1gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
+B_DBH_ea3p1 <- ea3sa1DBHp1gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
 B_DBH_ea1p1
 B_DBH_ea2p1
 B_DBH_ea3p1
 B_DBH_ea2p1/B_DBH_ea1p1
 B_DBH_ea3p1/B_DBH_ea1p1
 
-B_DBH_ea1p2 <- ea1sa1DBHp2gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(plantC))
-B_DBH_ea2p2 <- ea2sa1DBHp2gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(plantC))
-B_DBH_ea3p2 <- ea3sa1DBHp2gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(plantC))
+B_DBH_ea1p2 <- ea1sa1DBHp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
+B_DBH_ea2p2 <- ea2sa1DBHp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
+B_DBH_ea3p2 <- ea3sa1DBHp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
 B_DBH_ea2p2/B_DBH_ea1p2
 B_DBH_ea3p2/B_DBH_ea1p2
 
-B_DBH_ea1p3 <- ea1sa1DBHp3gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(plantC))
-B_DBH_ea2p3 <- ea2sa1DBHp3gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(plantC))
-B_DBH_ea3p3 <- ea3sa1DBHp3gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(plantC))
+B_DBH_ea1p3 <- ea1sa1DBHp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
+B_DBH_ea2p3 <- ea2sa1DBHp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
+B_DBH_ea3p3 <- ea3sa1DBHp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
 B_DBH_ea2p3/B_DBH_ea1p3
 B_DBH_ea3p3/B_DBH_ea1p3
 
@@ -179,7 +179,7 @@ fig3b_gr <- ggplot() +
   scale_linetype_manual("Level of LUE", breaks = c("+15%", "+30%"), 
                         values = c("dashed","solid"),
                         guide = guide_legend(override.aes = list(color = "black"))) +
-  labs(x = "t", y = "B",title="Total biomass") + 
+  labs(x = "t", y = "B",title=expression(paste("Biomass (Kg C ", m^-2, ") "))) + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -197,21 +197,21 @@ fig3b_gr <- ggplot() +
 fig3b_gr
 
 # Changes in biomass
-B_GR_ea1p2 <- ea1sa1GRp2gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(plantC))
-B_GR_ea2p2 <- ea2sa1GRp2gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(plantC))
-B_GR_ea3p2 <- ea3sa1GRp2gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(plantC))
+B_GR_ea1p2 <- ea1sa1GRp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
+B_GR_ea2p2 <- ea2sa1GRp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
+B_GR_ea3p2 <- ea3sa1GRp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
 B_GR_ea2p2/B_GR_ea1p2
 B_GR_ea3p2/B_GR_ea1p2
 
-B_GR_ea1p2 <- ea1sa1GRp2gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(plantC))
-B_GR_ea2p2 <- ea2sa1GRp2gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(plantC))
-B_GR_ea3p2 <- ea3sa1GRp2gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(plantC))
+B_GR_ea1p2 <- ea1sa1GRp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
+B_GR_ea2p2 <- ea2sa1GRp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
+B_GR_ea3p2 <- ea3sa1GRp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
 B_GR_ea2p2/B_GR_ea1p2
 B_GR_ea3p2/B_GR_ea1p2
 
-B_GR_ea1p3 <- ea1sa1GRp3gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(plantC))
-B_GR_ea2p3 <- ea2sa1GRp3gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(plantC))
-B_GR_ea3p3 <- ea3sa1GRp3gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(plantC))
+B_GR_ea1p3 <- ea1sa1GRp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
+B_GR_ea2p3 <- ea2sa1GRp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
+B_GR_ea3p3 <- ea3sa1GRp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
 B_GR_ea2p3/B_GR_ea1p3
 B_GR_ea3p3/B_GR_ea1p3
 
@@ -229,7 +229,7 @@ fig2c_dbh <- ggplot() +
                      values = c("#009E73", "#0072B2", "#D55E00")) +
   scale_linetype_manual("Level of LUE", breaks = c("+15%", "+30%"), 
                         values = c("dashed","solid")) +
-  labs(x = "t", y = "G",title="Net Primary Productivity") + 
+  labs(x = "t", y = "G",title=expression(paste("Growth (Kg C ", m^-2, " ", yr^-1, ") "))) + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -246,21 +246,21 @@ fig2c_dbh <- ggplot() +
 fig2c_dbh
 
 # Changes in growth
-G_DBH_ea1p1 <- ea1sa1DBHp1gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(NPP))
-G_DBH_ea2p1 <- ea2sa1DBHp1gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(NPP))
-G_DBH_ea3p1 <- ea3sa1DBHp1gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(NPP))
+G_DBH_ea1p1 <- ea1sa1DBHp1gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
+G_DBH_ea2p1 <- ea2sa1DBHp1gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
+G_DBH_ea3p1 <- ea3sa1DBHp1gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
 G_DBH_ea2p1/G_DBH_ea1p1
 G_DBH_ea3p1/G_DBH_ea1p1
 
-G_DBH_ea1p2 <- ea1sa1DBHp2gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(NPP))
-G_DBH_ea2p2 <- ea2sa1DBHp2gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(NPP))
-G_DBH_ea3p2 <- ea3sa1DBHp2gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(NPP))
+G_DBH_ea1p2 <- ea1sa1DBHp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
+G_DBH_ea2p2 <- ea2sa1DBHp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
+G_DBH_ea3p2 <- ea3sa1DBHp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
 G_DBH_ea2p2/G_DBH_ea1p2
 G_DBH_ea3p2/G_DBH_ea1p2
 
-G_DBH_ea1p3 <- ea1sa1DBHp3gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(NPP))
-G_DBH_ea2p3 <- ea2sa1DBHp3gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(NPP))
-G_DBH_ea3p3 <- ea3sa1DBHp3gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(NPP))
+G_DBH_ea1p3 <- ea1sa1DBHp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
+G_DBH_ea2p3 <- ea2sa1DBHp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
+G_DBH_ea3p3 <- ea3sa1DBHp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
 G_DBH_ea2p3/G_DBH_ea1p3
 G_DBH_ea3p3/G_DBH_ea1p3
 
@@ -276,7 +276,7 @@ fig3c_gr <- ggplot() +
                      values = c("#009E73", "#0072B2", "#D55E00")) +
   scale_linetype_manual("Level of LUE", breaks = c("+15%", "+30%"), 
                         values = c("dashed","solid")) +
-  labs(x = "t", y = "G",title="Net Primary Productivity") + 
+  labs(x = "t", y = "G",title=expression(paste("Growth (Kg C ", m^-2, " ", yr^-1, ") "))) + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -293,21 +293,21 @@ fig3c_gr <- ggplot() +
 fig3c_gr
 
 # Changes in growth
-G_GR_ea1p1 <- ea1sa1GRp1gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(NPP))
-G_GR_ea2p1 <- ea2sa1GRp1gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(NPP))
-G_GR_ea3p1 <- ea3sa1GRp1gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(NPP))
+G_GR_ea1p1 <- ea1sa1GRp1gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
+G_GR_ea2p1 <- ea2sa1GRp1gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
+G_GR_ea3p1 <- ea3sa1GRp1gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
 G_GR_ea2p1/G_GR_ea1p1
 G_GR_ea3p1/G_GR_ea1p1
 
-G_GR_ea1p2 <- ea1sa1GRp2gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(NPP))
-G_GR_ea2p2 <- ea2sa1GRp2gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(NPP))
-G_GR_ea3p2 <- ea3sa1GRp2gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(NPP))
+G_GR_ea1p2 <- ea1sa1GRp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
+G_GR_ea2p2 <- ea2sa1GRp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
+G_GR_ea3p2 <- ea3sa1GRp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
 G_GR_ea2p2/G_GR_ea1p2
 G_GR_ea3p2/G_GR_ea1p2
 
-G_GR_ea1p3 <- ea1sa1GRp3gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(NPP))
-G_GR_ea2p3 <- ea2sa1GRp3gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(NPP))
-G_GR_ea3p3 <- ea3sa1GRp3gl_out_annual_tile %>% filter(year>=800) %>% summarise(meanB=mean(NPP))
+G_GR_ea1p3 <- ea1sa1GRp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
+G_GR_ea2p3 <- ea2sa1GRp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
+G_GR_ea3p3 <- ea3sa1GRp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
 G_GR_ea2p3/G_GR_ea1p3
 G_GR_ea3p3/G_GR_ea1p3
 
@@ -325,7 +325,7 @@ fig2d_dbh <- ggplot() +
                      values = c("#009E73", "#0072B2", "#D55E00")) +
   scale_linetype_manual("Level of LUE", breaks = c("+15%", "+30%"), 
                         values = c("dashed","solid")) +
-  labs(x = "t", y = "M",title="Tree mortality") + 
+  labs(x = "t", y = "M",title=expression(paste("Mortality (Kg C ", m^-2, " ", yr^-1, ") "))) + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -353,7 +353,7 @@ fig3d_gr <- ggplot() +
                      values = c("#009E73", "#0072B2", "#D55E00")) +
   scale_linetype_manual("Level of LUE", breaks = c("+15%", "+30%"), 
                         values = c("dashed","solid")) +
-  labs(x = "t", y = "M",title="Tree mortality") + 
+  labs(x = "t", y = "M",title=expression(paste("Mortality (Kg C ", m^-2, " ", yr^-1, ") "))) + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -374,16 +374,16 @@ fig3d_gr
 #DBH
 # DBH p1
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-B30 <- ea3sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(B30=mean(plantC)) 
-B15 <- ea2sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(B15=mean(plantC))
-B0  <- ea1sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(B0=mean(plantC))
+B30 <- ea3sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B30=mean(plantC)) 
+B15 <- ea2sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B15=mean(plantC))
+B0  <- ea1sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B0=mean(plantC))
 dB0_15 <- (B15$B15 - B0$B0)/B0$B0
 dB15_30 <- (B30$B30 - B15$B15)/B15$B15
 dB0_30 <- (B30$B30 - B0$B0)/B0$B0
@@ -394,16 +394,16 @@ DBHp1gl_RelChange_B_NPP_0_30 <- data.frame(dNPP0_30,dB0_30)
 
 # DBH p2
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-B30 <- ea3sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(B30=mean(plantC)) 
-B15 <- ea2sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(B15=mean(plantC))
-B0  <- ea1sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(B0=mean(plantC))
+B30 <- ea3sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B30=mean(plantC)) 
+B15 <- ea2sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B15=mean(plantC))
+B0  <- ea1sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B0=mean(plantC))
 dB0_15 <- (B15$B15 - B0$B0)/B0$B0
 dB15_30 <- (B30$B30 - B15$B15)/B15$B15
 dB0_30 <- (B30$B30 - B0$B0)/B0$B0
@@ -414,16 +414,16 @@ DBHp2gl_RelChange_B_NPP_0_30 <- data.frame(dNPP0_30,dB0_30)
 
 # DBH p3
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-B30 <- ea3sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(B30=mean(plantC)) 
-B15 <- ea2sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(B15=mean(plantC))
-B0  <- ea1sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(B0=mean(plantC))
+B30 <- ea3sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B30=mean(plantC)) 
+B15 <- ea2sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B15=mean(plantC))
+B0  <- ea1sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B0=mean(plantC))
 dB0_15 <- (B15$B15 - B0$B0)/B0$B0
 dB15_30 <- (B30$B30 - B15$B15)/B15$B15
 dB0_30 <- (B30$B30 - B0$B0)/B0$B0
@@ -463,16 +463,16 @@ fig2e_dbh
 # GR
 # GR p1
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-B30 <- ea3sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(B30=mean(plantC)) 
-B15 <- ea2sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(B15=mean(plantC))
-B0  <- ea1sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(B0=mean(plantC))
+B30 <- ea3sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B30=mean(plantC)) 
+B15 <- ea2sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B15=mean(plantC))
+B0  <- ea1sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B0=mean(plantC))
 dB0_15 <- (B15$B15 - B0$B0)/B0$B0
 dB15_30 <- (B30$B30 - B15$B15)/B15$B15
 dB0_30 <- (B30$B30 - B0$B0)/B0$B0
@@ -483,16 +483,16 @@ GRp1gl_RelChange_B_NPP_0_30 <- data.frame(dNPP0_30,dB0_30)
 
 # GR p2
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-B30 <- ea3sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(B30=mean(plantC)) 
-B15 <- ea2sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(B15=mean(plantC))
-B0  <- ea1sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(B0=mean(plantC))
+B30 <- ea3sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B30=mean(plantC)) 
+B15 <- ea2sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B15=mean(plantC))
+B0  <- ea1sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B0=mean(plantC))
 dB0_15 <- (B15$B15 - B0$B0)/B0$B0
 dB15_30 <- (B30$B30 - B15$B15)/B15$B15
 dB0_30 <- (B30$B30 - B0$B0)/B0$B0
@@ -503,16 +503,16 @@ GRp2gl_RelChange_B_NPP_0_30 <- data.frame(dNPP0_30,dB0_30)
 
 # GR p3
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-B30 <- ea3sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(B30=mean(plantC)) 
-B15 <- ea2sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(B15=mean(plantC))
-B0  <- ea1sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(B0=mean(plantC))
+B30 <- ea3sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B30=mean(plantC)) 
+B15 <- ea2sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B15=mean(plantC))
+B0  <- ea1sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B0=mean(plantC))
 dB0_15 <- (B15$B15 - B0$B0)/B0$B0
 dB15_30 <- (B30$B30 - B15$B15)/B15$B15
 dB0_30 <- (B30$B30 - B0$B0)/B0$B0
@@ -554,16 +554,16 @@ fig3e_gr
 # DBH
 # DBH 1
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-M30 <- ea3sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(M30=mean(c_deadtrees+m_turnover)) 
-M15 <- ea2sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(M15=mean(c_deadtrees+m_turnover))
-M0  <- ea1sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(M0=mean(c_deadtrees+m_turnover))
+M30 <- ea3sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(M30=mean(c_deadtrees+m_turnover)) 
+M15 <- ea2sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(M15=mean(c_deadtrees+m_turnover))
+M0  <- ea1sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(M0=mean(c_deadtrees+m_turnover))
 dM0_15 <- (M15$M15 - M0$M0)/M0$M0
 dM15_30 <- (M30$M30 - M15$M15)/M15$M15
 dM0_30 <- (M30$M30 - M0$M0)/M0$M0
@@ -574,16 +574,16 @@ DBHp1gl_RelChange_0_30 <- data.frame(dNPP0_30,dM0_30)
 
 # DBH p2
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-M30 <- ea3sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(M30=mean(c_deadtrees+m_turnover)) 
-M15 <- ea2sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(M15=mean(c_deadtrees+m_turnover))
-M0  <- ea1sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(M0=mean(c_deadtrees+m_turnover))
+M30 <- ea3sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(M30=mean(c_deadtrees+m_turnover)) 
+M15 <- ea2sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(M15=mean(c_deadtrees+m_turnover))
+M0  <- ea1sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(M0=mean(c_deadtrees+m_turnover))
 dM0_15 <- (M15$M15 - M0$M0)/M0$M0
 dM15_30 <- (M30$M30 - M15$M15)/M15$M15
 dM0_30 <- (M30$M30 - M0$M0)/M0$M0
@@ -643,16 +643,16 @@ fig2f_dbh
 # GR
 # GR 1
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-M30 <- ea3sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(M30=mean(c_deadtrees+m_turnover)) 
-M15 <- ea2sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(M15=mean(c_deadtrees+m_turnover))
-M0  <- ea1sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(M0=mean(c_deadtrees+m_turnover))
+M30 <- ea3sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(M30=mean(c_deadtrees+m_turnover)) 
+M15 <- ea2sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(M15=mean(c_deadtrees+m_turnover))
+M0  <- ea1sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(M0=mean(c_deadtrees+m_turnover))
 dM0_15 <- (M15$M15 - M0$M0)/M0$M0
 dM15_30 <- (M30$M30 - M15$M15)/M15$M15
 dM0_30 <- (M30$M30 - M0$M0)/M0$M0
@@ -663,16 +663,16 @@ GRp1gl_RelChange_0_30 <- data.frame(dNPP0_30,dM0_30)
 
 # GR p2
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-M30 <- ea3sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(M30=mean(c_deadtrees+m_turnover)) 
-M15 <- ea2sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(M15=mean(c_deadtrees+m_turnover))
-M0  <- ea1sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(M0=mean(c_deadtrees+m_turnover))
+M30 <- ea3sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(M30=mean(c_deadtrees+m_turnover)) 
+M15 <- ea2sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(M15=mean(c_deadtrees+m_turnover))
+M0  <- ea1sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(M0=mean(c_deadtrees+m_turnover))
 dM0_15 <- (M15$M15 - M0$M0)/M0$M0
 dM15_30 <- (M30$M30 - M15$M15)/M15$M15
 dM0_30 <- (M30$M30 - M0$M0)/M0$M0
@@ -683,16 +683,16 @@ GRp2gl_RelChange_0_30 <- data.frame(dNPP0_30,dM0_30)
 
 # GR p3
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  #NPP or A_NPP
-NPP15 <- ea2sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  #NPP or A_NPP
+NPP15 <- ea2sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-M30 <- ea3sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(M30=mean(c_deadtrees+m_turnover)) #plantC or A_Biomass
-M15 <- ea2sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(M15=mean(c_deadtrees+m_turnover))
-M0  <- ea1sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(M0=mean(c_deadtrees+m_turnover))
+M30 <- ea3sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(M30=mean(c_deadtrees+m_turnover)) #plantC or A_Biomass
+M15 <- ea2sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(M15=mean(c_deadtrees+m_turnover))
+M0  <- ea1sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(M0=mean(c_deadtrees+m_turnover))
 dM0_15 <- (M15$M15 - M0$M0)/M0$M0
 dM15_30 <- (M30$M30 - M15$M15)/M15$M15
 dM0_30 <- (M30$M30 - M0$M0)/M0$M0
@@ -734,16 +734,16 @@ fig3f_gr
 # DBH
 # DBH 1
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-k30 <- ea3sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(k30=mean(1/c_turnover_time)) 
-k15 <- ea2sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(k15=mean(1/c_turnover_time))
-k0  <- ea1sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(k0=mean(1/c_turnover_time))
+k30 <- ea3sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(k30=mean(1/c_turnover_time)) 
+k15 <- ea2sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(k15=mean(1/c_turnover_time))
+k0  <- ea1sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(k0=mean(1/c_turnover_time))
 dk0_15 <- (k15$k15 - k0$k0)/k0$k0
 dk15_30 <- (k30$k30 - k15$k15)/k15$k15
 dk0_30 <- (k30$k30 - k0$k0)/k0$k0
@@ -754,16 +754,16 @@ DBHp1gl_RelChange_0_30 <- data.frame(dNPP0_30,dk0_30)
 
 # DBH 2
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-k30 <- ea3sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(k30=mean(1/c_turnover_time)) 
-k15 <- ea2sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(k15=mean(1/c_turnover_time))
-k0  <- ea1sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(k0=mean(1/c_turnover_time))
+k30 <- ea3sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(k30=mean(1/c_turnover_time)) 
+k15 <- ea2sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(k15=mean(1/c_turnover_time))
+k0  <- ea1sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(k0=mean(1/c_turnover_time))
 dk0_15 <- (k15$k15 - k0$k0)/k0$k0
 dk15_30 <- (k30$k30 - k15$k15)/k15$k15
 dk0_30 <- (k30$k30 - k0$k0)/k0$k0
@@ -774,16 +774,16 @@ DBHp2gl_RelChange_0_30 <- data.frame(dNPP0_30,dk0_30)
 
 # DBH 3
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-k30 <- ea3sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(k30=mean(1/c_turnover_time)) 
-k15 <- ea2sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(k15=mean(1/c_turnover_time))
-k0  <- ea1sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(k0=mean(1/c_turnover_time))
+k30 <- ea3sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(k30=mean(1/c_turnover_time)) 
+k15 <- ea2sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(k15=mean(1/c_turnover_time))
+k0  <- ea1sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(k0=mean(1/c_turnover_time))
 dk0_15 <- (k15$k15 - k0$k0)/k0$k0
 dk15_30 <- (k30$k30 - k15$k15)/k15$k15
 dk0_30 <- (k30$k30 - k0$k0)/k0$k0
@@ -823,16 +823,16 @@ fig2g_dbh
 # GR
 # GR 1
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-k30 <- ea3sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(k30=mean(1/c_turnover_time)) 
-k15 <- ea2sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(k15=mean(1/c_turnover_time))
-k0  <- ea1sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(k0=mean(1/c_turnover_time))
+k30 <- ea3sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(k30=mean(1/c_turnover_time)) 
+k15 <- ea2sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(k15=mean(1/c_turnover_time))
+k0  <- ea1sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(k0=mean(1/c_turnover_time))
 dk0_15 <- (k15$k15 - k0$k0)/k0$k0
 dk15_30 <- (k30$k30 - k15$k15)/k15$k15
 dk0_30 <- (k30$k30 - k0$k0)/k0$k0
@@ -843,16 +843,16 @@ GRp1gl_RelChange_0_30 <- data.frame(dNPP0_30,dk0_30)
 
 # GR 2
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-k30 <- ea3sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(k30=mean(1/c_turnover_time)) 
-k15 <- ea2sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(k15=mean(1/c_turnover_time))
-k0  <- ea1sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(k0=mean(1/c_turnover_time))
+k30 <- ea3sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(k30=mean(1/c_turnover_time)) 
+k15 <- ea2sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(k15=mean(1/c_turnover_time))
+k0  <- ea1sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(k0=mean(1/c_turnover_time))
 dk0_15 <- (k15$k15 - k0$k0)/k0$k0
 dk15_30 <- (k30$k30 - k15$k15)/k15$k15
 dk0_30 <- (k30$k30 - k0$k0)/k0$k0
@@ -863,16 +863,16 @@ GRp2gl_RelChange_0_30 <- data.frame(dNPP0_30,dk0_30)
 
 # GR 3
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-k30 <- ea3sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(k30=mean(1/c_turnover_time)) 
-k15 <- ea2sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(k15=mean(1/c_turnover_time))
-k0  <- ea1sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(k0=mean(1/c_turnover_time))
+k30 <- ea3sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(k30=mean(1/c_turnover_time)) 
+k15 <- ea2sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(k15=mean(1/c_turnover_time))
+k0  <- ea1sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(k0=mean(1/c_turnover_time))
 dk0_15 <- (k15$k15 - k0$k0)/k0$k0
 dk15_30 <- (k30$k30 - k15$k15)/k15$k15
 dk0_30 <- (k30$k30 - k0$k0)/k0$k0
@@ -932,7 +932,7 @@ fig2gg_dbh <- ggplot() +
                         values = c("dotted","longdash","solid"),
                         guide = guide_legend(override.aes = list(color = "black", size=.5))) +
   labs(x = "Year", y = expression(paste(tau)), 
-       title = "Carbon residence time with size-dependent mortality") + 
+       title = "Carbon residence time (yrs) with size-dependent mortality") + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -970,7 +970,7 @@ fig3gg_gr <- ggplot() +
                         values = c("dotted","longdash","solid"),
                         guide = guide_legend(override.aes = list(color = "black", size=.5))) +
   labs(x = "Year", y = expression(paste(tau)), 
-       title = "Carbon residence time with size-dependent mortality") + 
+       title = "Carbon residence time (yrs) with size-dependent mortality") + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -994,16 +994,16 @@ fig3gg_gr
 # DBH
 # DBH p1
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-L30 <- ea3sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=1300) %>% summarise(L30=max(MaxAge))
-L15 <- ea2sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=1300) %>% summarise(L15=max(MaxAge))
-L0  <- ea1sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=1300) %>% summarise(L0=max(MaxAge))
+L30 <- ea3sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L30=max(MaxAge))
+L15 <- ea2sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L15=max(MaxAge))
+L0  <- ea1sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L0=max(MaxAge))
 dL0_15 <- (L15$L15 - L0$L0)/L0$L0
 dL15_30 <- (L30$L30 - L15$L15)/L15$L15
 dL0_30 <- (L30$L30 - L0$L0)/L0$L0
@@ -1014,16 +1014,16 @@ DBHp1gl_RelChange_0_30 <- data.frame(dNPP0_30,dL0_30)
 
 # DBH p2
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-L30 <- ea3sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=1300) %>% summarise(L30=max(MaxAge))
-L15 <- ea2sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=1300) %>% summarise(L15=max(MaxAge))
-L0  <- ea1sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=1300) %>% summarise(L0=max(MaxAge))
+L30 <- ea3sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L30=max(MaxAge))
+L15 <- ea2sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L15=max(MaxAge))
+L0  <- ea1sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L0=max(MaxAge))
 dL0_15 <- (L15$L15 - L0$L0)/L0$L0
 dL15_30 <- (L30$L30 - L15$L15)/L15$L15
 dL0_30 <- (L30$L30 - L0$L0)/L0$L0
@@ -1033,16 +1033,16 @@ DBHp2gl_RelChange_15_30 <- data.frame(dNPP15_30,dL15_30)
 DBHp2gl_RelChange_0_30 <- data.frame(dNPP0_30,dL0_30)
 
 # DBH p3
-NPP30 <- ea3sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-L30 <- ea3sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=1300) %>% summarise(L30=max(MaxAge))
-L15 <- ea2sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=1300) %>% summarise(L15=max(MaxAge))
-L0  <- ea1sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=1300) %>% summarise(L0=max(MaxAge))
+L30 <- ea3sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L30=max(MaxAge))
+L15 <- ea2sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L15=max(MaxAge))
+L0  <- ea1sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L0=max(MaxAge))
 dL0_15 <- (L15$L15 - L0$L0)/L0$L0
 dL15_30 <- (L30$L30 - L15$L15)/L15$L15
 dL0_30 <- (L30$L30 - L0$L0)/L0$L0
@@ -1082,9 +1082,9 @@ fig2h_dbh
 # GR
 # GR p1
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
@@ -1102,9 +1102,9 @@ GRp1gl_RelChange_0_30 <- data.frame(dNPP0_30,dL0_30)
 
 # GR p2
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
@@ -1121,9 +1121,9 @@ GRp2gl_RelChange_15_30 <- data.frame(dNPP15_30,dL15_30)
 GRp2gl_RelChange_0_30 <- data.frame(dNPP0_30,dL0_30)
 
 # DBH p3
-NPP30 <- ea3sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=800) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
@@ -1253,21 +1253,21 @@ data_DBH_ea1p1 <- ea1sa1DBHp1gl_out_annual_tile %>%
   mutate(Mortality = "DBH") %>% 
   mutate(Parameter = "p1") %>% 
   mutate(LUE = "Control") %>% 
-  filter(year>=1000) %>% 
+  filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
 data_DBH_ea2p1 <- ea2sa1DBHp1gl_out_annual_tile %>%
   mutate(Mortality = "DBH") %>% 
   mutate(Parameter = "p1") %>% 
   mutate(LUE = "+15%")%>% 
-  filter(year>=1000) %>% 
+  filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
 data_DBH_ea3p1 <- ea3sa1DBHp1gl_out_annual_tile %>% 
   mutate(Mortality = "DBH") %>% 
   mutate(Parameter = "p1") %>% 
   mutate(LUE = "+30%") %>% 
-  filter(year>=1000) %>% 
+  filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
 # Select from each QMD bins the number of plots with higher density
@@ -1336,21 +1336,21 @@ data_DBH_ea1p2 <- ea1sa1DBHp2gl_out_annual_tile %>%
   mutate(Mortality = "DBH") %>% 
   mutate(Parameter = "p2") %>% 
   mutate(LUE = "Control") %>% 
-  filter(year>=1000) %>% 
+  filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30))
 
 data_DBH_ea2p2 <- ea2sa1DBHp2gl_out_annual_tile %>%
   mutate(Mortality = "DBH") %>% 
   mutate(Parameter = "p2") %>% 
   mutate(LUE = "+15%")%>% 
-  filter(year>=1000) %>% 
+  filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30))
 
 data_DBH_ea3p2 <- ea3sa1DBHp2gl_out_annual_tile %>% 
   mutate(Mortality = "DBH") %>% 
   mutate(Parameter = "p2") %>% 
   mutate(LUE = "+30%") %>% 
-  filter(year>=1000) %>% 
+  filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30))
 
 # Select from each QMD bins the number of plots with higher density
@@ -1412,21 +1412,21 @@ data_DBH_ea1p3 <- ea1sa1DBHp3gl_out_annual_tile %>%
   mutate(Mortality = "DBH") %>% 
   mutate(Parameter = "p3") %>% 
   mutate(LUE = "Control") %>% 
-  filter(year>=1000) %>% 
+  filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
 data_DBH_ea2p3 <- ea2sa1DBHp3gl_out_annual_tile %>%
   mutate(Mortality = "DBH") %>% 
   mutate(Parameter = "p3") %>% 
   mutate(LUE = "+15%")%>% 
-  filter(year>=1000) %>% 
+  filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
 data_DBH_ea3p3 <- ea3sa1DBHp3gl_out_annual_tile %>% 
   mutate(Mortality = "DBH") %>% 
   mutate(Parameter = "p3") %>% 
   mutate(LUE = "+30%") %>% 
-  filter(year>=1000) %>% 
+  filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
 # Select from each QMD bins the number of plots with higher density
@@ -1490,21 +1490,21 @@ data_GR_ea1p1 <- ea1sa1GRp1gl_out_annual_tile %>%
   mutate(Mortality = "GR") %>% 
   mutate(Parameter = "p1") %>% 
   mutate(LUE = "Control") %>% 
-  filter(year>=1000) %>% 
+  filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
 data_GR_ea2p1 <- ea2sa1GRp1gl_out_annual_tile %>%
   mutate(Mortality = "GR") %>% 
   mutate(Parameter = "p1") %>% 
   mutate(LUE = "+15%")%>% 
-  filter(year>=1000) %>% 
+  filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
 data_GR_ea3p1 <- ea3sa1GRp1gl_out_annual_tile %>% 
   mutate(Mortality = "GR") %>% 
   mutate(Parameter = "p1") %>% 
   mutate(LUE = "+30%") %>% 
-  filter(year>=1000) %>% 
+  filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
 # Select from each QMD bins the number of plots with higher density
@@ -1571,21 +1571,21 @@ data_GR_ea1p2 <- ea1sa1GRp2gl_out_annual_tile %>%
   mutate(Mortality = "GR") %>% 
   mutate(Parameter = "p2") %>% 
   mutate(LUE = "Control") %>% 
-  filter(year>=1000) %>% 
+  filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
 data_GR_ea2p2 <- ea2sa1GRp2gl_out_annual_tile %>%
   mutate(Mortality = "GR") %>% 
   mutate(Parameter = "p2") %>% 
   mutate(LUE = "+15%")%>% 
-  filter(year>=1000) %>% 
+  filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
 data_GR_ea3p2 <- ea3sa1GRp2gl_out_annual_tile %>% 
   mutate(Mortality = "GR") %>% 
   mutate(Parameter = "p2") %>% 
   mutate(LUE = "+30%") %>% 
-  filter(year>=1000) %>% 
+  filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
 # Select from each QMD bins the number of plots with higher density
@@ -1647,21 +1647,21 @@ data_GR_ea1p3 <- ea1sa1GRp3gl_out_annual_tile %>%
   mutate(Mortality = "GR") %>% 
   mutate(Parameter = "p3") %>% 
   mutate(LUE = "Control") %>% 
-  filter(year>=1000) %>% 
+  filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
 data_GR_ea2p3 <- ea2sa1GRp3gl_out_annual_tile %>%
   mutate(Mortality = "GR") %>% 
   mutate(Parameter = "p3") %>% 
   mutate(LUE = "+15%")%>% 
-  filter(year>=1000) %>% 
+  filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
 data_GR_ea3p3 <- ea3sa1GRp3gl_out_annual_tile %>% 
   mutate(Mortality = "GR") %>% 
   mutate(Parameter = "p3") %>% 
   mutate(LUE = "+30%") %>% 
-  filter(year>=1000) %>% 
+  filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
 # Select from each QMD bins the number of plots with higher density
@@ -1726,7 +1726,9 @@ fig4cLUE_gr3
 preddataLUE_DBH1
 preddataLUE_DBH1_agg <- preddataLUE_DBH1 %>% group_by(x) %>% 
   mutate(STL_15=predicted-lag(predicted)) %>%
-  mutate(STL_30=predicted-lag(lag(predicted)))
+  mutate(STL_30=predicted-lag(lag(predicted))) %>%
+  mutate(increment_15=predicted/lag(predicted)) %>%
+  mutate(increment_30=predicted/lag(lag(predicted)))
 
 N30 <- preddataLUE_DBH1_agg %>%
   filter(group=="+30%") %>%
@@ -1750,7 +1752,9 @@ DBHp1gl_RelChange_B_NPP_0_15 <- DBHp1gl_RelChange_B_NPP_0_15 %>%
 preddataLUE_DBH2
 preddataLUE_DBH2_agg <- preddataLUE_DBH2 %>% group_by(x) %>% 
   mutate(STL_15=predicted-lag(predicted)) %>%
-  mutate(STL_30=predicted-lag(lag(predicted)))
+  mutate(STL_30=predicted-lag(lag(predicted))) %>%
+  mutate(increment_15=predicted/lag(predicted)) %>%
+  mutate(increment_30=predicted/lag(lag(predicted)))
 
 N30 <- preddataLUE_DBH2_agg %>%
   filter(group=="+30%") %>%
@@ -1774,7 +1778,9 @@ DBHp2gl_RelChange_B_NPP_0_15 <- DBHp2gl_RelChange_B_NPP_0_15 %>%
 preddataLUE_DBH3
 preddataLUE_DBH3_agg <- preddataLUE_DBH3 %>% group_by(x) %>%  
   mutate(STL_15=predicted-lag(predicted)) %>%
-  mutate(STL_30=predicted-lag(lag(predicted))) 
+  mutate(STL_30=predicted-lag(lag(predicted))) %>%
+  mutate(increment_15=predicted/lag(predicted)) %>%
+  mutate(increment_30=predicted/lag(lag(predicted)))
 
 N30 <- preddataLUE_DBH3_agg %>%
   filter(group=="+30%") %>%
@@ -1846,7 +1852,9 @@ fig5_dbh
 preddataLUE_GR1
 preddataLUE_GR1_agg <- preddataLUE_GR1 %>% group_by(x) %>% 
   mutate(STL_15=predicted-lag(predicted)) %>%
-  mutate(STL_30=predicted-lag(lag(predicted)))
+  mutate(STL_30=predicted-lag(lag(predicted))) %>%
+  mutate(increment_15=predicted/lag(predicted)) %>%
+  mutate(increment_30=predicted/lag(lag(predicted)))
 
 N30 <- preddataLUE_GR1_agg %>%
   filter(group=="+30%") %>%
@@ -1871,7 +1879,9 @@ GRp1gl_RelChange_B_NPP_0_30 <- GRp1gl_RelChange_B_NPP_0_30 %>%
 preddataLUE_GR2
 preddataLUE_GR2_agg <- preddataLUE_GR2 %>% group_by(x) %>% 
   mutate(STL_15=predicted-lag(predicted)) %>%
-  mutate(STL_30=predicted-lag(lag(predicted)))  
+  mutate(STL_30=predicted-lag(lag(predicted))) %>%
+  mutate(increment_15=predicted/lag(predicted)) %>%
+  mutate(increment_30=predicted/lag(lag(predicted)))
 
 N30 <- preddataLUE_GR2_agg %>%
   filter(group=="+30%") %>%
@@ -1896,7 +1906,9 @@ GRp2gl_RelChange_B_NPP_0_30 <- GRp2gl_RelChange_B_NPP_0_30 %>%
 preddataLUE_GR3
 preddataLUE_GR3_agg <- preddataLUE_GR3 %>% group_by(x) %>% 
   mutate(STL_15=predicted-lag(predicted)) %>%
-  mutate(STL_30=predicted-lag(lag(predicted))) 
+  mutate(STL_30=predicted-lag(lag(predicted))) %>%
+  mutate(increment_15=predicted/lag(predicted)) %>%
+  mutate(increment_30=predicted/lag(lag(predicted)))
 
 N30 <- preddataLUE_GR3_agg %>%
   filter(group=="+30%") %>%
@@ -2250,5 +2262,52 @@ ff_stl <- B_DBH_1 + STL_DBH_1 + CRT_DBH_1 + B_GR_1 + STL_GR_1 + CRT_GR_1 +
 ff_stl
 ggsave("~/GFDY/manuscript/extra_figures/ff_stl_crt.png", width = 9, height = 6, dpi=300)
 
+B_DBH_1 +  CRT_DBH_1 + plot_layout(ncol = 2)
+ggsave("~/GFDY/manuscript/extra_figures/ff_bb_crt.png", width = 6, height = 3, dpi=300)
 
+# More
+ggplot() + 
+  geom_line(data=ea1sa1DBHp1gl_out_annual_tile, aes(x=year, y=plantC, linetype='Control'),alpha=1,col="#c43b3b",size = .6) + 
+  geom_line(data=ea2sa1DBHp1gl_out_annual_tile, aes(x=year, y=plantC, linetype='+15%'),alpha=1,col="#c43b3b",size = .6) + 
+  geom_line(data=ea3sa1DBHp1gl_out_annual_tile, aes(x=year, y=plantC, linetype='+30%'),alpha=1,col="#c43b3b",size = .6) + 
+  scale_linetype_manual("Growth", 
+                        breaks = c("Control","+15%", "+30%"),
+                        labels = c("Low","Medium", "High"),
+                        values = c("dotted","dashed","solid")) +
+  labs(x = "Year", y = expression(paste("Biomass (Kg C ", m^-2, " ", yr^-1, ") ")),title = "Total biomass",
+       linetype = "Growth") +
+  theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
+                      plot.subtitle  = element_text(size = 10),
+                      legend.text = element_text(size = 9),legend.title = element_text(size = 9),
+                      plot.title = element_text(size = 10),
+                      legend.key = element_rect(fill = NA, color = NA),
+                      legend.position = c(.80, .25),
+                      legend.direction="vertical",
+                      legend.box = "horizontal",
+                      legend.key.size = unit(.6, 'cm'),
+                      legend.margin = margin(2, 2, 2, 2),
+                      legend.box.margin = margin(1, 1, 1, 1)) 
 
+ggplot() +  
+  geom_line(data=ea1sa1DBHp1gl_out_annual_tile, aes(x=year, y=plantC/NPP, linetype='Control'),alpha=1,col="#c43b3b",size = .6,show.legend = F) + 
+  geom_line(data=ea2sa1DBHp1gl_out_annual_tile, aes(x=year, y=plantC/NPP, linetype='+15%'),alpha=1,col="#c43b3b",size = .6,show.legend = F) + 
+  geom_line(data=ea3sa1DBHp1gl_out_annual_tile, aes(x=year, y=plantC/NPP, linetype='+30%'),alpha=1,col="#c43b3b",size = .6,show.legend = F) + 
+  scale_linetype_manual("Level of LUE", breaks = c("Control","+15%", "+30%"), 
+                        values = c("dotted","dashed","solid")) +
+  labs(x = "Year", y = expression(paste("Carbon residence time ( ", tau, " , ", yr, ") ")),title = "",
+       subtitle = "Carbon residence time") +
+  theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
+                      plot.subtitle  = element_text(size = 10),
+                      legend.text = element_text(size = 9),legend.title = element_text(size = 9),
+                      plot.title = element_text(size = 10),
+                      legend.key = element_rect(fill = NA, color = NA),
+                      legend.position = c(.85, .25),
+                      legend.direction="vertical",
+                      legend.box = "horizontal",
+                      legend.key.size = unit(.6, 'cm'),
+                      legend.margin = margin(2, 2, 2, 2),
+                      legend.box.margin = margin(1, 1, 1, 1)) +
+  scale_x_continuous(limits = c(450,1500), breaks = seq(500,1500,500)) + 
+  scale_y_continuous(limits = c(15,21), breaks = seq(10,30,2))

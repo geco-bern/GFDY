@@ -13,6 +13,7 @@ library(sjPlot)
 load("~/GFDY/data/inputs_obs/aggData.RData")
 aggData_QMDbins <- aggData %>% mutate(QMD_bins = cut(QMD, breaks = 30)) 
 sort(unique(aggData_QMDbins$QMD_bins))
+min(aggData_QMDbins$Year)
 
 # Highlight the tails of the distributions
 ggplot(aggData_QMDbins, aes(x = Density, y = QMD_bins, fill = factor(stat(quantile)))) +
@@ -45,6 +46,7 @@ ggplot(data = aggData_QMDbinsRest, aes(x = logQMD, y = logDensity)) + geom_point
 length(unique(aggData$PlotID))
 length(unique(aggData_QMDbinsDen$PlotID))
 length(unique(aggData_QMDbinsRest$PlotID))
+min(aggData_QMDbinsRest$Year)
 
 # Residuals Growth ~ QMD or growth anomalies ####
 # To analyse the effect of growth enhancement (growth anomalies, i.e., residuals) in STL relationships.
@@ -85,5 +87,5 @@ aggData_QMDbinsDen <- aggData_QMDbinsDen %>%
   mutate(Res_Growth15 = GrowthPlus15 - predict0,
          Res_Growth30 = GrowthPlus30 - predict0)
 
-save(aggData_QMDbinsDen, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen.RData")
+save(aggData_QMDbinsDen, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen90.RData")
 

@@ -16,34 +16,21 @@ library(patchwork)
 
 # load data
 load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen.RData")
+load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen55.RData")
+load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
+load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen90.RData")
 
 # LME model N ~ QMD and Res_Growth0 with 75th percentile
 Fit_ResBio = lmer(logDensity ~ scale(logQMD) + scale(Res_Growth0) + (1|PlotID) + (1|Species), data = aggData_QMDbinsDen, na.action = "na.exclude")
 summary(Fit_ResBio)
 r.squaredGLMM(Fit_ResBio)
 plot(allEffects(Fit_ResBio))
-plot_model(Fit_ResBio, type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logQMD","Res_Growth0[-0.50,0.25,1.00]"))
-min(aggData_QMDbinsDen$Res_Growth0,na.rm=T)
-max(aggData_QMDbinsDen$Res_Growth0,na.rm=T)
+plot_model(Fit_ResBio, type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logQMD","Res_Growth0[-0.60,0.50,1.60]"))
+summary(aggData_QMDbinsDen$Res_Growth0)
 
-pred <- ggpredict(Fit_ResBio, terms = c("logQMD","Res_Growth0[-0.5,0.25,1.00]"), full.data = TRUE)
-pred <- ggpredict(Fit_ResBio, terms = c("logQMD","Res_Growth0[-0.6,1.6]"), full.data = TRUE)
+pred <- ggpredict(Fit_ResBio, terms = c("logQMD","Res_Growth0[-0.60,0.50,1.60]"), full.data = TRUE)
 plot(pred, add.data = F) 
 preddata <- as.data.frame(pred)
-
-preddata <- preddata %>% group_by(x) %>% 
-  mutate(STL_Plus1=predicted-lag(predicted)) %>%
-  mutate(STL_Plus2=predicted-lag(lag(predicted)))
-
-NPlus1 <- preddata %>%
-  filter(group==0.25) %>%
-  ungroup(x) %>%
-  summarise(STL_Plus1=mean(STL_Plus1,na.rm=T)) %>% pull()
-
-NPlus2 <- preddata %>%
-  filter(group==1) %>%
-  ungroup(x) %>%
-  summarise(STL_Plus2=mean(STL_Plus2)) %>% pull()
 
 plot75Res <- ggplot() + 
   geom_point(data = aggData_QMDbinsDen, aes(x = logQMD, y = logDensity), alpha=0.3, size = .8,col="black", shape = 16, inherit.aes = FALSE) + 
@@ -51,8 +38,8 @@ plot75Res <- ggplot() +
   geom_smooth(data= preddata, aes(x=x, y=predicted, color=group), method = "lm",fullrange = T,size = .6, se=F) +
   labs(x = "ln QMD", y = "ln N",title = "STL changes as a function of growth",color  = "Growth anomalies") + 
   scale_color_manual(expression(paste("Growth \n anomalies")), 
-                     breaks = c("-0.5","0.25", "1"), 
-                     labels = c("-0.50","0.25", "1.00"),
+                     breaks = c("-0.6","0.5", "1.6"), 
+                     labels = c("-0.60","0.50", "1.60"),
                      values = c("#E41A1C", "#377EB8", "#4DAF4A")) +
   theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                       axis.text = element_text(size = 10),axis.title = element_text(size = 10),
@@ -74,7 +61,7 @@ hist_Res <- ggplot(aggData_QMDbinsDen, aes(x=Res_Growth0)) + geom_histogram(colo
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.text = element_text(size = 8),axis.title = element_text(size = 8),
         plot.margin = unit(c(-.5,.1,.1,.1), "cm")) + ggtitle("") +
-  scale_x_continuous("Growth anomalies", breaks = c(-0.50,0.25,1.00)) +
+  scale_x_continuous("Growth anomalies", breaks = c(-0.60,0.50,1.60)) +
   scale_y_continuous("Frequency", limits = c(0,100), breaks = seq(0,100,20))
 hist_Res
 
@@ -91,3 +78,19 @@ ff1 <- plot75Year + inset_element(hist_Year, left = 0.6, bottom = 0.6, right = 0
   #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
 ff1
 ggsave("~/GFDY/manuscript/figures/fig_1.png", width = 8.5, height = 4.2, dpi=300)
+
+# Get upward shift
+# predict y for a given x
+pred <- ggpredict(Fit_ResBio, terms = c("logQMD","Res_Growth0[0,1]"), full.data = TRUE)
+plot(pred, add.data = F) 
+preddata <- as.data.frame(pred)
+preddata <- preddata %>% group_by(x) %>% 
+  mutate(upSTL=predicted-lag(predicted)) %>%
+  mutate(increment=predicted/lag(predicted)) %>%
+  mutate(percent=upSTL*100/lag(predicted))
+preddata
+change_STL <- preddata %>%
+  filter(group=="1") %>%
+  ungroup(x) %>%
+  summarise(percent=mean(percent)) %>% pull()
+change_STL
