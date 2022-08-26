@@ -2032,12 +2032,12 @@ ggsave("~/GFDY/manuscript/figures/fig_S3.png",width = 8.5, height = 4.2, dpi=300
 # Box 1 ####
 xx <- rep(0.5,3)
 yy <- c(0,0.25,0.5)
-oo <- as.factor(c("Constant self-thinning","Intermediate change","Constant decay rate"))
+oo <- as.factor(c("Constant self-thinning","Intermediate change","Constant turnover rate"))
 df <- data.frame(oo,xx,yy)
 df
 str(df)
 levels(df$oo) 
-df$oo <- factor(df$oo, levels = c("Constant decay rate","Intermediate change","Constant self-thinning"))
+df$oo <- factor(df$oo, levels = c("Constant turnover rate","Intermediate change","Constant self-thinning"))
 
 fig00a <- ggplot() + 
   geom_abline(slope=1, intercept = 0.0, linetype="dashed") +

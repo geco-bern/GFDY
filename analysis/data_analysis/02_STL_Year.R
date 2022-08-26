@@ -14,7 +14,7 @@ library(ggeffects)
 library(patchwork)
 
 # load data
-load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen.RData")
+#load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen.RData")
 load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen55.RData")
 load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
 load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen90.RData")
@@ -112,4 +112,35 @@ rightSTL90 <- exp((intercept - 7 + b*1991)/abs(a) - (intercept - 7 + b*1990)/abs
 shifts <- data.frame(change=c("up55","up75","up90"),up=c(upSTL55,upSTL75,upSTL90),right=c(rightSTL55,rightSTL75,rightSTL90))
 ggplot() + geom_col(data = shifts, aes(change,up))
 ggplot() + geom_col(data = shifts, aes(change,right))
+
+# Other pltos for conferences ####
+
+p <- ggplot() + 
+  #geom_point(data = aggData_QMDbins, aes(x = logQMD, y = logDensity), alpha=0.3, size = .8,col="black", shape = 16, inherit.aes = FALSE) + 
+  geom_point(data = aggData_QMDbinsDen, aes(x = logQMD, y = logDensity), alpha=0.4, size = 2,col="royalblue", shape = 16, inherit.aes = FALSE) + 
+  geom_point(data = aggData_QMDbinsRest, aes(x = logQMD, y = logDensity), alpha=0.4, size = 2,col="darkgrey",shape = 16, inherit.aes = FALSE) + 
+  labs(x = "ln QMD", y = "ln N") + 
+  scale_color_manual("Year", 
+                     breaks = c("1946","1985", "2019"), 
+                     values = c("#FC4E07", "#00AFBB", "#E7B800")) +
+  theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
+                      legend.text = element_text(size = 9),legend.title = element_text(size = 9),
+                      plot.title = element_text(size = 10),
+                      legend.key = element_rect(fill = NA, color = NA),
+                      legend.position = c(.11, .20),
+                      legend.direction="vertical",
+                      legend.box = "horizontal",
+                      legend.margin = margin(2, 2, 2, 2),
+                      legend.key.size = unit(.6, 'cm'),
+                      legend.box.margin = margin(1, 1, 1, 1)) +
+  scale_x_continuous(limits = c(2,4.5),breaks = seq(2,4.5,0.5))+
+  scale_y_continuous(limits = c(4.5,8.5))
+p
+ggsave("~/GFDY/manuscript/extra_figures/fig_STL_B.png", width = 5, height = 4.5, dpi=300)
+
+# Animations ####
+library(gganimate)
+p + transition_time(logQMD) + shadow_mark(alpha = 0.4, size = 1.5) + enter_fly(y_loc = 0)
+anim_save("~/GFDY/manuscript/extra_figures/fig_STL_anim.png", width = 5, height = 4.5,)
 

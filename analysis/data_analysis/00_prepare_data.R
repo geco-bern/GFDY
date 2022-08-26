@@ -40,6 +40,29 @@ EFM_stand_Bysps <- EFM_stand %>% filter(Latin !="All species combined")
 length(unique(EFM_stand_Bysps$FNUM))
 dominant_speciesEFM <- EFM_stand_Bysps %>% group_by(FNUM, AJ) %>% top_n(1, BasalAreaAHC1_2_m2perha) %>% rename(Species=Latin)
 
+percent_speciesEFM <-  EFM_stand_Bysps %>% group_by(FNUM, AJ) %>% mutate(totalBA=sum(BasalAreaAHC1_2_m2perha,na.rm = T)) %>% ungroup() %>%
+  group_by(FNUM, AJ, Latin) %>% mutate(percent=BasalAreaAHC1_2_m2perha/totalBA*100) %>% ungroup() %>%
+  group_by(FNUM, AJ) %>% top_n(3, BasalAreaAHC1_2_m2perha) %>%
+  select(FNUM, Latin, AJ, BasalAreaAHC1_2_m2perha,totalBA,percent) %>%
+  arrange(AJ,FNUM)
+
+change_speciesEFM <-  EFM_stand_Bysps %>% group_by(FNUM) %>% filter(AJ == min(AJ)| AJ == max(AJ)) %>% ungroup() %>% 
+  group_by(FNUM,AJ) %>% mutate(total=sum(TreesPerHectareAHC1_2,na.rm=T)) %>% ungroup() %>%
+  group_by(FNUM) %>% mutate(totalYears=sum(TreesPerHectareAHC1_2,na.rm=T)) %>% ungroup() %>%
+  group_by(FNUM,Latin) %>% mutate(mini = min(TreesPerHectareAHC1_2,na.rm=T)) %>% ungroup() %>%
+  group_by(FNUM,AJ) %>% mutate(lesser=sum(mini,na.rm=T)) %>% ungroup() %>%
+  group_by(FNUM,AJ) %>% mutate(BC = 1-(2*lesser) / (totalYears)) %>% ungroup() %>%
+  group_by(FNUM) %>% summarise(BC=mean(BC))
+change_speciesEFM
+change_speciesEFM <-  change_speciesEFM %>% mutate(BC=ifelse(BC<0,0,BC))
+change_speciesEFM %>% mutate(Plot=as.factor(seq(1,n()))) %>% ggplot() + geom_col(aes(x=Plot, y=BC))
+
+# Select plots that are part of the STL analysis (see selection later)
+load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
+change_speciesEFM <- change_speciesEFM %>% filter(FNUM %in% aggData_QMDbinsDen$PlotID) 
+mean(change_speciesEFM$BC,na.rm=T)
+sd(change_speciesEFM$BC,na.rm=T)
+
 # Add dominant species per plot to EFM_stand_Allsps
 EFM_stand_Allsps <- EFM_stand_Allsps %>% left_join(dominant_speciesEFM[,c(1,3,4)])
 
@@ -106,13 +129,31 @@ NFI_tree_census <- NFI_tree_census %>%  group_by(PLOTID,CENSUSID,SPECIES_ID) %>%
 NFI_tree_census <- NFI_tree_census %>% mutate(BA=pi*(DBH*0.01)^2/4) %>% mutate(BA_perha=BA*Tree_density_perha) 
 # Aggregate by plot and species
 NFI_tree_agg <- NFI_tree_census %>% group_by(PLOTID,Year,SPECIES_NAME) %>% 
-  summarise(Total_BA_perha=sum(BA_perha),Total_Tree_density_perha = sum(Tree_density_perha))
-
+  summarise(Total_BA_perha=sum(BA_perha),Total_Tree_density_perha = sum(Tree_density_perha)) 
+  
 # Identify which species dominates in each site (FNUM) and year (AJ)
 dominant_speciesNFI <- NFI_tree_agg %>% group_by(PLOTID, Year) %>% top_n(1, Total_BA_perha) %>% rename(Species=SPECIES_NAME)
 
 # Add dominant species per plot to NFI_plot_census
 NFI_plot_census <- NFI_plot_census %>% left_join(dominant_speciesNFI[,c(1,2,3)])
+
+# Identify changes in species composition
+change_speciesNFI <-  NFI_tree_agg %>% group_by(PLOTID) %>% filter(Year == min(Year)| Year == max(Year)) %>% ungroup() %>% 
+  group_by(PLOTID,Year) %>% mutate(total=sum(Total_Tree_density_perha,na.rm=T)) %>% ungroup() %>%
+  group_by(PLOTID) %>% mutate(totalYears=sum(Total_Tree_density_perha,na.rm=T)) %>% ungroup() %>%
+  group_by(PLOTID,SPECIES_NAME) %>% mutate(mini = min(Total_Tree_density_perha,na.rm=T)) %>% ungroup() %>%
+  group_by(PLOTID,Year) %>% mutate(lesser=sum(mini,na.rm=T)) %>% ungroup() %>%
+  group_by(PLOTID,Year) %>% mutate(BC = 1-(2*lesser) / (totalYears)) %>% ungroup() %>%
+  group_by(PLOTID) %>% summarise(BC=mean(BC))
+change_speciesNFI
+change_speciesNFI <-  change_speciesNFI %>% mutate(BC=ifelse(BC<0,0,BC))
+change_speciesNFI %>% mutate(Plot=as.factor(seq(1,n()))) %>% ggplot() + geom_col(aes(x=Plot, y=BC))
+
+# Select plots that are part of the STL analysis (see selection later)
+load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
+change_speciesNFI <- change_speciesNFI %>% filter(PLOTID %in% aggData_QMDbinsDen$PlotID) 
+mean(change_speciesNFI$BC,na.rm=T)
+sd(change_speciesNFI$BC,na.rm=T)
 
 # Natural Forests Reserves NFR ####
 
@@ -160,6 +201,23 @@ dim(NFR_stand_Allsps)
 NFR_stand_Bysps <- NFR_stand %>% filter(Latin !="All species combined")
 length(unique(NFR_stand_Bysps$FNUM))
 dominant_speciesNFR <- NFR_stand_Bysps %>% group_by(FNUM, AJ) %>% top_n(1, BasalAreaAHC1_2_m2perha) %>% rename(Species=Latin)
+
+change_speciesNFR <-  NFR_stand_Bysps %>% group_by(FNUM) %>% filter(AJ == min(AJ)| AJ == max(AJ)) %>% ungroup() %>% 
+  group_by(FNUM,AJ) %>% mutate(total=sum(TreesPerHectareAHC1_2,na.rm=T)) %>% ungroup() %>%
+  group_by(FNUM) %>% mutate(totalYears=sum(TreesPerHectareAHC1_2,na.rm=T)) %>% ungroup() %>%
+  group_by(FNUM,Latin) %>% mutate(mini = min(TreesPerHectareAHC1_2,na.rm=T)) %>% ungroup() %>%
+  group_by(FNUM,AJ) %>% mutate(lesser=sum(mini,na.rm=T)) %>% ungroup() %>%
+  group_by(FNUM,AJ) %>% mutate(BC = 1-(2*lesser) / (totalYears)) %>% ungroup() %>%
+  group_by(FNUM) %>% summarise(BC=mean(BC))
+change_speciesNFR
+change_speciesNFR <-  change_speciesNFR %>% mutate(BC=ifelse(BC<0,0,BC))
+change_speciesNFR %>% mutate(Plot=as.factor(seq(1,n()))) %>% ggplot() + geom_col(aes(x=Plot, y=BC))
+
+# Select plots that are part of the STL analysis (see selection later)
+load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
+change_speciesNFR <- change_speciesNFR %>% filter(FNUM %in% aggData_QMDbinsDen$PlotID) 
+mean(change_speciesNFR$BC,na.rm=T)
+sd(change_speciesNFR$BC,na.rm=T)
 
 # Add dominant species per plot to NFR_stand_Allsps
 NFR_stand_Allsps <- NFR_stand_Allsps %>% left_join(dominant_speciesNFR[,c(1,5,4)])
