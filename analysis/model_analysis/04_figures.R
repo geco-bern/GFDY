@@ -1860,7 +1860,7 @@ plot(pred, add.data = F)
 preddataLUE_DBH1 <- as.data.frame(pred)
 
 fig4aLUE_dbh1 <- ggplot() + 
-  geom_point(data = data_DBH_p1, aes(x = logQMD, y = logDensity12,col=plantC), alpha=0.5, size = 1, inherit.aes = FALSE) +
+  geom_point(data = data_DBH_p1, aes(x = logQMD, y = logDensity12,col=plantC), alpha=0.7, size = 1, inherit.aes = FALSE) +
   geom_smooth(data= preddataLUE_DBH1, aes(x=x, y=predicted, linetype=group),col="#009E73",
               method = "lm",fullrange = T,size = .6, se=F) +
   labs(x = "Ln QMD", y = "Ln N",title = expression(paste("STL changes for ", italic("r")[italic("S1")])),
@@ -2101,7 +2101,7 @@ fig4aLUE_gr1 <- ggplot() +
               method = "lm",fullrange = T,size = .6, se=F) +
   labs(x = "Ln QMD", y = "Ln N",title = expression(paste("STL changes for ", italic("r")[italic("GR1")])),
        color  = "Biomass", linetype = "Level of LUE") + 
-  scale_color_viridis_c(direction = -1,limits=c(43,62),breaks=seq(45,60,5)) +
+  scale_color_viridis_c(direction = -1,limits=c(42,62),breaks=seq(45,60,5)) +
   scale_linetype_manual("Level of LUE", 
                         breaks = c("Control","+15%", "+30%"), 
                         values = c("dotted","dashed","solid"),
@@ -2121,7 +2121,7 @@ fig4aLUE_gr1 <- ggplot() +
                       legend.box.margin = margin(1, 1, 1, 1)) +
   #scale_x_continuous(limits = c(3.6,4.4),breaks = seq(3.6,4.4,0.6)) + 
   #scale_y_continuous(limits = c(4.2,6.3),breaks = seq(4.5,6.0,1))
-  scale_x_continuous(limits = c(3.6,4.4),breaks = seq(3.6,4.4,0.4)) + 
+  scale_x_continuous(limits = c(3.6,4.2),breaks = seq(3.6,4.2,0.3)) + 
   scale_y_continuous(limits = c(4.3,6.5),breaks = seq(4.5,6.5,1))
 fig4aLUE_gr1
 
@@ -2184,7 +2184,7 @@ fig4bLUE_gr2 <- ggplot() +
               method = "lm",fullrange = T,size = .6, se=F,show.legend = FALSE) +
   labs(x = "Ln QMD", y = "Ln N",title = expression(paste("STL changes for ", italic("r")[italic("GR2")])),
        color  = "B", linetype = "Level of LUE") + 
-  scale_color_viridis_c(direction = -1,limits=c(43,62),breaks=seq(45,60,5)) +
+  scale_color_viridis_c(direction = -1,limits=c(42,62),breaks=seq(45,60,5)) +
   scale_linetype_manual("Level of LUE", breaks = c("Control","+15%", "+30%"), 
                         values = c("dotted","dashed","solid"),
                         guide = guide_legend(override.aes = list(color = "black"),order=2)) +
@@ -2197,7 +2197,7 @@ fig4bLUE_gr2 <- ggplot() +
                      legend.direction="horizontal",
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(3.6,4.4),breaks = seq(3.6,4.4,0.4)) + 
+  scale_x_continuous(limits = c(3.6,4.2),breaks = seq(3.6,4.2,0.3)) + 
   scale_y_continuous(limits = c(4.3,6.5),breaks = seq(4.5,6.5,1))
 fig4bLUE_gr2
 
@@ -2260,7 +2260,7 @@ fig4cLUE_gr3 <- ggplot() +
               method = "lm",fullrange = T,size = .6, se=F,show.legend = FALSE) +
   labs(x = "Ln QMD", y = "Ln N",title = expression(paste("STL changes for ", italic("r")[italic("GR3")])),
        color  = "B", linetype = "Level of LUE") + 
-  scale_color_viridis_c(direction = -1,limits=c(43,62),breaks=seq(45,60,5)) +
+  scale_color_viridis_c(direction = -1,limits=c(42,62),breaks=seq(45,60,5)) +
   scale_linetype_manual("Level of LUE", breaks = c("Control","+15%", "+30%"), 
                         values = c("dotted","dashed","solid"),
                         guide = guide_legend(override.aes = list(color = "black"),order=2)) +
@@ -2273,7 +2273,7 @@ fig4cLUE_gr3 <- ggplot() +
                      legend.direction="horizontal",
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(3.6,4.4),breaks = seq(3.6,4.4,0.4)) + 
+  scale_x_continuous(limits = c(3.6,4.2),breaks = seq(3.6,4.2,0.3)) + 
   scale_y_continuous(limits = c(4.3,6.5),breaks = seq(4.5,6.5,1))
 fig4cLUE_gr3
 
