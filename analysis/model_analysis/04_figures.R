@@ -58,50 +58,6 @@ ea3sa1GRp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp2g
 ea3sa1GRp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp3gl_out_annual_tile.csv")
 ea3sa1GRp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp3gl_out_annual_cohorts.csv")
 
-# DBH Mortality gs-leuning 
-ea1sa1DBHp1gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_thetaBM0_out_annual_tile.csv")
-ea1sa1DBHp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_thetaBM0_out_annual_cohorts.csv")
-ea1sa1DBHp2gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_thetaBM0_out_annual_tile.csv")
-ea1sa1DBHp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_thetaBM0_out_annual_cohorts.csv")
-ea1sa1DBHp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_thetaBM0_out_annual_tile.csv")
-ea1sa1DBHp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_thetaBM0_out_annual_cohorts.csv")
-
-ea2sa1DBHp1gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_thetaBM0_out_annual_tile.csv")
-ea2sa1DBHp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_thetaBM0_out_annual_cohorts.csv")
-ea2sa1DBHp2gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_thetaBM0_out_annual_tile.csv")
-ea2sa1DBHp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_thetaBM0_out_annual_cohorts.csv")
-ea2sa1DBHp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_thetaBM0_out_annual_tile.csv")
-ea2sa1DBHp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_thetaBM0_out_annual_cohorts.csv")
-
-ea3sa1DBHp1gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_thetaBM0_out_annual_tile.csv")
-ea3sa1DBHp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_thetaBM0_out_annual_cohorts.csv")
-ea3sa1DBHp2gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_thetaBM0_out_annual_tile.csv")
-ea3sa1DBHp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_thetaBM0_out_annual_cohorts.csv")
-ea3sa1DBHp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_thetaBM0_out_annual_tile.csv")
-ea3sa1DBHp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_thetaBM0_out_annual_cohorts.csv")
-
-# GR Mortality gs-leuning 
-ea1sa1GRp1gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1GRp1gl_thetaBM0_out_annual_tile.csv")
-ea1sa1GRp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1GRp1gl_thetaBM0_out_annual_cohorts.csv")
-ea1sa1GRp2gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1GRp2gl_thetaBM0_out_annual_tile.csv")
-ea1sa1GRp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1GRp2gl_thetaBM0_out_annual_cohorts.csv")
-ea1sa1GRp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1GRp3gl_thetaBM0_out_annual_tile.csv")
-ea1sa1GRp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1GRp3gl_thetaBM0_out_annual_cohorts.csv")
-
-ea2sa1GRp1gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1GRp1gl_thetaBM0_out_annual_tile.csv")
-ea2sa1GRp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1GRp1gl_thetaBM0_out_annual_cohorts.csv")
-ea2sa1GRp2gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1GRp2gl_thetaBM0_out_annual_tile.csv")
-ea2sa1GRp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1GRp2gl_thetaBM0_out_annual_cohorts.csv")
-ea2sa1GRp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1GRp3gl_thetaBM0_out_annual_tile.csv")
-ea2sa1GRp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1GRp3gl_thetaBM0_out_annual_cohorts.csv")
-
-ea3sa1GRp1gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp1gl_thetaBM0_out_annual_tile.csv")
-ea3sa1GRp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp1gl_thetaBM0_out_annual_cohorts.csv")
-ea3sa1GRp2gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp2gl_thetaBM0_out_annual_tile.csv")
-ea3sa1GRp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp2gl_thetaBM0_out_annual_cohorts.csv")
-ea3sa1GRp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp3gl_thetaBM0_out_annual_tile.csv")
-ea3sa1GRp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp3gl_thetaBM0_out_annual_cohorts.csv")
-
 # Exploring relationships and plotting
 
 # Mortality formulations ####
@@ -286,7 +242,7 @@ fig2c_dbh <- ggplot() +
                      legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
   scale_x_continuous(limits=c(0,1515),breaks=seq(0,1500,750)) +
-  scale_y_continuous(limits=c(0,2.4),breaks=seq(0,2.5,1))
+  scale_y_continuous(limits=c(0,2.5),breaks=seq(0,2.5,1))
 fig2c_dbh
 
 # Changes in growth
@@ -296,35 +252,17 @@ G_DBH_ea3p1 <- ea3sa1DBHp1gl_out_annual_tile %>% filter(year>=900) %>% summarise
 G_DBH_ea2p1/G_DBH_ea1p1
 G_DBH_ea3p1/G_DBH_ea1p1
 
-R_DBH_ea1p1 <- ea1sa1DBHp1gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(Rauto/GPP))
-R_DBH_ea2p1 <- ea2sa1DBHp1gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(Rauto/GPP))
-R_DBH_ea3p1 <- ea3sa1DBHp1gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(Rauto/GPP))
-R_DBH_ea2p1/R_DBH_ea1p1
-R_DBH_ea3p1/R_DBH_ea1p1
-
 G_DBH_ea1p2 <- ea1sa1DBHp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
 G_DBH_ea2p2 <- ea2sa1DBHp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
 G_DBH_ea3p2 <- ea3sa1DBHp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
 G_DBH_ea2p2/G_DBH_ea1p2
 G_DBH_ea3p2/G_DBH_ea1p2
 
-R_DBH_ea1p2 <- ea1sa1DBHp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(Rauto/GPP))
-R_DBH_ea2p2 <- ea2sa1DBHp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(Rauto/GPP))
-R_DBH_ea3p2 <- ea3sa1DBHp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(Rauto/GPP))
-R_DBH_ea2p2/R_DBH_ea1p2
-R_DBH_ea3p2/R_DBH_ea1p2
-
 G_DBH_ea1p3 <- ea1sa1DBHp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
 G_DBH_ea2p3 <- ea2sa1DBHp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
 G_DBH_ea3p3 <- ea3sa1DBHp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
 G_DBH_ea2p3/G_DBH_ea1p3
 G_DBH_ea3p3/G_DBH_ea1p3
-
-R_DBH_ea1p3 <- ea1sa1DBHp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(Rauto/GPP))
-R_DBH_ea2p3 <- ea2sa1DBHp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(Rauto/GPP))
-R_DBH_ea3p3 <- ea3sa1DBHp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(Rauto/GPP))
-R_DBH_ea2p3/R_DBH_ea1p3
-R_DBH_ea3p3/R_DBH_ea1p3
 
 # GR
 fig3c_gr <- ggplot() + 
@@ -351,7 +289,7 @@ fig3c_gr <- ggplot() +
                      legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
   scale_x_continuous(limits=c(0,1515),breaks=seq(0,1500,750)) +
-  scale_y_continuous(limits=c(0,2.4),breaks=seq(0,2.5,1))
+  scale_y_continuous(limits=c(0,2.5),breaks=seq(0,2.5,1))
 fig3c_gr
 
 # Changes in growth
@@ -399,7 +337,7 @@ fig2d_dbh <- ggplot() +
                      legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
   scale_x_continuous(limits=c(0,1515),breaks=seq(0,1500,750)) +
-  scale_y_continuous(limits=c(0,2.4),breaks=seq(0,2.5,1))
+  scale_y_continuous(limits=c(0,2.5),breaks=seq(0,2.5,1))
 fig2d_dbh
 
 # GR
@@ -427,7 +365,7 @@ fig3d_gr <- ggplot() +
                      legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
   scale_x_continuous(limits=c(0,1515),breaks=seq(0,1500,750)) +
-  scale_y_continuous(limits=c(0,2.4),breaks=seq(0,2.5,1))
+  scale_y_continuous(limits=c(0,2.5),breaks=seq(0,2.5,1))
 fig3d_gr
 
 # Relative change biomass (plantC) vs. NPP ####
@@ -1140,9 +1078,9 @@ dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-L30 <- ea3sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L30=max(MaxAge))
-L15 <- ea2sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L15=max(MaxAge))
-L0  <- ea1sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L0=max(MaxAge))
+L30 <- ea3sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L30=mean(MaxAge))
+L15 <- ea2sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L15=mean(MaxAge))
+L0  <- ea1sa1DBHp1gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L0=mean(MaxAge))
 dL0_15 <- (L15$L15 - L0$L0)/L0$L0
 dL15_30 <- (L30$L30 - L15$L15)/L15$L15
 dL0_30 <- (L30$L30 - L0$L0)/L0$L0
@@ -1160,9 +1098,9 @@ dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-L30 <- ea3sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L30=max(MaxAge))
-L15 <- ea2sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L15=max(MaxAge))
-L0  <- ea1sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L0=max(MaxAge))
+L30 <- ea3sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L30=mean(MaxAge))
+L15 <- ea2sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L15=mean(MaxAge))
+L0  <- ea1sa1DBHp2gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L0=mean(MaxAge))
 dL0_15 <- (L15$L15 - L0$L0)/L0$L0
 dL15_30 <- (L30$L30 - L15$L15)/L15$L15
 dL0_30 <- (L30$L30 - L0$L0)/L0$L0
@@ -1179,9 +1117,9 @@ dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-L30 <- ea3sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L30=max(MaxAge))
-L15 <- ea2sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L15=max(MaxAge))
-L0  <- ea1sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L0=max(MaxAge))
+L30 <- ea3sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L30=mean(MaxAge))
+L15 <- ea2sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L15=mean(MaxAge))
+L0  <- ea1sa1DBHp3gl_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(L0=mean(MaxAge))
 dL0_15 <- (L15$L15 - L0$L0)/L0$L0
 dL15_30 <- (L30$L30 - L15$L15)/L15$L15
 dL0_30 <- (L30$L30 - L0$L0)/L0$L0
@@ -1228,9 +1166,9 @@ dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-L30 <- ea3sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=1100) %>% summarise(L30=max(MaxAge))
-L15 <- ea2sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=1100) %>% summarise(L15=max(MaxAge))
-L0  <- ea1sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=1100) %>% summarise(L0=max(MaxAge))
+L30 <- ea3sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=1100) %>% summarise(L30=mean(MaxAge))
+L15 <- ea2sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=1100) %>% summarise(L15=mean(MaxAge))
+L0  <- ea1sa1GRp1gl_out_annual_tile %>% dplyr::filter(year>=1100) %>% summarise(L0=mean(MaxAge))
 dL0_15 <- (L15$L15 - L0$L0)/L0$L0
 dL15_30 <- (L30$L30 - L15$L15)/L15$L15
 dL0_30 <- (L30$L30 - L0$L0)/L0$L0
@@ -1248,9 +1186,9 @@ dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-L30 <- ea3sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=1100) %>% summarise(L30=max(MaxAge))
-L15 <- ea2sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=1100) %>% summarise(L15=max(MaxAge))
-L0  <- ea1sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=1100) %>% summarise(L0=max(MaxAge))
+L30 <- ea3sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=1100) %>% summarise(L30=mean(MaxAge))
+L15 <- ea2sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=1100) %>% summarise(L15=mean(MaxAge))
+L0  <- ea1sa1GRp2gl_out_annual_tile %>% dplyr::filter(year>=1100) %>% summarise(L0=mean(MaxAge))
 dL0_15 <- (L15$L15 - L0$L0)/L0$L0
 dL15_30 <- (L30$L30 - L15$L15)/L15$L15
 dL0_30 <- (L30$L30 - L0$L0)/L0$L0
@@ -1267,9 +1205,9 @@ dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-L30 <- ea3sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=1100) %>% summarise(L30=max(MaxAge))
-L15 <- ea2sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=1100) %>% summarise(L15=max(MaxAge))
-L0  <- ea1sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=1100) %>% summarise(L0=max(MaxAge))
+L30 <- ea3sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=1100) %>% summarise(L30=mean(MaxAge))
+L15 <- ea2sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=1100) %>% summarise(L15=mean(MaxAge))
+L0  <- ea1sa1GRp3gl_out_annual_tile %>% dplyr::filter(year>=1100) %>% summarise(L0=mean(MaxAge))
 dL0_15 <- (L15$L15 - L0$L0)/L0$L0
 dL15_30 <- (L30$L30 - L15$L15)/L15$L15
 dL0_30 <- (L30$L30 - L0$L0)/L0$L0
@@ -1309,7 +1247,6 @@ fig3h_gr
 # Cohort longevity vs. growth (dbh) ####
 
 # DBH
-#ea1sa1DBHp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_thetaBM0_out_annual_cohorts.csv")
 
 # DBH p1
 ea1sa1DBHp1gl_out_annual_cohorts_agg <- ea1sa1DBHp1gl_out_annual_cohorts %>% filter(year>700) %>% 
@@ -1489,14 +1426,14 @@ fig2Coho_dbh <- ggplot() +
   geom_point(data=ea3sa1DBHp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r3', shape='+30%'),size=3) +
   geom_smooth(data=DBHp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age),color="#D55E00",
               method = "lm",fullrange = T,size = .4, se=F,show.legend = F) +
-  scale_color_manual("Parameter value", breaks = c("r1", "r2", "r3"), 
+  scale_color_manual("Parameter ", breaks = c("r1", "r2", "r3"), 
                      values = c("#009E73", "#0072B2", "#D55E00"),
-                     guide = guide_legend(override.aes = list(size=1)),
+                     guide = guide_legend(override.aes = list(size=1),order=1),
                      labels =c(expression(paste(italic("r")[italic("1")])),expression(paste(italic("r")[italic("2")])),
                                expression(paste(italic("r")[italic("3")])))) +
   scale_shape_manual("Level of LUE", breaks = c("Control","+15%","+30%"), 
                      values = c(18,16,17),
-                     guide = guide_legend(override.aes = list(color = "black", size=1.4))) + 
+                     guide = guide_legend(override.aes = list(color = "black", size=1.4),order=2)) + 
   labs(x = expression(paste("Growth rate (mm ", yr^-1, ") ")), y = "Age of canopy trees (yrs)", 
        title = "For size-dependent mortality") + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
@@ -1517,7 +1454,6 @@ fig2Coho_dbh <- ggplot() +
 fig2Coho_dbh
 
 # GR
-#ea1sa1DBHp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_thetaBM0_out_annual_cohorts.csv")
 
 # GR p1
 ea1sa1GRp1gl_out_annual_cohorts_agg <- ea1sa1GRp1gl_out_annual_cohorts %>% filter(year>700) %>% 
@@ -1697,7 +1633,7 @@ fig2Coho_gr <- ggplot() +
   geom_point(data=ea3sa1GRp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r3', shape='+30%'),size=3) + 
   geom_smooth(data=GRp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age),color="#D55E00",
               method = "lm",fullrange = T,size = .4, se=F,show.legend = F) +
-  scale_color_manual("Parameter value", breaks = c("r1", "r2", "r3"), 
+  scale_color_manual("Parameter ", breaks = c("r1", "r2", "r3"), 
                      values = c("#009E73", "#0072B2", "#D55E00"),
                      guide = guide_legend(override.aes = list(size=1),order = 1),
                      labels =c(expression(paste(italic("r")[italic("1")])),expression(paste(italic("r")[italic("2")])),
@@ -1827,27 +1763,10 @@ data_DBH_ea3p1 <- ea3sa1DBHp1gl_out_annual_tile %>%
   filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
-# Select from each QMD bins the number of plots with higher density
-valueQuantile = 0.75
-quantileX <- data_DBH_ea1p1 %>% group_by(QMD_bins) %>% summarise(quantile(Density12, c(valueQuantile))) 
-data_DBH_ea1p1Den <- data_DBH_ea1p1 %>% left_join(quantileX) %>% filter(Density12>=`quantile(Density12, c(valueQuantile))`)
-quantileX <- data_DBH_ea2p1 %>% group_by(QMD_bins) %>% summarise(quantile(Density12, c(valueQuantile))) 
-data_DBH_ea2p1Den <- data_DBH_ea2p1 %>% left_join(quantileX) %>% filter(Density12>=`quantile(Density12, c(valueQuantile))`)
-quantileX <- data_DBH_ea3p1 %>% group_by(QMD_bins) %>% summarise(quantile(Density12, c(valueQuantile))) 
-data_DBH_ea3p1Den <- data_DBH_ea3p1 %>% left_join(quantileX) %>% filter(Density12>=`quantile(Density12, c(valueQuantile))`)
-
 data_DBH_p1 <- rbind(data_DBH_ea1p1, data_DBH_ea2p1, data_DBH_ea3p1) 
 data_DBH_p1 <- data_DBH_p1 %>% mutate(logDensity12=log(Density12),logQMD=log(QMD),LUE=as.factor(LUE))
 data_DBH_p1$LUE <- relevel(data_DBH_p1$LUE, ref = "Control")
 ggplot() +  geom_point(data = data_DBH_p1, aes(x = log(QMD), y = log(Density12)), color="blue")
-data_DBH_p1Den <- rbind(data_DBH_ea1p1Den, data_DBH_ea2p1Den, data_DBH_ea3p1Den) 
-data_DBH_p1Den <- data_DBH_p1Den %>% mutate(logDensity12=log(Density12),logQMD=log(QMD),LUE=as.factor(LUE))
-data_DBH_p1Den$LUE <- relevel(data_DBH_p1Den$LUE, ref = "Control")
-ggplot() +  geom_point(data = data_DBH_p1Den, aes(x = log(QMD), y = log(Density12)), color="blue") 
-
-ggplot() + 
-  geom_point(data = data_DBH_p1, aes(x = log(QMD), y = log(Density12)), color="blue") +
-  geom_point(data = data_DBH_p1Den, aes(x = log(QMD), y = log(Density12)), color="red") 
 
 # STL model as LUE change
 Fit_QMD = lm(logDensity12 ~ scale(logQMD) + LUE, data = data_DBH_p1, na.action = "na.exclude")
@@ -1910,26 +1829,10 @@ data_DBH_ea3p2 <- ea3sa1DBHp2gl_out_annual_tile %>%
   filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30))
 
-# Select from each QMD bins the number of plots with higher density
-valueQuantile = 0.75
-quantileX <- data_DBH_ea1p2 %>% group_by(QMD_bins) %>% summarise(quantile(Density12, c(valueQuantile))) 
-data_DBH_ea1p2Den <- data_DBH_ea1p2 %>% left_join(quantileX) %>% filter(Density12>=`quantile(Density12, c(valueQuantile))`)
-quantileX <- data_DBH_ea2p2 %>% group_by(QMD_bins) %>% summarise(quantile(Density12, c(valueQuantile))) 
-data_DBH_ea2p2Den <- data_DBH_ea2p2 %>% left_join(quantileX) %>% filter(Density12>=`quantile(Density12, c(valueQuantile))`)
-quantileX <- data_DBH_ea3p2 %>% group_by(QMD_bins) %>% summarise(quantile(Density12, c(valueQuantile))) 
-data_DBH_ea3p2Den <- data_DBH_ea3p2 %>% left_join(quantileX) %>% filter(Density12>=`quantile(Density12, c(valueQuantile))`)
-
 data_DBH_p2 <- rbind(data_DBH_ea1p2, data_DBH_ea2p2, data_DBH_ea3p2) 
 data_DBH_p2 <- data_DBH_p2 %>% mutate(logDensity12=log(Density12),logQMD=log(QMD),LUE=as.factor(LUE))
 data_DBH_p2$LUE <- relevel(data_DBH_p2$LUE, ref = "Control")
 ggplot() +  geom_point(data = data_DBH_p2, aes(x = log(QMD), y = log(Density12)), color="blue")
-data_DBH_p2Den <- rbind(data_DBH_ea1p2Den, data_DBH_ea2p2Den, data_DBH_ea3p2Den) 
-data_DBH_p2Den <- data_DBH_p2Den %>% mutate(logDensity12=log(Density12),logQMD=log(QMD),LUE=as.factor(LUE))
-data_DBH_p2Den$LUE <- relevel(data_DBH_p2Den$LUE, ref = "Control")
-ggplot() +  geom_point(data = data_DBH_p2Den, aes(x = log(QMD), y = log(Density12)), color="blue") 
-ggplot() + 
-  geom_point(data = data_DBH_p2, aes(x = log(QMD), y = log(Density12)), color="blue") +
-  geom_point(data = data_DBH_p2Den, aes(x = log(QMD), y = log(Density12)), color="red") 
 
 # STL model as LUE change
 Fit_QMD = lm(logDensity12 ~ scale(logQMD) + LUE, data = data_DBH_p2, na.action = "na.exclude")
@@ -1986,26 +1889,10 @@ data_DBH_ea3p3 <- ea3sa1DBHp3gl_out_annual_tile %>%
   filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
-# Select from each QMD bins the number of plots with higher density
-valueQuantile = 0.75
-quantileX <- data_DBH_ea1p3 %>% group_by(QMD_bins) %>% summarise(quantile(Density12, c(valueQuantile))) 
-data_DBH_ea1p3Den <- data_DBH_ea1p3 %>% left_join(quantileX) %>% filter(Density12>=`quantile(Density12, c(valueQuantile))`)
-quantileX <- data_DBH_ea2p3 %>% group_by(QMD_bins) %>% summarise(quantile(Density12, c(valueQuantile))) 
-data_DBH_ea2p3Den <- data_DBH_ea2p3 %>% left_join(quantileX)  %>% filter(Density12>=`quantile(Density12, c(valueQuantile))`)
-quantileX <- data_DBH_ea3p3 %>% group_by(QMD_bins) %>% summarise(quantile(Density12, c(valueQuantile))) 
-data_DBH_ea3p3Den <- data_DBH_ea3p3 %>% left_join(quantileX) %>% filter(Density12>=`quantile(Density12, c(valueQuantile))`)
-
 data_DBH_p3 <- rbind(data_DBH_ea1p3, data_DBH_ea2p3, data_DBH_ea3p3) 
 data_DBH_p3 <- data_DBH_p3 %>% mutate(logDensity12=log(Density12),logQMD=log(QMD),LUE=as.factor(LUE))
 data_DBH_p3$LUE <- relevel(data_DBH_p3$LUE, ref = "Control")
 ggplot() + geom_point(data = data_DBH_p3, aes(x = log(QMD), y = log(Density12)), color="blue")  
-data_DBH_p3Den <- rbind(data_DBH_ea1p3Den, data_DBH_ea2p3Den, data_DBH_ea3p3Den) 
-data_DBH_p3Den <- data_DBH_p3Den %>% mutate(logDensity12=log(Density12),logQMD=log(QMD),LUE=as.factor(LUE))
-data_DBH_p3Den$LUE <- relevel(data_DBH_p3Den$LUE, ref = "Control")
-ggplot() + geom_point(data = data_DBH_p3Den, aes(x = log(QMD), y = log(Density12)), color="blue")  
-ggplot() + 
-  geom_point(data = data_DBH_p3, aes(x = log(QMD), y = log(Density12)), color="blue") +
-  geom_point(data = data_DBH_p3Den, aes(x = log(QMD), y = log(Density12)), color="red") 
 
 # STL model as LUE change
 Fit_QMD = lm(logDensity12 ~ scale(logQMD) + LUE, data = data_DBH_p3, na.action = "na.exclude")
@@ -2064,26 +1951,10 @@ data_GR_ea3p1 <- ea3sa1GRp1gl_out_annual_tile %>%
   filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
-# Select from each QMD bins the number of plots with higher density
-valueQuantile = 0.75
-quantileX <- data_GR_ea1p1 %>% group_by(QMD_bins) %>% summarise(quantile(Density12, c(valueQuantile))) 
-data_GR_ea1p1Den <- data_GR_ea1p1 %>% left_join(quantileX) %>% filter(Density12>=`quantile(Density12, c(valueQuantile))`)
-quantileX <- data_GR_ea2p1 %>% group_by(QMD_bins) %>% summarise(quantile(Density12, c(valueQuantile))) 
-data_GR_ea2p1Den <- data_GR_ea2p1 %>% left_join(quantileX) %>% filter(Density12>=`quantile(Density12, c(valueQuantile))`)
-quantileX <- data_GR_ea3p1 %>% group_by(QMD_bins) %>% summarise(quantile(Density12, c(valueQuantile))) 
-data_GR_ea3p1Den <- data_GR_ea3p1 %>% left_join(quantileX) %>% filter(Density12>=`quantile(Density12, c(valueQuantile))`)
-
 data_GR_p1 <- rbind(data_GR_ea1p1, data_GR_ea2p1, data_GR_ea3p1) 
 data_GR_p1 <- data_GR_p1 %>% mutate(logDensity12=log(Density12),logQMD=log(QMD),LUE=as.factor(LUE))
 data_GR_p1$LUE <- relevel(data_GR_p1$LUE, ref = "Control")
 ggplot() +  geom_point(data = data_GR_p1, aes(x = log(QMD), y = log(Density12)), color="blue",alpha=0.5)
-data_GR_p1Den <- rbind(data_GR_ea1p1Den, data_GR_ea2p1Den, data_GR_ea3p1Den) 
-data_GR_p1Den <- data_GR_p1Den %>% mutate(logDensity12=log(Density12),logQMD=log(QMD),LUE=as.factor(LUE))
-data_GR_p1Den$LUE <- relevel(data_GR_p1Den$LUE, ref = "Control")
-ggplot() +  geom_point(data = data_GR_p1Den, aes(x = log(QMD), y = log(Density12)), color="blue") 
-ggplot() + 
-  geom_point(data = data_GR_p1, aes(x = log(QMD), y = log(Density12)), color="blue") +
-  geom_point(data = data_GR_p1Den, aes(x = log(QMD), y = log(Density12)), color="red") 
 
 # STL model as LUE change
 Fit_QMD = lm(logDensity12 ~ scale(logQMD) + LUE, data = data_GR_p1, na.action = "na.exclude")
@@ -2121,8 +1992,8 @@ fig4aLUE_gr1 <- ggplot() +
                       legend.box.margin = margin(1, 1, 1, 1)) +
   #scale_x_continuous(limits = c(3.6,4.4),breaks = seq(3.6,4.4,0.6)) + 
   #scale_y_continuous(limits = c(4.2,6.3),breaks = seq(4.5,6.0,1))
-  scale_x_continuous(limits = c(3.6,4.2),breaks = seq(3.6,4.2,0.3)) + 
-  scale_y_continuous(limits = c(4.3,6.5),breaks = seq(4.5,6.5,1))
+  scale_x_continuous(limits = c(3.6,4.2),breaks = seq(3.5,4.2,0.3)) + 
+  scale_y_continuous(limits = c(4.5,6.5),breaks = seq(4.5,6.5,1))
 fig4aLUE_gr1
 
 # GR2
@@ -2147,26 +2018,10 @@ data_GR_ea3p2 <- ea3sa1GRp2gl_out_annual_tile %>%
   filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
-# Select from each QMD bins the number of plots with higher density
-valueQuantile = 0.75
-quantileX <- data_GR_ea1p2 %>% group_by(QMD_bins) %>% summarise(quantile(Density12, c(valueQuantile))) 
-data_GR_ea1p2Den <- data_GR_ea1p2 %>% left_join(quantileX) %>% filter(Density12>=`quantile(Density12, c(valueQuantile))`)
-quantileX <- data_GR_ea2p2 %>% group_by(QMD_bins) %>% summarise(quantile(Density12, c(valueQuantile))) 
-data_GR_ea2p2Den <- data_GR_ea2p2 %>% left_join(quantileX) %>% filter(Density12>=`quantile(Density12, c(valueQuantile))`)
-quantileX <- data_GR_ea3p2 %>% group_by(QMD_bins) %>% summarise(quantile(Density12, c(valueQuantile))) 
-data_GR_ea3p2Den <- data_GR_ea3p2 %>% left_join(quantileX) %>% filter(Density12>=`quantile(Density12, c(valueQuantile))`)
-
 data_GR_p2 <- rbind(data_GR_ea1p2, data_GR_ea2p2, data_GR_ea3p2) 
 data_GR_p2 <- data_GR_p2 %>% mutate(logDensity12=log(Density12),logQMD=log(QMD),LUE=as.factor(LUE))
 data_GR_p2$LUE <- relevel(data_GR_p2$LUE, ref = "Control")
 ggplot() +  geom_point(data = data_GR_p2, aes(x = log(QMD), y = log(Density12)), color="blue")
-data_GR_p2Den <- rbind(data_GR_ea1p2Den, data_GR_ea2p2Den, data_GR_ea3p2Den) 
-data_GR_p2Den <- data_GR_p2Den %>% mutate(logDensity12=log(Density12),logQMD=log(QMD),LUE=as.factor(LUE))
-data_GR_p2Den$LUE <- relevel(data_GR_p2Den$LUE, ref = "Control")
-ggplot() +  geom_point(data = data_GR_p2Den, aes(x = log(QMD), y = log(Density12)), color="blue") 
-ggplot() + 
-  geom_point(data = data_GR_p2, aes(x = log(QMD), y = log(Density12)), color="blue") +
-  geom_point(data = data_GR_p2Den, aes(x = log(QMD), y = log(Density12)), color="red") 
 
 # STL model as LUE change
 Fit_QMD = lm(logDensity12 ~ scale(logQMD) + LUE, data = data_GR_p2, na.action = "na.exclude")
@@ -2198,7 +2053,7 @@ fig4bLUE_gr2 <- ggplot() +
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
   scale_x_continuous(limits = c(3.6,4.2),breaks = seq(3.6,4.2,0.3)) + 
-  scale_y_continuous(limits = c(4.3,6.5),breaks = seq(4.5,6.5,1))
+  scale_y_continuous(limits = c(4.5,6.5),breaks = seq(4.5,6.5,1))
 fig4bLUE_gr2
 
 # GR3
@@ -2223,26 +2078,10 @@ data_GR_ea3p3 <- ea3sa1GRp3gl_out_annual_tile %>%
   filter(year>=900) %>% 
   mutate(QMD_bins = cut(QMD, breaks = 30)) 
 
-# Select from each QMD bins the number of plots with higher density
-valueQuantile = 0.75
-quantileX <- data_GR_ea1p3 %>% group_by(QMD_bins) %>% summarise(quantile(Density12, c(valueQuantile))) 
-data_GR_ea1p3Den <- data_GR_ea1p3 %>% left_join(quantileX) %>% filter(Density12>=`quantile(Density12, c(valueQuantile))`)
-quantileX <- data_GR_ea2p3 %>% group_by(QMD_bins) %>% summarise(quantile(Density12, c(valueQuantile))) 
-data_GR_ea2p3Den <- data_GR_ea2p3 %>% left_join(quantileX) %>% filter(Density12>=`quantile(Density12, c(valueQuantile))`)
-quantileX <- data_GR_ea3p3 %>% group_by(QMD_bins) %>% summarise(quantile(Density12, c(valueQuantile))) 
-data_GR_ea3p3Den <- data_GR_ea3p3 %>% left_join(quantileX) %>% filter(Density12>=`quantile(Density12, c(valueQuantile))`)
-
 data_GR_p3 <- rbind(data_GR_ea1p3, data_GR_ea2p3, data_GR_ea3p3) 
 data_GR_p3 <- data_GR_p3 %>% mutate(logDensity12=log(Density12),logQMD=log(QMD),LUE=as.factor(LUE))
 data_GR_p3$LUE <- relevel(data_GR_p3$LUE, ref = "Control")
 ggplot() +  geom_point(data = data_GR_p3, aes(x = log(QMD), y = log(Density12)), color="blue")
-data_GR_p3Den <- rbind(data_GR_ea1p3Den, data_GR_ea2p3Den, data_GR_ea3p3Den) 
-data_GR_p3Den <- data_GR_p3Den %>% mutate(logDensity12=log(Density12),logQMD=log(QMD),LUE=as.factor(LUE))
-data_GR_p3Den$LUE <- relevel(data_GR_p3Den$LUE, ref = "Control")
-ggplot() +  geom_point(data = data_GR_p3Den, aes(x = log(QMD), y = log(Density12)), color="blue") 
-ggplot() + 
-  geom_point(data = data_GR_p3, aes(x = log(QMD), y = log(Density12)), color="blue") +
-  geom_point(data = data_GR_p3Den, aes(x = log(QMD), y = log(Density12)), color="red") 
 
 # STL model as LUE change
 Fit_QMD = lm(logDensity12 ~ scale(logQMD) + LUE, data = data_GR_p3, na.action = "na.exclude")
@@ -2274,7 +2113,7 @@ fig4cLUE_gr3 <- ggplot() +
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
   scale_x_continuous(limits = c(3.6,4.2),breaks = seq(3.6,4.2,0.3)) + 
-  scale_y_continuous(limits = c(4.3,6.5),breaks = seq(4.5,6.5,1))
+  scale_y_continuous(limits = c(4.5,6.5),breaks = seq(4.5,6.5,1))
 fig4cLUE_gr3
 
 # Link model and observations ####
@@ -2540,7 +2379,7 @@ ff2 <- fig2a_dbh + fig2b_dbh + fig2c_dbh + fig2d_dbh + fig2e_dbh + fig2f_dbh + f
   theme(plot.margin = unit(rep(0.13,4), "cm"))#+
   #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
 ff2
-ggsave("~/GFDY/manuscript/figures/fig_2A.png", width = 10.5, height = 5.5, dpi=300)
+ggsave("~/GFDY/manuscript/figures/fig_2.png", width = 10.5, height = 5.5, dpi=300)
 
 # Figure 3 ####
 ff3 <- fig3a_gr + fig3b_gr + fig3c_gr + fig3d_gr + fig3e_gr + fig3f_gr + fig3g_gr + fig3h_gr + 
@@ -2549,7 +2388,7 @@ ff3 <- fig3a_gr + fig3b_gr + fig3c_gr + fig3d_gr + fig3e_gr + fig3f_gr + fig3g_g
   theme(plot.margin = unit(rep(0.13,4), "cm"))#+
   #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
 ff3
-ggsave("~/GFDY/manuscript/figures/fig_3A.png", width = 10.5, height = 5.5, dpi=300)
+ggsave("~/GFDY/manuscript/figures/fig_3.png", width = 10.5, height = 5.5, dpi=300)
 
 # Figure 4 ####
 ff4 <- fig4aLUE_dbh1 + fig4bLUE_dbh2 + fig4cLUE_dbh3 + 
@@ -2559,16 +2398,7 @@ ff4 <- fig4aLUE_dbh1 + fig4bLUE_dbh2 + fig4cLUE_dbh3 +
   theme(plot.margin = unit(rep(0.13,4), "cm"))#+
   #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
 ff4
-ggsave("~/GFDY/manuscript/figures/fig_4A.png", width = 9.8, height = 6.3, dpi=300)
-
-# Figure 5 ####
-ff5 <- fig5_dbh + fig5_gr + 
-  plot_layout(ncol = 2) + 
-  plot_annotation(tag_levels = 'A', tag_suffix = ")") & 
-  theme(plot.margin = unit(rep(0.13,4), "cm"))#+  
-#plot_layout(guides = "collect") & theme(legend.position = 'bottom')
-ff5
-ggsave("~/GFDY/manuscript/figures/fig_5.png", width = 8.5, height = 4.2, dpi=300)
+ggsave("~/GFDY/manuscript/figures/fig_4.png", width = 9.8, height = 6.3, dpi=300)
 
 # Figure S2 ####
 ffs2 <- fig2gg_dbh + fig3gg_gr + 
@@ -2577,25 +2407,34 @@ ffs2 <- fig2gg_dbh + fig3gg_gr +
   theme(plot.margin = unit(rep(0.13,4), "cm"))#+
 #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
 ffs2
-ggsave("~/GFDY/manuscript/figures/fig_S2A.png",width = 8.5, height = 4.2, dpi=300)
+ggsave("~/GFDY/manuscript/figures/fig_S2.png",width = 8.5, height = 4.2, dpi=300)
 
 # Figure S3 ####
-ffs3 <- figS3A + figS3B + figS3C +figS3D +figS3E +figS3F +
-  plot_layout(ncol = 3) + 
+ffs3 <- figdistr_dbh + figdistr_gr + 
+  plot_layout(ncol = 2) + 
   plot_annotation(tag_levels = 'A', tag_suffix = ")") & 
   theme(plot.margin = unit(rep(0.13,4), "cm"))#+ 
 #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
 ffs3
-ggsave("~/GFDY/manuscript/figures/fig_S3.png", width = 9.8, height = 6.3, dpi=300)
+ggsave("~/GFDY/manuscript/figures/fig_S3.png",width = 8.5, height = 4.2, dpi=300)
 
 # Figure S4 ####
-ffs4 <- fig2Coho_dbh + fig2Coho_gr + 
+ffs4 <- figS3A + figS3B + figS3C +figS3D +figS3E +figS3F +
+  plot_layout(ncol = 3) + 
+  plot_annotation(tag_levels = 'A', tag_suffix = ")") & 
+  theme(plot.margin = unit(rep(0.13,4), "cm"))#+ 
+#plot_layout(guides = "collect") & theme(legend.position = 'bottom')
+ffs4
+ggsave("~/GFDY/manuscript/figures/fig_S4.png", width = 9.8, height = 6.3, dpi=300)
+
+# Figure S5 ####
+ffs5 <- fig2Coho_dbh + fig2Coho_gr + 
   plot_layout(ncol = 2) + 
   plot_annotation(tag_levels = 'A', tag_suffix = ")") & 
   theme(plot.margin = unit(rep(0.13,4), "cm"))#+
 #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
-ffs4
-ggsave("~/GFDY/manuscript/figures/fig_S4A.png",width = 8.5, height = 4.2, dpi=300)
+ffs5
+ggsave("~/GFDY/manuscript/figures/fig_S5.png",width = 8.5, height = 4.2, dpi=300)
 
 # Box 1 ####
 xx <- rep(0.5,3)
@@ -2660,7 +2499,7 @@ fig00b
 ff_box <- fig00a + fig00b +
   plot_layout(ncol = 2)  +  plot_annotation(tag_levels = 'A') 
 ff_box
-ggsave("~/GFDY/manuscript/figures_extra/ff_box_color.png", width = 8, height = 4, dpi=300)
+ggsave("~/GFDY/manuscript/figures/fig_0_box.png", width = 8, height = 4, dpi=300)
 
 # Other figures ####
 # Biomass for DBH param 1

@@ -20,7 +20,7 @@ str(EFM_species_metadata)
 # All the plots in this dataset are unmanaged.
 EFM_stand <- readRDS("~/GFDY/data/raw_obs/efm/EFM_stand_data.RDS") # 18 plots
 str(EFM_stand)
-length(unique(EFM_stand$FNUM))
+
 # Join Stand level data with plot metadata
 EFM_stand <- EFM_stand %>% inner_join(EFM_plots_metadata[,c(4,7,8,19)])
 # Create new variables for linear mixed models at the stand level
@@ -31,7 +31,8 @@ EFM_stand <- EFM_stand %>% mutate(QMD=sqrt(BasalAreaAHC1_2_m2perha/(0.0000785*Tr
   mutate(BiomassKgperha=(AbovegroundAHC1_2_Mgperha+RootmassAHC1_2_Mgperha)*1000) %>%
   mutate(BiomassIncrement_KgperhaperPeriod=(AbovegroundIncrement_MgperhaperPeriod+RootmassIncrement_MgperhaperPeriod)*1000) %>%
   mutate(BiomassIncrement_KgperhaperYear=BiomassIncrement_KgperhaperPeriod/PeriodLength_years) %>%
-  mutate(logTreesPerHectareAHC1_2=log(TreesPerHectareAHC1_2))
+  mutate(logTreesPerHectareAHC1_2=log(TreesPerHectareAHC1_2)) %>% group_by(FNUM,BA) %>%
+  mutate(interval=AJ-lag(AJ)) %>% ungroup()
 # Select Stand level data for all species: "All species combined"
 EFM_stand_Allsps <- EFM_stand %>% filter(Latin =="All species combined")
 
@@ -39,6 +40,9 @@ EFM_stand_Allsps <- EFM_stand %>% filter(Latin =="All species combined")
 EFM_stand_Bysps <- EFM_stand %>% filter(Latin !="All species combined")
 length(unique(EFM_stand_Bysps$FNUM))
 dominant_speciesEFM <- EFM_stand_Bysps %>% group_by(FNUM, AJ) %>% top_n(1, BasalAreaAHC1_2_m2perha) %>% rename(Species=Latin)
+
+# Add dominant species per plot to EFM_stand_Allsps
+EFM_stand_Allsps <- EFM_stand_Allsps %>% left_join(dominant_speciesEFM[,c(1,3,4)])
 
 percent_speciesEFM <-  EFM_stand_Bysps %>% group_by(FNUM, AJ) %>% mutate(totalBA=sum(BasalAreaAHC1_2_m2perha,na.rm = T)) %>% ungroup() %>%
   group_by(FNUM, AJ, Latin) %>% mutate(percent=BasalAreaAHC1_2_m2perha/totalBA*100) %>% ungroup() %>%
@@ -52,7 +56,6 @@ percent_speciesEFM <-  EFM_stand_Bysps %>% group_by(FNUM, AJ) %>% mutate(totalBA
 # Si: The total number of specimens counted at site i
 # Sj: The total number of specimens counted at site j
 # The Bray-Curtis Dissimilarity always ranges between 0 (zero dissimilarity) and 1 (complete dissimilarity)
-
 change_speciesEFM <-  EFM_stand_Bysps %>% group_by(FNUM) %>% filter(AJ == min(AJ)| AJ == max(AJ)) %>% ungroup() %>% 
   group_by(FNUM,AJ) %>% mutate(total=sum(TreesPerHectareAHC1_2,na.rm=T)) %>% ungroup() %>%
   group_by(FNUM) %>% mutate(totalYears=sum(TreesPerHectareAHC1_2,na.rm=T)) %>% ungroup() %>%
@@ -69,9 +72,6 @@ load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
 change_speciesEFM <- change_speciesEFM %>% filter(FNUM %in% aggData_QMDbinsDen$PlotID) 
 mean(change_speciesEFM$BC,na.rm=T)
 sd(change_speciesEFM$BC,na.rm=T)
-
-# Add dominant species per plot to EFM_stand_Allsps
-EFM_stand_Allsps <- EFM_stand_Allsps %>% left_join(dominant_speciesEFM[,c(1,3,4)])
 
 ## Tree-level data from EFM ####
 EFM_tree <- readRDS("~/GFDY/data/raw_obs/efm/EFM_tree_data.RDS") # 18 plots
@@ -288,6 +288,18 @@ aggData <- aggData %>% mutate(BiomassIncrement_Kg_m2_year=BiomassIncrement_Kg_ha
 length(unique(aggData$PlotID))
 # save
 save(aggData, file = "~/GFDY/data/inputs_obs/aggData.RData")
+
+# Table S1 ####
+summary(aggData)
+# EFM
+summary(EFM_stand_Allsps)
+EFM_stand_Allsps %>% summarise(mean=mean())
+# NFI
+summary(NFI_plot_census)
+NFI_plot_census %>% summarise(mean=mean())
+# NFR
+summary(NFR_stand_Allsps)
+NFR_stand_Allsps %>% summarise(mean=mean())
 
 
 # Tree-level analysis logN ~ logB and Year ####

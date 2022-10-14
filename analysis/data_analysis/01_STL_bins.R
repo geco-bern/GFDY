@@ -90,15 +90,7 @@ aggData_QMDbinsDen <- aggData_QMDbinsDen %>%
 save(aggData_QMDbinsDen, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
 save(aggData_QMDbinsRest, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsRest75.RData")
 
-# Data properties # Table S1
-summary(aggData)
-# EFM
-summary(aggEFM)
-aggEFM %>% summarise(mean=mean())
-summary(aggNFI)
-summary(aggNFR)
-
-
+# Table S1
 load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
 length(unique(aggData_QMDbinsDen$PlotID))
 summary(aggData_QMDbinsDen)

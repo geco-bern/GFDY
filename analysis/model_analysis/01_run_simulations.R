@@ -103,7 +103,7 @@ params_species <- tibble(
   LMA           = c(0.05,0.17,0.11,rep(0.1,13)),  # Leaf mass per unit area. For sps: Beech-Spruce-Fir # In Ensheng rep(0.035,16)
   rho_wood      = c(590,370,350,rep(300,13)),     # In Ensheng rep(300,16),   # c(590,370,350,rep(300,13)),
   alphaBM       = rep(0.19,16),                   # c(0.19,0.15,0.09,rep(0.15,13)), # In Ensheng BiomeE: rep(5200,16) 
-  thetaBM       = c(2.36,2.30,2.54,rep(2.30,13)), # In Ensheng BiomeE: 2.5 rep(2.5,16),
+  thetaBM       = rep(2.36,16),                   # In Ensheng BiomeE: 2.5 rep(2.5,16),
   # add calibratable params
   kphio         = rep(0.05,16),
   phiRL         = rep(3.5,16),
