@@ -58,6 +58,50 @@ ea3sa1GRp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp2g
 ea3sa1GRp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp3gl_out_annual_tile.csv")
 ea3sa1GRp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp3gl_out_annual_cohorts.csv")
 
+# DBH Mortality gs-leuning 
+ea1sa1DBHp1gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_thetaBM0_out_annual_tile.csv")
+ea1sa1DBHp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_thetaBM0_out_annual_cohorts.csv")
+ea1sa1DBHp2gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_thetaBM0_out_annual_tile.csv")
+ea1sa1DBHp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_thetaBM0_out_annual_cohorts.csv")
+ea1sa1DBHp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_thetaBM0_out_annual_tile.csv")
+ea1sa1DBHp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_thetaBM0_out_annual_cohorts.csv")
+
+ea2sa1DBHp1gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_thetaBM0_out_annual_tile.csv")
+ea2sa1DBHp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_thetaBM0_out_annual_cohorts.csv")
+ea2sa1DBHp2gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_thetaBM0_out_annual_tile.csv")
+ea2sa1DBHp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_thetaBM0_out_annual_cohorts.csv")
+ea2sa1DBHp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_thetaBM0_out_annual_tile.csv")
+ea2sa1DBHp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_thetaBM0_out_annual_cohorts.csv")
+
+ea3sa1DBHp1gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_thetaBM0_out_annual_tile.csv")
+ea3sa1DBHp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_thetaBM0_out_annual_cohorts.csv")
+ea3sa1DBHp2gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_thetaBM0_out_annual_tile.csv")
+ea3sa1DBHp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_thetaBM0_out_annual_cohorts.csv")
+ea3sa1DBHp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_thetaBM0_out_annual_tile.csv")
+ea3sa1DBHp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_thetaBM0_out_annual_cohorts.csv")
+
+# GR Mortality gs-leuning 
+ea1sa1GRp1gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1GRp1gl_thetaBM0_out_annual_tile.csv")
+ea1sa1GRp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1GRp1gl_thetaBM0_out_annual_cohorts.csv")
+ea1sa1GRp2gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1GRp2gl_thetaBM0_out_annual_tile.csv")
+ea1sa1GRp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1GRp2gl_thetaBM0_out_annual_cohorts.csv")
+ea1sa1GRp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1GRp3gl_thetaBM0_out_annual_tile.csv")
+ea1sa1GRp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1GRp3gl_thetaBM0_out_annual_cohorts.csv")
+
+ea2sa1GRp1gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1GRp1gl_thetaBM0_out_annual_tile.csv")
+ea2sa1GRp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1GRp1gl_thetaBM0_out_annual_cohorts.csv")
+ea2sa1GRp2gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1GRp2gl_thetaBM0_out_annual_tile.csv")
+ea2sa1GRp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1GRp2gl_thetaBM0_out_annual_cohorts.csv")
+ea2sa1GRp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1GRp3gl_thetaBM0_out_annual_tile.csv")
+ea2sa1GRp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1GRp3gl_thetaBM0_out_annual_cohorts.csv")
+
+ea3sa1GRp1gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp1gl_thetaBM0_out_annual_tile.csv")
+ea3sa1GRp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp1gl_thetaBM0_out_annual_cohorts.csv")
+ea3sa1GRp2gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp2gl_thetaBM0_out_annual_tile.csv")
+ea3sa1GRp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp2gl_thetaBM0_out_annual_cohorts.csv")
+ea3sa1GRp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp3gl_thetaBM0_out_annual_tile.csv")
+ea3sa1GRp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp3gl_thetaBM0_out_annual_cohorts.csv")
+
 # Exploring relationships and plotting
 
 # Mortality formulations ####
@@ -112,8 +156,8 @@ fig3a_gr <- ggplot(data.frame(x = c(0, 20)), aes(x)) +
                      legend.key.size = unit(0.5, 'cm'),
                      #legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits=c(0,20), breaks=seq(0,20,5)) +
-  scale_y_continuous(limits=c(0,0.13),breaks=seq(0,0.15,0.05))
+  scale_x_continuous(limits=c(0,20), breaks=seq(0,20,10)) +
+  scale_y_continuous(limits=c(0,0.15),breaks=seq(0,0.15,0.05))
 fig3a_gr
 
 # Stand develop: Stand biomass vs. time ####
@@ -129,7 +173,7 @@ fig2b_dbh <- ggplot() +
   scale_linetype_manual("Level of LUE", breaks = c("+15%", "+30%"), 
                         values = c("dashed","solid"),
                         guide = guide_legend(override.aes = list(color = "black"))) +
-  labs(x = "t", y = "B",title=expression(paste("Biomass (Kg C ", m^-2, ") "))) + 
+  labs(x = "t", y = "B",title=expression(paste("Biomass (kg C ", m^-2, ") "))) + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -142,8 +186,8 @@ fig2b_dbh <- ggplot() +
                      legend.key.size = unit(0.5, 'cm'),
                      #legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits=c(0,1520),breaks=seq(0,1500,500)) +
-  scale_y_continuous(limits=c(0,65),breaks=seq(0,60,15))
+  scale_x_continuous(limits=c(0,1520),breaks=seq(0,1500,750)) +
+  scale_y_continuous(limits=c(0,65),breaks=seq(0,60,30))
 fig2b_dbh
 
 # Changes in biomass
@@ -179,7 +223,7 @@ fig3b_gr <- ggplot() +
   scale_linetype_manual("Level of LUE", breaks = c("+15%", "+30%"), 
                         values = c("dashed","solid"),
                         guide = guide_legend(override.aes = list(color = "black"))) +
-  labs(x = "t", y = "B",title=expression(paste("Biomass (Kg C ", m^-2, ") "))) + 
+  labs(x = "t", y = "B",title=expression(paste("Biomass (kg C ", m^-2, ") "))) + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -192,16 +236,16 @@ fig3b_gr <- ggplot() +
                      legend.key.size = unit(0.5, 'cm'),
                      #legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits=c(0,1520),breaks=seq(0,1500,500)) +
-  scale_y_continuous(limits=c(0,65),breaks=seq(0,60,15))
+  scale_x_continuous(limits=c(0,1520),breaks=seq(0,1500,750)) +
+  scale_y_continuous(limits=c(0,65),breaks=seq(0,60,30))
 fig3b_gr
 
 # Changes in biomass
-B_GR_ea1p2 <- ea1sa1GRp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
-B_GR_ea2p2 <- ea2sa1GRp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
-B_GR_ea3p2 <- ea3sa1GRp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
-B_GR_ea2p2/B_GR_ea1p2
-B_GR_ea3p2/B_GR_ea1p2
+B_GR_ea1p1 <- ea1sa1GRp1gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
+B_GR_ea2p1 <- ea2sa1GRp1gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
+B_GR_ea3p1 <- ea3sa1GRp1gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
+B_GR_ea2p1/B_GR_ea1p2
+B_GR_ea3p1/B_GR_ea1p2
 
 B_GR_ea1p2 <- ea1sa1GRp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
 B_GR_ea2p2 <- ea2sa1GRp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(plantC))
@@ -229,7 +273,7 @@ fig2c_dbh <- ggplot() +
                      values = c("#009E73", "#0072B2", "#D55E00")) +
   scale_linetype_manual("Level of LUE", breaks = c("+15%", "+30%"), 
                         values = c("dashed","solid")) +
-  labs(x = "t", y = "G",title=expression(paste("Growth (Kg C ", m^-2, " ", yr^-1, ") "))) + 
+  labs(x = "t", y = "G",title=expression(paste("Growth (kg C ", m^-2, " ", yr^-1, ") "))) + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -241,8 +285,8 @@ fig2c_dbh <- ggplot() +
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits=c(0,1520),breaks=seq(0,1500,500)) +
-  scale_y_continuous(limits=c(0,2.7),breaks=seq(0,2.5,0.5))
+  scale_x_continuous(limits=c(0,1515),breaks=seq(0,1500,750)) +
+  scale_y_continuous(limits=c(0,2.4),breaks=seq(0,2.5,1))
 fig2c_dbh
 
 # Changes in growth
@@ -252,17 +296,35 @@ G_DBH_ea3p1 <- ea3sa1DBHp1gl_out_annual_tile %>% filter(year>=900) %>% summarise
 G_DBH_ea2p1/G_DBH_ea1p1
 G_DBH_ea3p1/G_DBH_ea1p1
 
+R_DBH_ea1p1 <- ea1sa1DBHp1gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(Rauto/GPP))
+R_DBH_ea2p1 <- ea2sa1DBHp1gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(Rauto/GPP))
+R_DBH_ea3p1 <- ea3sa1DBHp1gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(Rauto/GPP))
+R_DBH_ea2p1/R_DBH_ea1p1
+R_DBH_ea3p1/R_DBH_ea1p1
+
 G_DBH_ea1p2 <- ea1sa1DBHp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
 G_DBH_ea2p2 <- ea2sa1DBHp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
 G_DBH_ea3p2 <- ea3sa1DBHp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
 G_DBH_ea2p2/G_DBH_ea1p2
 G_DBH_ea3p2/G_DBH_ea1p2
 
+R_DBH_ea1p2 <- ea1sa1DBHp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(Rauto/GPP))
+R_DBH_ea2p2 <- ea2sa1DBHp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(Rauto/GPP))
+R_DBH_ea3p2 <- ea3sa1DBHp2gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(Rauto/GPP))
+R_DBH_ea2p2/R_DBH_ea1p2
+R_DBH_ea3p2/R_DBH_ea1p2
+
 G_DBH_ea1p3 <- ea1sa1DBHp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
 G_DBH_ea2p3 <- ea2sa1DBHp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
 G_DBH_ea3p3 <- ea3sa1DBHp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(NPP))
 G_DBH_ea2p3/G_DBH_ea1p3
 G_DBH_ea3p3/G_DBH_ea1p3
+
+R_DBH_ea1p3 <- ea1sa1DBHp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(Rauto/GPP))
+R_DBH_ea2p3 <- ea2sa1DBHp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(Rauto/GPP))
+R_DBH_ea3p3 <- ea3sa1DBHp3gl_out_annual_tile %>% filter(year>=900) %>% summarise(meanB=mean(Rauto/GPP))
+R_DBH_ea2p3/R_DBH_ea1p3
+R_DBH_ea3p3/R_DBH_ea1p3
 
 # GR
 fig3c_gr <- ggplot() + 
@@ -276,7 +338,7 @@ fig3c_gr <- ggplot() +
                      values = c("#009E73", "#0072B2", "#D55E00")) +
   scale_linetype_manual("Level of LUE", breaks = c("+15%", "+30%"), 
                         values = c("dashed","solid")) +
-  labs(x = "t", y = "G",title=expression(paste("Growth (Kg C ", m^-2, " ", yr^-1, ") "))) + 
+  labs(x = "t", y = "G",title=expression(paste("Growth (kg C ", m^-2, " ", yr^-1, ") "))) + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -288,8 +350,8 @@ fig3c_gr <- ggplot() +
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits=c(0,1520),breaks=seq(0,1500,500)) +
-  scale_y_continuous(limits=c(0,2.7),breaks=seq(0,2.5,0.5))
+  scale_x_continuous(limits=c(0,1515),breaks=seq(0,1500,750)) +
+  scale_y_continuous(limits=c(0,2.4),breaks=seq(0,2.5,1))
 fig3c_gr
 
 # Changes in growth
@@ -312,7 +374,6 @@ G_GR_ea2p3/G_GR_ea1p3
 G_GR_ea3p3/G_GR_ea1p3
 
 # Mortality (Both mortality and biomass turnover) ####
-
 # DBH
 fig2d_dbh <- ggplot() + 
   geom_line(data=ea2sa1DBHp1gl_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, color='x1', linetype='+15%'),alpha=.7) + 
@@ -325,7 +386,7 @@ fig2d_dbh <- ggplot() +
                      values = c("#009E73", "#0072B2", "#D55E00")) +
   scale_linetype_manual("Level of LUE", breaks = c("+15%", "+30%"), 
                         values = c("dashed","solid")) +
-  labs(x = "t", y = "M",title=expression(paste("Mortality (Kg C ", m^-2, " ", yr^-1, ") "))) + 
+  labs(x = "t", y = "M",title=expression(paste("Mortality (kg C ", m^-2, " ", yr^-1, ") "))) + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -337,8 +398,8 @@ fig2d_dbh <- ggplot() +
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits=c(0,1502),breaks=seq(0,1500,500)) +
-  scale_y_continuous(limits=c(0,2.7),breaks=seq(0,2.5,0.5))
+  scale_x_continuous(limits=c(0,1515),breaks=seq(0,1500,750)) +
+  scale_y_continuous(limits=c(0,2.4),breaks=seq(0,2.5,1))
 fig2d_dbh
 
 # GR
@@ -353,7 +414,7 @@ fig3d_gr <- ggplot() +
                      values = c("#009E73", "#0072B2", "#D55E00")) +
   scale_linetype_manual("Level of LUE", breaks = c("+15%", "+30%"), 
                         values = c("dashed","solid")) +
-  labs(x = "t", y = "M",title=expression(paste("Mortality (Kg C ", m^-2, " ", yr^-1, ") "))) + 
+  labs(x = "t", y = "M",title=expression(paste("Mortality (kg C ", m^-2, " ", yr^-1, ") "))) + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -365,8 +426,8 @@ fig3d_gr <- ggplot() +
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits=c(0,1501),breaks=seq(0,1500,500)) +
-  scale_y_continuous(limits=c(0,2.7),breaks=seq(0,2.5,0.5))
+  scale_x_continuous(limits=c(0,1515),breaks=seq(0,1500,750)) +
+  scale_y_continuous(limits=c(0,2.4),breaks=seq(0,2.5,1))
 fig3d_gr
 
 # Relative change biomass (plantC) vs. NPP ####
@@ -455,8 +516,8 @@ fig2e_dbh <- ggplot() +
                      legend.key.size = unit(.5, 'cm'),
                      #legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) + 
-  scale_x_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.1)) + 
-  scale_y_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.1)) +
+  scale_x_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) + 
+  scale_y_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) +
   geom_abline(slope=1, intercept = 0.0, linetype="dashed") 
 fig2e_dbh
 
@@ -545,8 +606,8 @@ fig3e_gr <- ggplot() +
                      legend.key.size = unit(.5, 'cm'),
                      #legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) + 
-  scale_x_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.1)) + 
-  scale_y_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.1))
+  scale_x_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) + 
+  scale_y_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25))
 fig3e_gr
 
 # Relative change mortality vs. NPP ####
@@ -636,8 +697,8 @@ fig2f_dbh <- ggplot() +
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +  
-  scale_x_continuous(limits = c(0,0.5)) + 
-  scale_y_continuous(limits = c(0,0.5))
+  scale_x_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) + 
+  scale_y_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25))
 fig2f_dbh
 
 # GR
@@ -725,8 +786,8 @@ fig3f_gr <- ggplot() +
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +  
-  scale_x_continuous(limits = c(0,0.5)) + 
-  scale_y_continuous(limits = c(0,0.5)) 
+  scale_x_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) +
+  scale_y_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25))
 fig3f_gr
 
 # Relative change k vs. NPP ####
@@ -803,7 +864,7 @@ fig2g_dbh <- ggplot() +
                      values = c("#009E73", "#0072B2", "#D55E00")) +
   scale_shape_manual("Level of LUE", breaks = c("0-15%","0-30%"), 
                      values = c(16,17)) +  
-  labs(x = expression(frac(dG, G)), y = expression(frac(dk, k)), title = "Changes in C decay rate") + 
+  labs(x = expression(frac(dG, G)), y = expression(frac(dk, k)), title = "Changes in C turnover rate") + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -815,8 +876,8 @@ fig2g_dbh <- ggplot() +
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) + 
-  scale_x_continuous(limits = c(0,0.50), breaks = seq(0,0.5,0.10)) + 
-  scale_y_continuous(limits = c(0,0.16), breaks = seq(0,0.15,0.05)) + 
+  scale_x_continuous(limits = c(0,0.50), breaks = seq(0,0.5,0.25)) + 
+  scale_y_continuous(limits = c(0,0.20), breaks = seq(0,0.2,0.1)) + 
   geom_hline(yintercept =  0.0, linetype="dashed")
 fig2g_dbh
 
@@ -893,7 +954,7 @@ fig3g_gr <- ggplot() +
                      values = c("#009E73", "#0072B2", "#D55E00")) +
   scale_shape_manual("Level of LUE", breaks = c("0-15%","0-30%"), 
                      values = c(16,17)) +  
-  labs(x = expression(frac(dG, G)), y = expression(frac(dk, k)),title = "Changes in C decay rate") + 
+  labs(x = expression(frac(dG, G)), y = expression(frac(dk, k)),title = "Changes in C turnover rate") + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -905,8 +966,8 @@ fig3g_gr <- ggplot() +
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) + 
-  scale_x_continuous(limits = c(0,0.50), breaks = seq(0,0.5,0.10)) + 
-  scale_y_continuous(limits = c(0,0.16), breaks = seq(0,0.15,0.05))  
+  scale_x_continuous(limits = c(0,0.50), breaks = seq(0,0.5,0.25)) + 
+  scale_y_continuous(limits = c(0,0.20), breaks = seq(0,0.2,0.1)) 
 fig3g_gr
 
 # Carbon Residence time vs. time ####
@@ -932,7 +993,7 @@ fig2gg_dbh <- ggplot() +
                         values = c("dotted","longdash","solid"),
                         guide = guide_legend(override.aes = list(color = "black", size=.5))) +
   labs(x = "Year", y = expression(paste(tau)), 
-       title = "Carbon residence time (yrs) with size-dependent mortality") + 
+       title = "Carbon residence time for size-dependent mortality") + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -970,7 +1031,7 @@ fig3gg_gr <- ggplot() +
                         values = c("dotted","longdash","solid"),
                         guide = guide_legend(override.aes = list(color = "black", size=.5))) +
   labs(x = "Year", y = expression(paste(tau)), 
-       title = "Carbon residence time (yrs) with size-dependent mortality") + 
+       title = "Carbon residence time for growth rate-dependent mortality") + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -987,6 +1048,84 @@ fig3gg_gr <- ggplot() +
   scale_x_continuous(limits = c(450,1500), breaks = seq(500,1500,500)) + 
   scale_y_continuous(limits = c(10,35), breaks = seq(10,35,10))
 fig3gg_gr
+
+# Longevity vs. time ####
+
+# DBH
+fig2hh_dbh <- ggplot() +  
+  geom_line(data=ea1sa1DBHp1gl_out_annual_tile, aes(x=year, y=MaxAge, color='r1', linetype='Control'),alpha=.7) + 
+  geom_line(data=ea1sa1DBHp2gl_out_annual_tile, aes(x=year, y=MaxAge, color='r2', linetype='Control'),alpha=.7) +
+  geom_line(data=ea1sa1DBHp3gl_out_annual_tile, aes(x=year, y=MaxAge, color='r3', linetype='Control'),alpha=.7) +
+  geom_line(data=ea2sa1DBHp1gl_out_annual_tile, aes(x=year, y=MaxAge, color='r1', linetype='+15%'),alpha=.7) + 
+  geom_line(data=ea2sa1DBHp2gl_out_annual_tile, aes(x=year, y=MaxAge, color='r2', linetype='+15%'),alpha=.7) +
+  geom_line(data=ea2sa1DBHp3gl_out_annual_tile, aes(x=year, y=MaxAge, color='r3', linetype='+15%'),alpha=.7) +
+  geom_line(data=ea3sa1DBHp1gl_out_annual_tile, aes(x=year, y=MaxAge, color='r1', linetype='+30%'),alpha=.7) + 
+  geom_line(data=ea3sa1DBHp2gl_out_annual_tile, aes(x=year, y=MaxAge, color='r2', linetype='+30%'),alpha=.7) +
+  geom_line(data=ea3sa1DBHp3gl_out_annual_tile, aes(x=year, y=MaxAge, color='r3', linetype='+30%'),alpha=.7) +
+  scale_color_manual("Parameter", breaks = c("r1", "r2", "r3"), 
+                     values = c("#009E73", "#0072B2", "#D55E00"),
+                     guide = guide_legend(override.aes = list(size=.5),order = 1),
+                     labels =c(expression(paste(italic("r")[italic("1")])),expression(paste(italic("r")[italic("2")])),
+                               expression(paste(italic("r")[italic("3")])))) +
+  scale_linetype_manual("Level of LUE", breaks = c("Control","+15%", "+30%"), 
+                        values = c("dotted","longdash","solid"),
+                        guide = guide_legend(override.aes = list(color = "black", size=.5))) +
+  labs(x = "Year", y = expression(paste(tau)), 
+       title = "Longevity for size-dependent mortality") + 
+  theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                     axis.text = element_text(size = 10),axis.title = element_text(size = 10),
+                     axis.title.y=element_text(angle=0, vjust = 0.5),
+                     legend.text = element_text(size = 9),legend.title = element_text(size = 9),
+                     plot.title = element_text(size = 10),
+                     legend.key = element_rect(fill = NA, color = NA),
+                     legend.position = c(.43, .1),
+                     legend.direction="horizontal",
+                     legend.margin = margin(.2, .2, .2, .2),
+                     legend.key.size = unit(0.7, 'cm'),
+                     legend.spacing = unit(.1,"cm"),
+                     #legend.box.background = element_rect(color="black",size=0.2),
+                     legend.box.margin = margin(1, 1, 1, 1)) +
+  scale_x_continuous(limits = c(0,1200), breaks = seq(500,1500,500)) #+ 
+  #scale_y_continuous(limits = c(10,35), breaks = seq(10,35,10))
+fig2hh_dbh
+
+# GR
+fig2hh_gr <- ggplot() +  
+  geom_line(data=ea1sa1GRp1gl_out_annual_tile, aes(x=year, y=MaxAge, color='r1', linetype='Control'),alpha=.7) + 
+  geom_line(data=ea1sa1GRp2gl_out_annual_tile, aes(x=year, y=MaxAge, color='r2', linetype='Control'),alpha=.7) +
+  geom_line(data=ea1sa1GRp3gl_out_annual_tile, aes(x=year, y=MaxAge, color='r3', linetype='Control'),alpha=.7) +
+  geom_line(data=ea2sa1GRp1gl_out_annual_tile, aes(x=year, y=MaxAge, color='r1', linetype='+15%'),alpha=.7) + 
+  geom_line(data=ea2sa1GRp2gl_out_annual_tile, aes(x=year, y=MaxAge, color='r2', linetype='+15%'),alpha=.7) +
+  geom_line(data=ea2sa1GRp3gl_out_annual_tile, aes(x=year, y=MaxAge, color='r3', linetype='+15%'),alpha=.7) +
+  geom_line(data=ea3sa1GRp1gl_out_annual_tile, aes(x=year, y=MaxAge, color='r1', linetype='+30%'),alpha=.7) + 
+  geom_line(data=ea3sa1GRp2gl_out_annual_tile, aes(x=year, y=MaxAge, color='r2', linetype='+30%'),alpha=.7) +
+  geom_line(data=ea3sa1GRp3gl_out_annual_tile, aes(x=year, y=MaxAge, color='r3', linetype='+30%'),alpha=.7) +
+  scale_color_manual("Parameter", breaks = c("r1", "r2", "r3"), 
+                     values = c("#009E73", "#0072B2", "#D55E00"),
+                     guide = guide_legend(override.aes = list(size=.5),order = 1),
+                     labels =c(expression(paste(italic("r")[italic("1")])),expression(paste(italic("r")[italic("2")])),
+                               expression(paste(italic("r")[italic("3")])))) +
+  scale_linetype_manual("Level of LUE", breaks = c("Control","+15%", "+30%"), 
+                        values = c("dotted","longdash","solid"),
+                        guide = guide_legend(override.aes = list(color = "black", size=.5))) +
+  labs(x = "Year", y = expression(paste(tau)), 
+       title = "Longevity for size-dependent mortality") + 
+  theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                     axis.text = element_text(size = 10),axis.title = element_text(size = 10),
+                     axis.title.y=element_text(angle=0, vjust = 0.5),
+                     legend.text = element_text(size = 9),legend.title = element_text(size = 9),
+                     plot.title = element_text(size = 10),
+                     legend.key = element_rect(fill = NA, color = NA),
+                     legend.position = c(.43, .1),
+                     legend.direction="horizontal",
+                     legend.margin = margin(.2, .2, .2, .2),
+                     legend.key.size = unit(0.7, 'cm'),
+                     legend.spacing = unit(.1,"cm"),
+                     #legend.box.background = element_rect(color="black",size=0.2),
+                     legend.box.margin = margin(1, 1, 1, 1)) +
+  scale_x_continuous(limits = c(0,1200), breaks = seq(500,1500,500)) #+ 
+#scale_y_continuous(limits = c(10,35), breaks = seq(10,35,10))
+fig2hh_gr
 
 # Relative longevity vs. growth rates ####
 # longevity is maximum age at tile-level, plot mean across multiple years after spinup
@@ -1074,8 +1213,8 @@ fig2h_dbh <- ggplot() +
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(0,0.50), breaks = seq(0,0.5,0.10)) + 
-  scale_y_continuous(limits = c(-0.25,0), breaks = seq(-0.25,0,0.05)) +
+  scale_x_continuous(limits = c(0,0.50), breaks = seq(0,0.5,0.25)) + 
+  scale_y_continuous(limits = c(-0.25,0), breaks = seq(-0.2,0,0.1)) +
   geom_hline(yintercept =  0.0, linetype="dashed")
 fig2h_dbh
 
@@ -1163,9 +1302,427 @@ fig3h_gr <- ggplot() +
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) + 
-  scale_x_continuous(limits = c(0,0.50), breaks = seq(0,0.5,0.10)) + 
-  scale_y_continuous(limits = c(-0.25,0), breaks = seq(-0.25,0,0.05)) 
+  scale_x_continuous(limits = c(0,0.50), breaks = seq(0,0.5,0.25)) + 
+  scale_y_continuous(limits = c(-0.25,0), breaks = seq(-0.2,0,0.1)) 
 fig3h_gr
+
+# Cohort longevity vs. growth (dbh) ####
+
+# DBH
+#ea1sa1DBHp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_thetaBM0_out_annual_cohorts.csv")
+
+# DBH p1
+ea1sa1DBHp1gl_out_annual_cohorts_agg <- ea1sa1DBHp1gl_out_annual_cohorts %>% filter(year>700) %>% 
+  group_by(year) %>% top_n(n=2, wt = height) %>% 
+  mutate(meanAge=sum(age*density)/sum(density)) %>% relocate(meanAge,.after=age) %>%
+  mutate(meanNPPW=sum(NPPW*density)/sum(density)) %>% relocate(meanNPPW,.after=dbh) %>%
+  mutate(meanDBH = sum(dbh*density)/sum(density)) %>% relocate(meanDBH,.after=meanNPPW) %>%
+  ungroup() %>%
+  summarise(mean_Age=mean(meanAge),mean_G=mean(meanDBH/meanAge)*10,meanNPP=mean(meanNPPW)) 
+
+ea2sa1DBHp1gl_out_annual_cohorts_agg <- ea2sa1DBHp1gl_out_annual_cohorts %>% filter(year>700) %>% 
+  group_by(year) %>% top_n(n=2, wt = height) %>% 
+  mutate(meanAge=sum(age*density)/sum(density)) %>% relocate(meanAge,.after=age) %>%
+  mutate(meanNPPW=sum(NPPW*density)/sum(density)) %>% relocate(meanNPPW,.after=dbh) %>%
+  mutate(meanDBH = sum(dbh*density)/sum(density)) %>% relocate(meanDBH,.after=meanNPPW) %>%
+  ungroup() %>%
+  summarise(mean_Age=mean(meanAge),mean_G=mean(meanDBH/meanAge)*10,meanNPP=mean(meanNPPW)) 
+
+ea3sa1DBHp1gl_out_annual_cohorts_agg <- ea3sa1DBHp1gl_out_annual_cohorts %>% filter(year>700) %>% 
+  group_by(year) %>% top_n(n=2, wt = height) %>% 
+  mutate(meanAge=sum(age*density)/sum(density)) %>% relocate(meanAge,.after=age) %>%
+  mutate(meanNPPW=sum(NPPW*density)/sum(density)) %>% relocate(meanNPPW,.after=dbh) %>%
+  mutate(meanDBH = sum(dbh*density)/sum(density)) %>% relocate(meanDBH,.after=meanNPPW) %>%
+  ungroup() %>%
+  summarise(mean_Age=mean(meanAge),mean_G=mean(meanDBH/meanAge)*10,meanNPP=mean(meanNPPW)) 
+
+DBHp1gl_out_annual_cohorts_agg <- rbind(ea1sa1DBHp1gl_out_annual_cohorts_agg,ea2sa1DBHp1gl_out_annual_cohorts_agg,
+                                        ea3sa1DBHp1gl_out_annual_cohorts_agg)
+  
+# DBH p2
+ea1sa1DBHp2gl_out_annual_cohorts_agg <- ea1sa1DBHp2gl_out_annual_cohorts %>% filter(year>700) %>% 
+  group_by(year) %>% top_n(n=2, wt = height) %>% 
+  mutate(meanAge=sum(age*density)/sum(density)) %>% relocate(meanAge,.after=age) %>%
+  mutate(meanNPPW=sum(NPPW*density)/sum(density)) %>% relocate(meanNPPW,.after=dbh) %>%
+  mutate(meanDBH = sum(dbh*density)/sum(density)) %>% relocate(meanDBH,.after=meanNPPW) %>%
+  ungroup() %>%
+  summarise(mean_Age=mean(meanAge),mean_G=mean(meanDBH/meanAge)*10,meanNPP=mean(meanNPPW)) 
+
+ea2sa1DBHp2gl_out_annual_cohorts_agg <- ea2sa1DBHp2gl_out_annual_cohorts %>% filter(year>700) %>% 
+  group_by(year) %>% top_n(n=2, wt = height) %>% 
+  mutate(meanAge=sum(age*density)/sum(density)) %>% relocate(meanAge,.after=age) %>%
+  mutate(meanNPPW=sum(NPPW*density)/sum(density)) %>% relocate(meanNPPW,.after=dbh) %>%
+  mutate(meanDBH = sum(dbh*density)/sum(density)) %>% relocate(meanDBH,.after=meanNPPW) %>%
+  ungroup() %>%
+  summarise(mean_Age=mean(meanAge),mean_G=mean(meanDBH/meanAge)*10,meanNPP=mean(meanNPPW)) 
+
+ea3sa1DBHp2gl_out_annual_cohorts_agg <- ea3sa1DBHp2gl_out_annual_cohorts %>% filter(year>700) %>% 
+  group_by(year) %>% top_n(n=2, wt = height) %>% 
+  mutate(meanAge=sum(age*density)/sum(density)) %>% relocate(meanAge,.after=age) %>%
+  mutate(meanNPPW=sum(NPPW*density)/sum(density)) %>% relocate(meanNPPW,.after=dbh) %>%
+  mutate(meanDBH = sum(dbh*density)/sum(density)) %>% relocate(meanDBH,.after=meanNPPW) %>%
+  ungroup() %>%
+  summarise(mean_Age=mean(meanAge),mean_G=mean(meanDBH/meanAge)*10,meanNPP=mean(meanNPPW)) 
+
+DBHp2gl_out_annual_cohorts_agg <- rbind(ea1sa1DBHp2gl_out_annual_cohorts_agg,ea2sa1DBHp2gl_out_annual_cohorts_agg,
+                                        ea3sa1DBHp2gl_out_annual_cohorts_agg)
+
+# DBH p3
+ea1sa1DBHp3gl_out_annual_cohorts_agg <- ea1sa1DBHp3gl_out_annual_cohorts %>% filter(year>700) %>% 
+  group_by(year) %>% top_n(n=2, wt = height) %>% 
+  mutate(meanAge=sum(age*density)/sum(density)) %>% relocate(meanAge,.after=age) %>%
+  mutate(meanNPPW=sum(NPPW*density)/sum(density)) %>% relocate(meanNPPW,.after=dbh) %>%
+  mutate(meanDBH = sum(dbh*density)/sum(density)) %>% relocate(meanDBH,.after=meanNPPW) %>%
+  ungroup() %>%
+  summarise(mean_Age=mean(meanAge),mean_G=mean(meanDBH/meanAge)*10,meanNPP=mean(meanNPPW)) 
+
+ea2sa1DBHp3gl_out_annual_cohorts_agg <- ea2sa1DBHp3gl_out_annual_cohorts %>% filter(year>700) %>% 
+  group_by(year) %>% top_n(n=2, wt = height) %>% 
+  mutate(meanAge=sum(age*density)/sum(density)) %>% relocate(meanAge,.after=age) %>%
+  mutate(meanNPPW=sum(NPPW*density)/sum(density)) %>% relocate(meanNPPW,.after=dbh) %>%
+  mutate(meanDBH = sum(dbh*density)/sum(density)) %>% relocate(meanDBH,.after=meanNPPW) %>%
+  ungroup() %>%
+  summarise(mean_Age=mean(meanAge),mean_G=mean(meanDBH/meanAge)*10,meanNPP=mean(meanNPPW)) 
+
+ea3sa1DBHp3gl_out_annual_cohorts_agg <- ea3sa1DBHp3gl_out_annual_cohorts %>% filter(year>700) %>% 
+  group_by(year) %>% top_n(n=2, wt = height) %>% 
+  mutate(meanAge=sum(age*density)/sum(density)) %>% relocate(meanAge,.after=age) %>%
+  mutate(meanNPPW=sum(NPPW*density)/sum(density)) %>% relocate(meanNPPW,.after=dbh) %>%
+  mutate(meanDBH = sum(dbh*density)/sum(density)) %>% relocate(meanDBH,.after=meanNPPW) %>%
+  ungroup() %>%
+  summarise(mean_Age=mean(meanAge),mean_G=mean(meanDBH/meanAge)*10,meanNPP=mean(meanNPPW)) 
+
+DBHp3gl_out_annual_cohorts_agg <- rbind(ea1sa1DBHp3gl_out_annual_cohorts_agg,ea2sa1DBHp3gl_out_annual_cohorts_agg,
+                                        ea3sa1DBHp3gl_out_annual_cohorts_agg)
+
+figCoho_dbh1 <- ggplot() + 
+  geom_point(data=ea1sa1DBHp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, shape='Control'),color="#009E73",size=3) +
+  geom_point(data=ea2sa1DBHp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, shape='+15%'),color="#009E73",size=3) + 
+  geom_point(data=ea3sa1DBHp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, shape='+30%'),color="#009E73",size=3) + 
+  geom_smooth(data=DBHp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age),color="#009E73",
+              method = "lm",fullrange = T,size = .4, se=F,show.legend = F) + 
+  scale_shape_manual("Level of LUE", breaks = c("Control","+15%","+30%"), 
+                     values = c(18,16,17),
+                     guide = guide_legend(override.aes = list(color = "black", size=1.5))) + 
+  labs(x = expression(paste("Growth rate (mm ", yr^-1, ") ")), y = "Age of canopy trees (yrs)", 
+       title = expression(paste("Relation of growth rate and longevity for ", italic("r")[italic("S1")]))) + 
+  theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                     axis.text = element_text(size = 10),axis.title = element_text(size = 11),
+                     legend.text = element_text(size = 9),legend.title = element_text(size = 9),
+                     plot.title = element_text(size = 10),
+                     legend.key = element_rect(fill = NA, color = NA),
+                     legend.position = c(.75, .85),
+                     legend.direction="horizontal",
+                     legend.margin = margin(2, 2, 2, 2),
+                     legend.box.margin = margin(1, 1, 1, 1)) +
+  scale_x_continuous(limits = c(3,4.15), breaks = seq(3,4,0.5)) + 
+  scale_y_continuous(limits = c(220,280), breaks = seq(220,280,20))
+figCoho_dbh1
+
+cor.test(DBHp1gl_out_annual_cohorts_agg$mean_Age,DBHp1gl_out_annual_cohorts_agg$mean_G,method = "pearson")
+
+figCoho_dbh2 <- ggplot() + 
+  geom_point(data=ea1sa1DBHp2gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, shape='Control'),color="#0072B2",size=3) +
+  geom_point(data=ea2sa1DBHp2gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, shape='+15%'),color="#0072B2",size=3) + 
+  geom_point(data=ea3sa1DBHp2gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, shape='+30%'),color="#0072B2",size=3) +
+  geom_smooth(data=DBHp2gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age),color="#0072B2",
+              method = "lm",fullrange = T,size = .4, se=F,show.legend = F) +
+  scale_shape_manual("Level of LUE", breaks = c("Control","+15%","+30%"), 
+                     values = c(18,16,17),
+                     guide = guide_legend(override.aes = list(color = "black", size=1.5))) + 
+  labs(x = expression(paste("Growth rate (mm ", yr^-1, ") ")), y = "Age of canopy trees (yrs)", 
+       title = expression(paste("Relation of growth rate and longevity for ", italic("r")[italic("S2")]))) + 
+  theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                     axis.text = element_text(size = 10),axis.title = element_text(size = 11),
+                     legend.text = element_text(size = 9),legend.title = element_text(size = 9),
+                     plot.title = element_text(size = 10),
+                     legend.key = element_rect(fill = NA, color = NA),
+                     legend.position = "none",
+                     legend.direction="horizontal",
+                     legend.margin = margin(2, 2, 2, 2),
+                     legend.box.margin = margin(1, 1, 1, 1)) +
+  scale_x_continuous(limits = c(3,4.15), breaks = seq(3,4,0.5)) + 
+  scale_y_continuous(limits = c(220,280), breaks = seq(220,280,20))
+figCoho_dbh2
+
+cor.test(DBHp2gl_out_annual_cohorts_agg$mean_Age,DBHp2gl_out_annual_cohorts_agg$mean_G,method = "pearson")
+
+figCoho_dbh3 <- ggplot() + 
+  geom_point(data=ea1sa1DBHp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, shape='Control'),color="#D55E00",size=3) +
+  geom_point(data=ea2sa1DBHp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, shape='+15%'),color="#D55E00",size=3) + 
+  geom_point(data=ea3sa1DBHp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, shape='+30%'),color="#D55E00",size=3) + 
+  geom_smooth(data=DBHp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age),color="#D55E00",
+              method = "lm",fullrange = T,size = .4, se=F,show.legend = F) +
+  scale_shape_manual("Level of LUE", breaks = c("Control","+15%","+30%"), 
+                     values = c(18,16,17),
+                     guide = guide_legend(override.aes = list(color = "black", size=1.5))) + 
+  labs(x = expression(paste("Growth rate (mm ", yr^-1, ") ")), y = "Age of canopy trees (yrs)", 
+       title = expression(paste("Relation of growth rate and longevity for ", italic("r")[italic("S3")]))) + 
+  theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                     axis.text = element_text(size = 10),axis.title = element_text(size = 11),
+                     legend.text = element_text(size = 9),legend.title = element_text(size = 9),
+                     plot.title = element_text(size = 10),
+                     legend.key = element_rect(fill = NA, color = NA),
+                     legend.position = "none",
+                     legend.direction="horizontal",
+                     legend.margin = margin(2, 2, 2, 2),
+                     legend.box.margin = margin(1, 1, 1, 1)) +
+  scale_x_continuous(limits = c(3,4.15), breaks = seq(3,4,0.5)) + 
+  scale_y_continuous(limits = c(220,280), breaks = seq(220,280,20))
+figCoho_dbh3
+
+cor.test(DBHp3gl_out_annual_cohorts_agg$mean_Age,DBHp3gl_out_annual_cohorts_agg$mean_G,method = "pearson")
+
+fig2Coho_dbh <- ggplot() + 
+  geom_point(data=ea1sa1DBHp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r1', shape='Control'),size=3) + 
+  geom_point(data=ea2sa1DBHp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r1', shape='+15%'),size=3) + 
+  geom_point(data=ea3sa1DBHp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r1', shape='+30%'),size=3) + 
+  geom_smooth(data=DBHp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age),color="#009E73",
+              method = "lm",fullrange = T,size = .4, se=F,show.legend = F) +
+  geom_point(data=ea1sa1DBHp2gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r2', shape='Control'),size=3) + 
+  geom_point(data=ea2sa1DBHp2gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r2', shape='+15%'),size=3) + 
+  geom_point(data=ea3sa1DBHp2gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r2', shape='+30%'),size=3) + 
+  geom_smooth(data=DBHp2gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age),color="#0072B2",
+              method = "lm",fullrange = T,size = .4, se=F,show.legend = F) +
+  geom_point(data=ea1sa1DBHp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r3', shape='Control'),size=3) + 
+  geom_point(data=ea2sa1DBHp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r3', shape='+15%'),size=3) + 
+  geom_point(data=ea3sa1DBHp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r3', shape='+30%'),size=3) +
+  geom_smooth(data=DBHp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age),color="#D55E00",
+              method = "lm",fullrange = T,size = .4, se=F,show.legend = F) +
+  scale_color_manual("Parameter value", breaks = c("r1", "r2", "r3"), 
+                     values = c("#009E73", "#0072B2", "#D55E00"),
+                     guide = guide_legend(override.aes = list(size=1)),
+                     labels =c(expression(paste(italic("r")[italic("1")])),expression(paste(italic("r")[italic("2")])),
+                               expression(paste(italic("r")[italic("3")])))) +
+  scale_shape_manual("Level of LUE", breaks = c("Control","+15%","+30%"), 
+                     values = c(18,16,17),
+                     guide = guide_legend(override.aes = list(color = "black", size=1.4))) + 
+  labs(x = expression(paste("Growth rate (mm ", yr^-1, ") ")), y = "Age of canopy trees (yrs)", 
+       title = "For size-dependent mortality") + 
+  theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                     axis.text = element_text(size = 10),axis.title = element_text(size = 10),
+                     axis.title.y=element_text(angle=90, vjust = 0.5),
+                     legend.text = element_text(size = 9),legend.title = element_text(size = 9),
+                     plot.title = element_text(size = 10),
+                     #legend.key = element_rect(fill = NA, color = NA),
+                     legend.position = c(.45, .9),
+                     legend.direction="horizontal",
+                     legend.margin = margin(.2, .2, .2, .2),
+                     legend.key.size = unit(0.7, 'cm'),
+                     legend.spacing = unit(.1,"cm"),
+                     #legend.box.background = element_rect(color="black",size=0.2),
+                     legend.box.margin = margin(1, 1, 1, 1))  +
+  scale_x_continuous(limits = c(3,4.15), breaks = seq(3,4,0.5)) + 
+  scale_y_continuous(limits = c(220,280), breaks = seq(220,280,20))
+fig2Coho_dbh
+
+# GR
+#ea1sa1DBHp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_thetaBM0_out_annual_cohorts.csv")
+
+# GR p1
+ea1sa1GRp1gl_out_annual_cohorts_agg <- ea1sa1GRp1gl_out_annual_cohorts %>% filter(year>700) %>% 
+  group_by(year) %>% top_n(n=2, wt = height) %>% 
+  mutate(meanAge=sum(age*density)/sum(density)) %>% relocate(meanAge,.after=age) %>%
+  mutate(meanNPPW=sum(NPPW*density)/sum(density)) %>% relocate(meanNPPW,.after=dbh) %>%
+  mutate(meanDBH = sum(dbh*density)/sum(density)) %>% relocate(meanDBH,.after=meanNPPW) %>%
+  ungroup() %>%
+  summarise(mean_Age=mean(meanAge),mean_G=mean(meanDBH/meanAge)*10,meanNPP=mean(meanNPPW)) 
+
+ea2sa1GRp1gl_out_annual_cohorts_agg <- ea2sa1GRp1gl_out_annual_cohorts %>% filter(year>700) %>% 
+  group_by(year) %>% top_n(n=2, wt = height) %>% 
+  mutate(meanAge=sum(age*density)/sum(density)) %>% relocate(meanAge,.after=age) %>%
+  mutate(meanNPPW=sum(NPPW*density)/sum(density)) %>% relocate(meanNPPW,.after=dbh) %>%
+  mutate(meanDBH = sum(dbh*density)/sum(density)) %>% relocate(meanDBH,.after=meanNPPW) %>%
+  ungroup() %>%
+  summarise(mean_Age=mean(meanAge),mean_G=mean(meanDBH/meanAge)*10,meanNPP=mean(meanNPPW)) 
+
+ea3sa1GRp1gl_out_annual_cohorts_agg <- ea3sa1GRp1gl_out_annual_cohorts %>% filter(year>700) %>% 
+  group_by(year) %>% top_n(n=2, wt = height) %>% 
+  mutate(meanAge=sum(age*density)/sum(density)) %>% relocate(meanAge,.after=age) %>%
+  mutate(meanNPPW=sum(NPPW*density)/sum(density)) %>% relocate(meanNPPW,.after=dbh) %>%
+  mutate(meanDBH = sum(dbh*density)/sum(density)) %>% relocate(meanDBH,.after=meanNPPW) %>%
+  ungroup() %>%
+  summarise(mean_Age=mean(meanAge),mean_G=mean(meanDBH/meanAge)*10,meanNPP=mean(meanNPPW)) 
+
+GRp1gl_out_annual_cohorts_agg <- rbind(ea1sa1GRp1gl_out_annual_cohorts_agg,ea2sa1GRp1gl_out_annual_cohorts_agg,
+                                        ea3sa1GRp1gl_out_annual_cohorts_agg)
+
+# GR p2
+ea1sa1GRp2gl_out_annual_cohorts_agg <- ea1sa1GRp2gl_out_annual_cohorts %>% filter(year>700) %>% 
+  group_by(year) %>% top_n(n=2, wt = height) %>% 
+  mutate(meanAge=sum(age*density)/sum(density)) %>% relocate(meanAge,.after=age) %>%
+  mutate(meanNPPW=sum(NPPW*density)/sum(density)) %>% relocate(meanNPPW,.after=dbh) %>%
+  mutate(meanDBH = sum(dbh*density)/sum(density)) %>% relocate(meanDBH,.after=meanNPPW) %>%
+  ungroup() %>%
+  summarise(mean_Age=mean(meanAge),mean_G=mean(meanDBH/meanAge)*10,meanNPP=mean(meanNPPW)) 
+
+ea2sa1GRp2gl_out_annual_cohorts_agg <- ea2sa1GRp2gl_out_annual_cohorts %>% filter(year>700) %>% 
+  group_by(year) %>% top_n(n=2, wt = height) %>% 
+  mutate(meanAge=sum(age*density)/sum(density)) %>% relocate(meanAge,.after=age) %>%
+  mutate(meanNPPW=sum(NPPW*density)/sum(density)) %>% relocate(meanNPPW,.after=dbh) %>%
+  mutate(meanDBH = sum(dbh*density)/sum(density)) %>% relocate(meanDBH,.after=meanNPPW) %>%
+  ungroup() %>%
+  summarise(mean_Age=mean(meanAge),mean_G=mean(meanDBH/meanAge)*10,meanNPP=mean(meanNPPW)) 
+
+ea3sa1GRp2gl_out_annual_cohorts_agg <- ea3sa1GRp2gl_out_annual_cohorts %>% filter(year>700) %>% 
+  group_by(year) %>% top_n(n=2, wt = height) %>% 
+  mutate(meanAge=sum(age*density)/sum(density)) %>% relocate(meanAge,.after=age) %>%
+  mutate(meanNPPW=sum(NPPW*density)/sum(density)) %>% relocate(meanNPPW,.after=dbh) %>%
+  mutate(meanDBH = sum(dbh*density)/sum(density)) %>% relocate(meanDBH,.after=meanNPPW) %>%
+  ungroup() %>%
+  summarise(mean_Age=mean(meanAge),mean_G=mean(meanDBH/meanAge)*10,meanNPP=mean(meanNPPW)) 
+
+GRp2gl_out_annual_cohorts_agg <- rbind(ea1sa1GRp2gl_out_annual_cohorts_agg,ea2sa1GRp2gl_out_annual_cohorts_agg,
+                                       ea3sa1GRp2gl_out_annual_cohorts_agg)
+
+# DBH p3
+ea1sa1GRp3gl_out_annual_cohorts_agg <- ea1sa1GRp3gl_out_annual_cohorts %>% filter(year>700) %>% 
+  group_by(year) %>% top_n(n=2, wt = height) %>% 
+  mutate(meanAge=sum(age*density)/sum(density)) %>% relocate(meanAge,.after=age) %>%
+  mutate(meanNPPW=sum(NPPW*density)/sum(density)) %>% relocate(meanNPPW,.after=dbh) %>%
+  mutate(meanDBH = sum(dbh*density)/sum(density)) %>% relocate(meanDBH,.after=meanNPPW) %>%
+  ungroup() %>%
+  summarise(mean_Age=mean(meanAge),mean_G=mean(meanDBH/meanAge)*10,meanNPP=mean(meanNPPW)) 
+
+ea2sa1GRp3gl_out_annual_cohorts_agg <- ea2sa1GRp3gl_out_annual_cohorts %>% filter(year>700) %>% 
+  group_by(year) %>% top_n(n=2, wt = height) %>% 
+  mutate(meanAge=sum(age*density)/sum(density)) %>% relocate(meanAge,.after=age) %>%
+  mutate(meanNPPW=sum(NPPW*density)/sum(density)) %>% relocate(meanNPPW,.after=dbh) %>%
+  mutate(meanDBH = sum(dbh*density)/sum(density)) %>% relocate(meanDBH,.after=meanNPPW) %>%
+  ungroup() %>%
+  summarise(mean_Age=mean(meanAge),mean_G=mean(meanDBH/meanAge)*10,meanNPP=mean(meanNPPW)) 
+
+ea3sa1GRp3gl_out_annual_cohorts_agg <- ea3sa1GRp3gl_out_annual_cohorts %>% filter(year>700) %>% 
+  group_by(year) %>% top_n(n=2, wt = height) %>% 
+  mutate(meanAge=sum(age*density)/sum(density)) %>% relocate(meanAge,.after=age) %>%
+  mutate(meanNPPW=sum(NPPW*density)/sum(density)) %>% relocate(meanNPPW,.after=dbh) %>%
+  mutate(meanDBH = sum(dbh*density)/sum(density)) %>% relocate(meanDBH,.after=meanNPPW) %>%
+  ungroup() %>%
+  summarise(mean_Age=mean(meanAge),mean_G=mean(meanDBH/meanAge)*10,meanNPP=mean(meanNPPW)) 
+
+GRp3gl_out_annual_cohorts_agg <- rbind(ea1sa1GRp3gl_out_annual_cohorts_agg,ea2sa1GRp3gl_out_annual_cohorts_agg,
+                                       ea3sa1GRp3gl_out_annual_cohorts_agg)
+
+figCoho_gr1 <- ggplot() + 
+  geom_point(data=ea1sa1GRp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, shape='Control'),color="#009E73",size=3) +
+  geom_point(data=ea2sa1GRp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, shape='+15%'),color="#009E73",size=3) + 
+  geom_point(data=ea3sa1GRp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, shape='+30%'),color="#009E73",size=3) + 
+  geom_smooth(data=GRp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age),color="#009E73",
+              method = "lm",fullrange = T,size = .4, se=F,show.legend = F) +
+  scale_shape_manual("Level of LUE", breaks = c("Control","+15%","+30%"), 
+                     values = c(18,16,17),
+                     guide = guide_legend(override.aes = list(color = "black", size=1.5))) + 
+  labs(x = expression(paste("Growth rate (mm ", yr^-1, ") ")), y = "Age of canopy trees (yrs)", 
+       title = expression(paste("Relation of growth rate and longevity for ", italic("r")[italic("GR1")]))) + 
+  theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                     axis.text = element_text(size = 10),axis.title = element_text(size = 11),
+                     legend.text = element_text(size = 9),legend.title = element_text(size = 9),
+                     plot.title = element_text(size = 10),
+                     legend.key = element_rect(fill = NA, color = NA),
+                     legend.position = "none",
+                     legend.direction="horizontal",
+                     legend.margin = margin(2, 2, 2, 2),
+                     legend.box.margin = margin(1, 1, 1, 1)) +
+  scale_x_continuous(limits = c(4.8,6.3), breaks = seq(5,7,.5)) + 
+  scale_y_continuous(limits = c(320,340), breaks = seq(320,340,10))
+figCoho_gr1
+
+cor.test(GRp1gl_out_annual_cohorts_agg$mean_Age,GRp1gl_out_annual_cohorts_agg$mean_G,method = "pearson")
+
+figCoho_gr2 <- ggplot() + 
+  geom_point(data=ea1sa1GRp2gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, shape='Control'),color="#0072B2",size=3) +
+  geom_point(data=ea2sa1GRp2gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, shape='+15%'),color="#0072B2",size=3) + 
+  geom_point(data=ea3sa1GRp2gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, shape='+30%'),color="#0072B2",size=3) +
+  geom_smooth(data=GRp2gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age),color="#0072B2",
+              method = "lm",fullrange = T,size = .4, se=F,show.legend = F) +
+  scale_shape_manual("Level of LUE", breaks = c("Control","+15%","+30%"), 
+                     values = c(18,16,17),
+                     guide = guide_legend(override.aes = list(color = "black", size=1.5))) + 
+  labs(x = expression(paste("Growth rate (mm ", yr^-1, ") ")), y = "Age of canopy trees (yrs)", 
+       title = expression(paste("Relation of growth rate and longevity for ", italic("r")[italic("GR2")]))) + 
+  theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                     axis.text = element_text(size = 10),axis.title = element_text(size = 11),
+                     legend.text = element_text(size = 9),legend.title = element_text(size = 9),
+                     plot.title = element_text(size = 10),
+                     legend.key = element_rect(fill = NA, color = NA),
+                     legend.position = "none",
+                     legend.direction="horizontal",
+                     legend.margin = margin(2, 2, 2, 2),
+                     legend.box.margin = margin(1, 1, 1, 1)) +
+  scale_x_continuous(limits = c(4.8,6.3), breaks = seq(5,7,.5)) + 
+  scale_y_continuous(limits = c(320,340), breaks = seq(320,340,10))
+figCoho_gr2
+
+cor.test(GRp2gl_out_annual_cohorts_agg$mean_Age,GRp2gl_out_annual_cohorts_agg$mean_G,method = "pearson")
+
+figCoho_gr3 <- ggplot() + 
+  geom_point(data=ea1sa1GRp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, shape='Control'),color="#D55E00",size=3) +
+  geom_point(data=ea2sa1GRp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, shape='+15%'),color="#D55E00",size=3) + 
+  geom_point(data=ea3sa1GRp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, shape='+30%'),color="#D55E00",size=3) +
+  geom_smooth(data=GRp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age),color="#D55E00",
+              method = "lm",fullrange = T,size = .4, se=F,show.legend = F) +
+  scale_shape_manual("Level of LUE", breaks = c("Control","+15%","+30%"), 
+                     values = c(18,16,17),
+                     guide = guide_legend(override.aes = list(color = "black", size=1.5))) + 
+  labs(x = expression(paste("Growth rate (mm ", yr^-1, ") ")), y = "Age of canopy trees (yrs)", 
+       title = expression(paste("Relation of growth rate and longevity for ", italic("r")[italic("GR3")]))) + 
+  theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                     axis.text = element_text(size = 10),axis.title = element_text(size = 11),
+                     legend.text = element_text(size = 9),legend.title = element_text(size = 9),
+                     plot.title = element_text(size = 10),
+                     legend.key = element_rect(fill = NA, color = NA),
+                     legend.position = "none",
+                     legend.direction="horizontal",
+                     legend.margin = margin(2, 2, 2, 2),
+                     legend.box.margin = margin(1, 1, 1, 1)) +
+  scale_x_continuous(limits = c(4.8,6.3), breaks = seq(5,7,.5)) + 
+  scale_y_continuous(limits = c(320,340), breaks = seq(320,340,10))
+figCoho_gr3
+
+cor.test(GRp3gl_out_annual_cohorts_agg$mean_Age,GRp3gl_out_annual_cohorts_agg$mean_G,method = "pearson")
+
+fig2Coho_gr <- ggplot() + 
+  geom_point(data=ea1sa1GRp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r1', shape='Control'),size=3) + 
+  geom_point(data=ea2sa1GRp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r1', shape='+15%'),size=3) + 
+  geom_point(data=ea3sa1GRp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r1', shape='+30%'),size=3) + 
+  geom_smooth(data=GRp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age),color="#009E73",
+              method = "lm",fullrange = T,size = .4, se=F,show.legend = F) +
+  geom_point(data=ea1sa1GRp2gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r2', shape='Control'),size=3) + 
+  geom_point(data=ea2sa1GRp2gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r2', shape='+15%'),size=3) + 
+  geom_point(data=ea3sa1GRp2gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r2', shape='+30%'),size=3) + 
+  geom_smooth(data=GRp2gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age),color="#0072B2",
+              method = "lm",fullrange = T,size = .4, se=F,show.legend = F) +
+  geom_point(data=ea1sa1GRp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r3', shape='Control'),size=3) + 
+  geom_point(data=ea2sa1GRp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r3', shape='+15%'),size=3) + 
+  geom_point(data=ea3sa1GRp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r3', shape='+30%'),size=3) + 
+  geom_smooth(data=GRp3gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age),color="#D55E00",
+              method = "lm",fullrange = T,size = .4, se=F,show.legend = F) +
+  scale_color_manual("Parameter value", breaks = c("r1", "r2", "r3"), 
+                     values = c("#009E73", "#0072B2", "#D55E00"),
+                     guide = guide_legend(override.aes = list(size=1),order = 1),
+                     labels =c(expression(paste(italic("r")[italic("1")])),expression(paste(italic("r")[italic("2")])),
+                               expression(paste(italic("r")[italic("3")])))) +
+  scale_shape_manual("Level of LUE", breaks = c("Control","+15%","+30%"), 
+                     values = c(18,16,17),
+                     guide = guide_legend(override.aes = list(color = "black", size=1.4))) + 
+  labs(x = expression(paste("Growth rate (mm ", yr^-1, ") ")), y = "Age of canopy trees (yrs)", 
+       title = "For growth rate-dependent mortality") + 
+  theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                     axis.text = element_text(size = 10),axis.title = element_text(size = 10),
+                     axis.title.y=element_text(angle=90, vjust = 0.5),
+                     legend.text = element_text(size = 9),legend.title = element_text(size = 9),
+                     plot.title = element_text(size = 10),
+                     #legend.key = element_rect(fill = NA, color = NA),
+                     legend.position = "none",
+                     legend.direction="horizontal",
+                     legend.margin = margin(.2, .2, .2, .2),
+                     legend.key.size = unit(0.7, 'cm'),
+                     legend.spacing = unit(.1,"cm"),
+                     #legend.box.background = element_rect(color="black",size=0.2),
+                     legend.box.margin = margin(1, 1, 1, 1)) +
+  scale_x_continuous(limits = c(4.8,6.3), breaks = seq(5,7,.5)) + 
+  scale_y_continuous(limits = c(320,340), breaks = seq(320,340,10))
+fig2Coho_gr
 
 # Distribution of tree sizes ####
 
@@ -1188,7 +1745,7 @@ figdistr_dbh <- ggplot() +
   scale_linetype_manual("Level of LUE", breaks = c("Control","+15%", "+30%"), 
                         values = c("dotted","longdash","solid"),
                         guide = guide_legend(override.aes = list(color = "black", size=.5))) +
-  labs(x = "Diameter (cm)", y = "Ln N", title = "Size distributions with size-dependent mortality") + 
+  labs(x = "Diameter (cm)", y = "Ln N", title = "Size distributions for size-dependent mortality") + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -1202,9 +1759,9 @@ figdistr_dbh <- ggplot() +
                      legend.spacing = unit(.1,"cm"),
                      #legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  coord_cartesian(xlim = c(25,150),ylim = c(0,6)) +
+  coord_cartesian(xlim = c(25,150),ylim = c(0,5.2)) +
   scale_y_continuous(breaks = seq(0,6,2)) + 
-  scale_x_continuous(breaks = seq(25,150,25)) 
+  scale_x_continuous(breaks = seq(50,150,50)) 
 figdistr_dbh
 
 # GR
@@ -1226,7 +1783,7 @@ figdistr_gr <- ggplot() +
   scale_linetype_manual("Level of LUE", breaks = c("Control","+15%", "+30%"), 
                         values = c("dotted","longdash","solid"),
                         guide = guide_legend(override.aes = list(color = "black", size=.5))) +
-  labs(x = "Diameter (cm)", y = "Ln N", title = "Size distributions with growth rate-dependent mortality") + 
+  labs(x = "Diameter (cm)", y = "Ln N", title = "Size distributions for growth rate-dependent mortality") + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -1240,9 +1797,9 @@ figdistr_gr <- ggplot() +
                      legend.spacing = unit(.1,"cm"),
                      #legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  coord_cartesian(xlim = c(25,300),ylim = c(0,6)) +
-  scale_y_continuous(breaks = seq(0,6,2)) + 
-  scale_x_continuous(breaks = seq(25,300,25)) 
+  coord_cartesian(xlim = c(25,260),ylim = c(0,5.2)) +
+  scale_y_continuous(breaks = seq(0,4,2)) + 
+  scale_x_continuous(breaks = seq(50,250,100)) 
 figdistr_gr
 
 # Self-thinning relationship  ####
@@ -1306,7 +1863,7 @@ fig4aLUE_dbh1 <- ggplot() +
   geom_point(data = data_DBH_p1, aes(x = logQMD, y = logDensity12,col=plantC), alpha=0.5, size = 1, inherit.aes = FALSE) +
   geom_smooth(data= preddataLUE_DBH1, aes(x=x, y=predicted, linetype=group),col="#009E73",
               method = "lm",fullrange = T,size = .6, se=F) +
-  labs(x = "Ln QMD", y = "Ln N",title = expression(paste("Size mortality - ", italic("r")[italic("S1")])),
+  labs(x = "Ln QMD", y = "Ln N",title = expression(paste("STL changes for ", italic("r")[italic("S1")])),
        color  = "Biomass", linetype = "Level of LUE") + 
   scale_color_viridis_c(direction = -1,limits=c(27,51),breaks=seq(30,50,5)) +
   #scale_colour_scico(direction = -1,palette = "bamako",limits=c(28,39),breaks=c(30,35)) +
@@ -1327,8 +1884,8 @@ fig4aLUE_dbh1 <- ggplot() +
           legend.key.height = unit(.4, 'cm'),
           #legend.box.background = element_rect(color="black",size=0.2),
           legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(3.2,4.4),breaks = seq(3.2,4.6,0.2)) + 
-  scale_y_continuous(limits = c(4.3,6.8),breaks = seq(4.5,7,.5)) 
+  scale_x_continuous(limits = c(3.2,4.4),breaks = seq(3.2,4.6,0.6)) + 
+  scale_y_continuous(limits = c(4.3,6.8),breaks = seq(4.5,7,1)) 
 fig4aLUE_dbh1
 
 # DBH2
@@ -1388,7 +1945,7 @@ fig4bLUE_dbh2 <- ggplot() +
   geom_point(data = data_DBH_p2, aes(x = logQMD, y = logDensity12,col=plantC), alpha=0.5, size = 1, inherit.aes = FALSE,show.legend = FALSE) +
   geom_smooth(data= preddataLUE_DBH2, aes(x=x, y=predicted, linetype=group),col="#0072B2",
               method = "lm",fullrange = T,size = .6, se=F,show.legend = FALSE) +
-  labs(x = "Ln QMD", y = "Ln N",title = expression(paste("Size mortality - ", italic("r")[italic("S2")])),
+  labs(x = "Ln QMD", y = "Ln N",title = expression(paste("STL changes for ", italic("r")[italic("S2")])),
        color  = "B", linetype = "Level of LUE") + 
   scale_color_viridis_c(direction = -1,limits=c(27,51),breaks=seq(30,50,5)) +
   scale_linetype_manual("Level of LUE", breaks = c("Control","+15%", "+30%"), 
@@ -1403,8 +1960,8 @@ fig4bLUE_dbh2 <- ggplot() +
                      legend.direction="horizontal",
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(3.2,4.4),breaks = seq(3.2,4.6,0.2)) + 
-  scale_y_continuous(limits = c(4.3,6.8),breaks = seq(4.5,7,.5))
+  scale_x_continuous(limits = c(3.2,4.4),breaks = seq(3.2,4.6,0.6)) + 
+  scale_y_continuous(limits = c(4.3,6.8),breaks = seq(4.5,7,1))
 fig4bLUE_dbh2
 
 # DBH3
@@ -1464,7 +2021,7 @@ fig4cLUE_dbh3 <- ggplot() +
   geom_point(data = data_DBH_p3, aes(x = logQMD, y = logDensity12,col=plantC), alpha=0.5, size = 1, inherit.aes = FALSE,show.legend = F) +
   geom_smooth(data= preddataLUE_DBH3, aes(x=x, y=predicted, linetype=group),col="#D55E00",
               method = "lm",fullrange = T,size = .6, se=F,show.legend = F) +
-  labs(x = "Ln QMD", y = "Ln N",title = expression(paste("Size mortality - ", italic("r")[italic("S3")])),
+  labs(x = "Ln QMD", y = "Ln N",title = expression(paste("STL changes for ", italic("r")[italic("S3")])),
        color  = "B", linetype = "Level of LUE") + 
   scale_color_viridis_c(direction = -1,limits=c(27,51),breaks=seq(30,50,5)) +
   scale_linetype_manual("Level of LUE", breaks = c("Control","+15%", "+30%"), 
@@ -1479,8 +2036,8 @@ fig4cLUE_dbh3 <- ggplot() +
                       legend.direction="horizontal",
                       legend.margin = margin(2, 2, 2, 2),
                       legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(3.2,4.4),breaks = seq(3.2,4.6,0.2)) + 
-  scale_y_continuous(limits = c(4.3,6.8),breaks = seq(4.5,7,.5))
+  scale_x_continuous(limits = c(3.2,4.4),breaks = seq(3.2,4.6,0.6)) + 
+  scale_y_continuous(limits = c(4.3,6.8),breaks = seq(4.5,7,1))
 fig4cLUE_dbh3
 
 # GR
@@ -1519,7 +2076,7 @@ data_GR_ea3p1Den <- data_GR_ea3p1 %>% left_join(quantileX) %>% filter(Density12>
 data_GR_p1 <- rbind(data_GR_ea1p1, data_GR_ea2p1, data_GR_ea3p1) 
 data_GR_p1 <- data_GR_p1 %>% mutate(logDensity12=log(Density12),logQMD=log(QMD),LUE=as.factor(LUE))
 data_GR_p1$LUE <- relevel(data_GR_p1$LUE, ref = "Control")
-ggplot() +  geom_point(data = data_GR_p1, aes(x = log(QMD), y = log(Density12)), color="blue")
+ggplot() +  geom_point(data = data_GR_p1, aes(x = log(QMD), y = log(Density12)), color="blue",alpha=0.5)
 data_GR_p1Den <- rbind(data_GR_ea1p1Den, data_GR_ea2p1Den, data_GR_ea3p1Den) 
 data_GR_p1Den <- data_GR_p1Den %>% mutate(logDensity12=log(Density12),logQMD=log(QMD),LUE=as.factor(LUE))
 data_GR_p1Den$LUE <- relevel(data_GR_p1Den$LUE, ref = "Control")
@@ -1542,7 +2099,7 @@ fig4aLUE_gr1 <- ggplot() +
   geom_point(data = data_GR_p1, aes(x = logQMD, y = logDensity12,col=plantC), alpha=0.5, size = 1, inherit.aes = FALSE) +
   geom_smooth(data= preddataLUE_GR1, aes(x=x, y=predicted, linetype=group),col="#009E73",
               method = "lm",fullrange = T,size = .6, se=F) +
-  labs(x = "Ln QMD", y = "Ln N",title = expression(paste("Growth rate mortality - ", italic("r")[italic("S1")])),
+  labs(x = "Ln QMD", y = "Ln N",title = expression(paste("STL changes for ", italic("r")[italic("GR1")])),
        color  = "Biomass", linetype = "Level of LUE") + 
   scale_color_viridis_c(direction = -1,limits=c(43,62),breaks=seq(45,60,5)) +
   scale_linetype_manual("Level of LUE", 
@@ -1562,8 +2119,10 @@ fig4aLUE_gr1 <- ggplot() +
                       legend.key.height = unit(.4, 'cm'),
                       #legend.box.background = element_rect(color="black",size=0.2),
                       legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(3.6,4.4),breaks = seq(3.6,4.4,0.2)) + 
-  scale_y_continuous(limits = c(4.2,6.3),breaks = seq(4.5,6.0,.5))
+  #scale_x_continuous(limits = c(3.6,4.4),breaks = seq(3.6,4.4,0.6)) + 
+  #scale_y_continuous(limits = c(4.2,6.3),breaks = seq(4.5,6.0,1))
+  scale_x_continuous(limits = c(3.6,4.4),breaks = seq(3.6,4.4,0.4)) + 
+  scale_y_continuous(limits = c(4.3,6.5),breaks = seq(4.5,6.5,1))
 fig4aLUE_gr1
 
 # GR2
@@ -1623,7 +2182,7 @@ fig4bLUE_gr2 <- ggplot() +
   geom_point(data = data_GR_p2, aes(x = logQMD, y = logDensity12,col=plantC), alpha=0.5, size = 1, inherit.aes = FALSE,show.legend = FALSE) +
   geom_smooth(data= preddataLUE_GR2, aes(x=x, y=predicted, linetype=group),col="#0072B2",
               method = "lm",fullrange = T,size = .6, se=F,show.legend = FALSE) +
-  labs(x = "Ln QMD", y = "Ln N",title = expression(paste("Growth rate mortality - ", italic("r")[italic("GR2")])),
+  labs(x = "Ln QMD", y = "Ln N",title = expression(paste("STL changes for ", italic("r")[italic("GR2")])),
        color  = "B", linetype = "Level of LUE") + 
   scale_color_viridis_c(direction = -1,limits=c(43,62),breaks=seq(45,60,5)) +
   scale_linetype_manual("Level of LUE", breaks = c("Control","+15%", "+30%"), 
@@ -1638,8 +2197,8 @@ fig4bLUE_gr2 <- ggplot() +
                      legend.direction="horizontal",
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(3.6,4.4),breaks = seq(3.6,4.4,0.2)) + 
-  scale_y_continuous(limits = c(4.2,6.3),breaks = seq(4.5,6.0,.5))
+  scale_x_continuous(limits = c(3.6,4.4),breaks = seq(3.6,4.4,0.4)) + 
+  scale_y_continuous(limits = c(4.3,6.5),breaks = seq(4.5,6.5,1))
 fig4bLUE_gr2
 
 # GR3
@@ -1699,7 +2258,7 @@ fig4cLUE_gr3 <- ggplot() +
   geom_point(data = data_GR_p3, aes(x = logQMD, y = logDensity12, col=plantC), alpha=0.5, size = 1, inherit.aes = FALSE,show.legend = FALSE) +
   geom_smooth(data= preddataLUE_GR3, aes(x=x, y=predicted, linetype=group),col="#D55E00",
               method = "lm",fullrange = T,size = .6, se=F,show.legend = FALSE) +
-  labs(x = "Ln QMD", y = "Ln N",title = expression(paste("Growth rate mortality - ", italic("r")[italic("GR3")])),
+  labs(x = "Ln QMD", y = "Ln N",title = expression(paste("STL changes for ", italic("r")[italic("GR3")])),
        color  = "B", linetype = "Level of LUE") + 
   scale_color_viridis_c(direction = -1,limits=c(43,62),breaks=seq(45,60,5)) +
   scale_linetype_manual("Level of LUE", breaks = c("Control","+15%", "+30%"), 
@@ -1714,8 +2273,8 @@ fig4cLUE_gr3 <- ggplot() +
                      legend.direction="horizontal",
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(3.6,4.4),breaks = seq(3.6,4.4,0.2)) + 
-  scale_y_continuous(limits = c(4.2,6.3),breaks = seq(4.5,6.0,.5))
+  scale_x_continuous(limits = c(3.6,4.4),breaks = seq(3.6,4.4,0.4)) + 
+  scale_y_continuous(limits = c(4.3,6.5),breaks = seq(4.5,6.5,1))
 fig4cLUE_gr3
 
 # Link model and observations ####
@@ -1981,7 +2540,7 @@ ff2 <- fig2a_dbh + fig2b_dbh + fig2c_dbh + fig2d_dbh + fig2e_dbh + fig2f_dbh + f
   theme(plot.margin = unit(rep(0.13,4), "cm"))#+
   #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
 ff2
-ggsave("~/GFDY/manuscript/figures/fig_2.png", width = 10.5, height = 5.5, dpi=300)
+ggsave("~/GFDY/manuscript/figures/fig_2A.png", width = 10.5, height = 5.5, dpi=300)
 
 # Figure 3 ####
 ff3 <- fig3a_gr + fig3b_gr + fig3c_gr + fig3d_gr + fig3e_gr + fig3f_gr + fig3g_gr + fig3h_gr + 
@@ -1990,7 +2549,7 @@ ff3 <- fig3a_gr + fig3b_gr + fig3c_gr + fig3d_gr + fig3e_gr + fig3f_gr + fig3g_g
   theme(plot.margin = unit(rep(0.13,4), "cm"))#+
   #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
 ff3
-ggsave("~/GFDY/manuscript/figures/fig_3.png", width = 10.5, height = 5.5, dpi=300)
+ggsave("~/GFDY/manuscript/figures/fig_3A.png", width = 10.5, height = 5.5, dpi=300)
 
 # Figure 4 ####
 ff4 <- fig4aLUE_dbh1 + fig4bLUE_dbh2 + fig4cLUE_dbh3 + 
@@ -2000,7 +2559,7 @@ ff4 <- fig4aLUE_dbh1 + fig4bLUE_dbh2 + fig4cLUE_dbh3 +
   theme(plot.margin = unit(rep(0.13,4), "cm"))#+
   #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
 ff4
-ggsave("~/GFDY/manuscript/figures/fig_4.png", width = 9.8, height = 6.3, dpi=300)
+ggsave("~/GFDY/manuscript/figures/fig_4A.png", width = 9.8, height = 6.3, dpi=300)
 
 # Figure 5 ####
 ff5 <- fig5_dbh + fig5_gr + 
@@ -2012,38 +2571,50 @@ ff5
 ggsave("~/GFDY/manuscript/figures/fig_5.png", width = 8.5, height = 4.2, dpi=300)
 
 # Figure S2 ####
-ffs2 <- figdistr_dbh + figdistr_gr +
-  plot_layout(ncol = 2) + 
-  plot_annotation(tag_levels = 'A', tag_suffix = ")") & 
-  theme(plot.margin = unit(rep(0.13,4), "cm"))#+ 
-  #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
-ffs2
-ggsave("~/GFDY/manuscript/figures/fig_S2.png", width = 8.5, height = 4.2, dpi=300)
-
-# Figure S3 ####
-ffs3 <- fig2gg_dbh + fig3gg_gr + 
+ffs2 <- fig2gg_dbh + fig3gg_gr + 
   plot_layout(ncol = 2) + 
   plot_annotation(tag_levels = 'A', tag_suffix = ")") & 
   theme(plot.margin = unit(rep(0.13,4), "cm"))#+
-  #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
+#plot_layout(guides = "collect") & theme(legend.position = 'bottom')
+ffs2
+ggsave("~/GFDY/manuscript/figures/fig_S2A.png",width = 8.5, height = 4.2, dpi=300)
+
+# Figure S3 ####
+ffs3 <- figS3A + figS3B + figS3C +figS3D +figS3E +figS3F +
+  plot_layout(ncol = 3) + 
+  plot_annotation(tag_levels = 'A', tag_suffix = ")") & 
+  theme(plot.margin = unit(rep(0.13,4), "cm"))#+ 
+#plot_layout(guides = "collect") & theme(legend.position = 'bottom')
 ffs3
-ggsave("~/GFDY/manuscript/figures/fig_S3.png",width = 8.5, height = 4.2, dpi=300)
+ggsave("~/GFDY/manuscript/figures/fig_S3.png", width = 9.8, height = 6.3, dpi=300)
+
+# Figure S4 ####
+ffs4 <- fig2Coho_dbh + fig2Coho_gr + 
+  plot_layout(ncol = 2) + 
+  plot_annotation(tag_levels = 'A', tag_suffix = ")") & 
+  theme(plot.margin = unit(rep(0.13,4), "cm"))#+
+#plot_layout(guides = "collect") & theme(legend.position = 'bottom')
+ffs4
+ggsave("~/GFDY/manuscript/figures/fig_S4A.png",width = 8.5, height = 4.2, dpi=300)
 
 # Box 1 ####
 xx <- rep(0.5,3)
 yy <- c(0,0.25,0.5)
-oo <- as.factor(c("Constant self-thinning","Intermediate change","Constant turnover rate"))
-df <- data.frame(oo,xx,yy)
+lev <- as.factor(c("Constant self-thinning","Accelerated turnover","Constant turnover rate"))
+df <- data.frame(lev,xx,yy)
 df
 str(df)
-levels(df$oo) 
-df$oo <- factor(df$oo, levels = c("Constant turnover rate","Intermediate change","Constant self-thinning"))
+levels(df$lev) 
+df$lev <- factor(df$lev, levels = c("Constant turnover rate","Accelerated turnover","Constant self-thinning"))
 
 fig00a <- ggplot() + 
+  geom_point(data=df, aes(x=xx, y=yy,shape=lev,col=lev),size=3) + 
   geom_abline(slope=1, intercept = 0.0, linetype="dashed") +
-  geom_point(data=df, aes(x=xx, y=yy,shape=oo),col="black",size=3) + 
   labs(x = expression(frac(dG, G)), y = expression(frac(dB, B)),title="Relative change in biomass per relative change in growth") + 
-  scale_shape_manual(values = c(15, 1, 16)) + expand_limits(x = 0, y = 0) +
+  #scale_shape_manual(values = c(15, 1, 16)) + 
+  scale_shape_manual(values = c(16, 16, 16)) + 
+  scale_color_manual(values = c("#619CFF","#00BA38","#F8766D")) + 
+  expand_limits(x = 0, y = 0) +
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.ticks = element_blank(),
                      axis.text = element_blank(),axis.title = element_text(size = 9),
@@ -2062,11 +2633,13 @@ fig00a <- ggplot() +
 fig00a
 
 fig00b <- ggplot() +
-  geom_abline(slope=-1, intercept = 2.5, linetype="solid",alpha=0.8) +
-  geom_abline(slope=-1, intercept = 2.5, linetype="dashed",color="darkgrey",alpha=0.8) +
-  geom_abline(slope=-1, intercept = 2.7, linetype="solid",color="darkgrey") +
-  geom_abline(slope=-1, intercept = 2.9, linetype="solid") +
-  labs(x = "ln QMD", y = "ln N",title="Changes in the STL from changes in growth") + 
+  geom_abline(aes(col="Reference STL",slope=-1, intercept = 2.49)) +
+  geom_abline(aes(col="Constant turnover rate",slope=-1, intercept = 2.5)) +
+  geom_abline(aes(col="Accelerated turnover",slope=-1, intercept = 2.7)) +
+  geom_abline(aes(col="Constant self-thinning",slope=-1, intercept = 2.9)) +
+  scale_color_manual(breaks = c("Reference STL","Constant turnover rate","Accelerated turnover","Constant self-thinning"), 
+                        values = c("black","#F8766D","#00BA38","#619CFF")) +
+  labs(x = "ln QMD", y = "ln N",title="Change in the STL from change in growth") + 
   scale_x_continuous(limits = c(0,3),breaks=seq(0,3,0.1),expand=c(0,0)) + 
   scale_y_continuous(limits = c(0,3),breaks=seq(0,3,0.1),expand=c(0,0)) +
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
@@ -2076,7 +2649,7 @@ fig00b <- ggplot() +
                      legend.text = element_text(size = 8.5),legend.title = element_blank(),
                      plot.title = element_text(size = 9),
                      legend.key = element_rect(fill = NA, color = NA),
-                     legend.position = c(.20, .8),
+                     legend.position = c(.75, .83),
                      legend.direction="vertical",
                      legend.margin = margin(.2, .2, .2, .2),
                      legend.key.size = unit(.9, 'lines'),
@@ -2087,7 +2660,7 @@ fig00b
 ff_box <- fig00a + fig00b +
   plot_layout(ncol = 2)  +  plot_annotation(tag_levels = 'A') 
 ff_box
-ggsave("~/GFDY/manuscript/extra_figures/ff_box.png", width = 8, height = 4, dpi=300)
+ggsave("~/GFDY/manuscript/figures_extra/ff_box_color.png", width = 8, height = 4, dpi=300)
 
 # Other figures ####
 # Biomass for DBH param 1

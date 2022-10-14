@@ -61,7 +61,7 @@ plot(aggData_QMDbinsDen$BiomassIncrement_Kg_m2_year ~ predict0, xlab="Predicted"
 aggData_QMDbinsDen <- aggData_QMDbinsDen %>% mutate(Res_Growth0=Res_Growth0) 
 
 figRes <- plot_model(FitRes$gam,type = "pred",terms = c("QMD"),show.data=T) + 
-  labs(x = "QMD (cm)", y = expression(paste("Biomass increment (Kg C ", m^-2, " ", yr^-1, ") ")),title="") + 
+  labs(x = "QMD (cm)", y = expression(paste("Net biomass change (kg C ", m^-2, " ", yr^-1, ") ")),title="") + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 11),
                      legend.text = element_text(size = 9),legend.title = element_text(size = 9),
@@ -70,7 +70,7 @@ figRes <- plot_model(FitRes$gam,type = "pred",terms = c("QMD"),show.data=T) +
                      legend.position = "none",
                      legend.direction="vertical",
                      legend.margin = margin(2, 2, 2, 2),
-                     legend.box.background = element_rect(color="black",size=0.2),
+                     #legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
   guides(color = "none") 
 figRes
@@ -87,5 +87,19 @@ aggData_QMDbinsDen <- aggData_QMDbinsDen %>%
   mutate(Res_Growth15 = GrowthPlus15 - predict0,
          Res_Growth30 = GrowthPlus30 - predict0)
 
-save(aggData_QMDbinsDen, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen90.RData")
+save(aggData_QMDbinsDen, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
+save(aggData_QMDbinsRest, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsRest75.RData")
 
+# Data properties # Table S1
+summary(aggData)
+# EFM
+summary(aggEFM)
+aggEFM %>% summarise(mean=mean())
+summary(aggNFI)
+summary(aggNFR)
+
+
+load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
+length(unique(aggData_QMDbinsDen$PlotID))
+summary(aggData_QMDbinsDen)
+aggData_QMDbinsDen %>% filter()

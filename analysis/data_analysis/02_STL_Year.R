@@ -14,14 +14,27 @@ library(ggeffects)
 library(patchwork)
 
 # load data
-#load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen.RData")
 load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen55.RData")
 load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
+load("~/GFDY/data/inputs_obs/aggData_QMDbinsRest75.RData")
 load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen90.RData")
 
 # LME model N ~ QMD and Year with 75th percentile
 Fit_Year = lmer(logDensity ~ scale(logQMD) + scale(Year) + (1|PlotID) + (1|Species), data = aggData_QMDbinsDen, na.action = "na.exclude")
 summary(Fit_Year)
+Fit = lmer(logDensity ~ scale(logQMD) + (1|PlotID) + (1|Species), data = aggData_QMDbinsDen, na.action = "na.exclude")
+summary(Fit)
+AIC(Fit, Fit_Year)
+out_anova <- anova(Fit, Fit_Year)
+out <- summary(Fit_Year)
+out$coefficients
+confint(Fit_Year)
+upperCI <-  out$coefficients["scale(Year)","Estimate"] + out$coefficient["scale(Year)","Std. Error"]*1.96
+lowerCI <-  out$coefficients["scale(Year)","Estimate"] - out$coefficient["scale(Year)","Std. Error"]*1.96
+upperCI_unscaled <- out$coefficients["scale(Year)","Estimate"]/ sd(aggData_QMDbinsDen$Year) +
+  out$coefficient["scale(Year)","Std. Error"]/ sd(aggData_QMDbinsDen$Year)*1.96
+lowerCI_unscaled <- out$coefficients["scale(Year)","Estimate"]/ sd(aggData_QMDbinsDen$Year) -
+  out$coefficient["scale(Year)","Std. Error"]/ sd(aggData_QMDbinsDen$Year)*1.96
 r.squaredGLMM(Fit_Year)
 plot(allEffects(Fit_Year))
 plot_model(Fit_Year,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logQMD","Year[1946,1985,2019]"))
@@ -35,13 +48,13 @@ plot75Year <- ggplot() +
   geom_point(data = aggData_QMDbinsDen, aes(x = logQMD, y = logDensity), alpha=0.3, size = .8,col="black", shape = 16, inherit.aes = FALSE) + 
   geom_point(data = aggData_QMDbinsRest, aes(x = logQMD, y = logDensity), alpha=0.2, size = .8,col="grey",shape = 16, inherit.aes = FALSE) + 
   geom_smooth(data= preddata, aes(x=x, y=predicted, color=group), method = "lm",fullrange = T,size = .6, se=F) +
-  labs(x = "ln QMD", y = "ln N",title = "STL changes as a function of calendar year",color  = "Year") + 
-  scale_color_manual("Year", 
+  labs(x = "ln QMD", y = "ln N",title = "STL changes as a function of time",color  = "Year") + 
+  scale_color_manual("Year", #expression(paste(italic("Year"))), 
                      breaks = c("1946","1985", "2019"), 
                      values = c("#FC4E07", "#00AFBB", "#E7B800")) +
   theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                       axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-                      legend.text = element_text(size = 9),legend.title = element_text(size = 9),
+                      legend.text = element_text(size = 8),legend.title = element_text(size = 8),
                       plot.title = element_text(size = 10),
                       legend.key = element_rect(fill = NA, color = NA),
                       legend.position = c(.11, .20),
@@ -50,8 +63,8 @@ plot75Year <- ggplot() +
                       legend.margin = margin(2, 2, 2, 2),
                       legend.key.size = unit(.6, 'cm'),
                       legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(2,4.5),breaks = seq(2,4.5,0.5))+
-  scale_y_continuous(limits = c(4.5,9.2))
+  scale_x_continuous(limits = c(1.95,4.7),breaks = seq(2.5,4.5,1))+
+  scale_y_continuous(limits = c(3.6,9.2))
 plot75Year
 
 hist(aggData_QMDbinsDen$Year)
@@ -113,7 +126,7 @@ shifts <- data.frame(change=c("up55","up75","up90"),up=c(upSTL55,upSTL75,upSTL90
 ggplot() + geom_col(data = shifts, aes(change,up))
 ggplot() + geom_col(data = shifts, aes(change,right))
 
-# Other pltos for conferences ####
+# Other plots for conferences ####
 
 p <- ggplot() + 
   #geom_point(data = aggData_QMDbins, aes(x = logQMD, y = logDensity), alpha=0.3, size = .8,col="black", shape = 16, inherit.aes = FALSE) + 
@@ -134,13 +147,18 @@ p <- ggplot() +
                       legend.margin = margin(2, 2, 2, 2),
                       legend.key.size = unit(.6, 'cm'),
                       legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(2,4.5),breaks = seq(2,4.5,0.5))+
+  scale_x_continuous(limits = c(2,4.5),breaks = seq(2,4.5,0.5)) +
   scale_y_continuous(limits = c(4.5,8.5))
 p
 ggsave("~/GFDY/manuscript/extra_figures/fig_STL_B.png", width = 5, height = 4.5, dpi=300)
 
 # Animations ####
 library(gganimate)
-p + transition_time(logQMD) + shadow_mark(alpha = 0.4, size = 1.5) + enter_fly(y_loc = 0)
-anim_save("~/GFDY/manuscript/extra_figures/fig_STL_anim.png", width = 5, height = 4.5,)
+q <- p + transition_time(logQMD) + shadow_mark(alpha = 0.4, size = 1.5) + enter_fly(y_loc = 0)
+q <- p + transition_time(Year) + shadow_mark(alpha = 0.4, size = 1.5) + enter_fly(y_loc = 0)
+
+anim_save("~/GFDY/manuscript/figures_extra/fig_STL_anim_yr.gif", q)
+
+anim_save("~/GFDY/manuscript/figures_extra/fig_STL_anim.png", width = 5, height = 4.5)
+anim_save("~/GFDY/manuscript/figures_extra/fig_STL_anim2.gif", width = 5, height = 4.5)
 

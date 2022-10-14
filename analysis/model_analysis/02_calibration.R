@@ -39,6 +39,7 @@ LAE_data_bio <- LAE_data %>% left_join(d_param_lnb0_AG[,c(1,8)]) %>% left_join(d
   mutate(b1_AG=ifelse(is.na(b1_AG),mean(d_param_b1_AG$b1_AG,na.rm=T),b1_AG)) %>% 
   mutate(lnb0_BG=ifelse(is.na(lnb0_BG),mean(d_param_lnb0_BG$lnb0_BG,na.rm=T),lnb0_BG)) %>%
   mutate(b1_BG=ifelse(is.na(b1_BG),mean(d_param_b1_BG$b1_BG,na.rm=T),b1_BG)) 
+sort(d_param_b1_AG$b1_AG)
 # Filter trees with DBH >= 12 cm
 LAE_data_bio <- LAE_data_bio %>% dplyr::filter(DBH_cm >= 12)
 # Calculate Biomass

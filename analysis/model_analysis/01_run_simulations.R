@@ -180,7 +180,7 @@ save(df_drivers, file = "~/GFDY/data/inputs_mod/df_drivers_DBH_gs.RData")
 save(df_drivers, file = "~/GFDY/data/inputs_mod/df_drivers_GR_gs.RData")
 
 # Run the model
-# DBH mortality has the shape params: p1=1.5, p2=2.5, p3=5.0
+# DBH mortality has the shape params: p1=1.5, p2=2.5, p3=4.0
 # This first simulation is run with p2=2.5
 load("~/GFDY/data/inputs_mod/df_drivers_DBH_gs.RData")
 simul <- df_drivers$params_siml[[1]]
