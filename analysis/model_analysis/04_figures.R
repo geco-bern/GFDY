@@ -63,10 +63,11 @@ ea3sa1GRp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1GRp3g
 # Mortality formulations ####
 
 # DBH
+
 fig2a_dbh <- ggplot(data.frame(x = c(0, 1.2)), aes(x)) + 
-  stat_function(fun = ~ 0.12*.x ^ 1.5, aes(colour = "r1")) + 
-  stat_function(fun = ~ 0.12*.x ^ 2.5, aes(colour = "r2")) + 
-  stat_function(fun = ~ 0.12*.x ^ 4.0, aes(colour = "r3")) +
+  stat_function(fun = ~ 0.1*.x ^ 1.5, aes(colour = "r1")) + 
+  stat_function(fun = ~ 0.1*.x ^ 2.5, aes(colour = "r2")) + 
+  stat_function(fun = ~ 0.1*.x ^ 4.0, aes(colour = "r3")) +
   scale_color_manual("Parameter", breaks = c("r1", "r2", "r3"), 
                      values = c("#009E73", "#0072B2", "#D55E00"),
                      labels =c(expression(paste(italic("r")[italic("S1")]~ "= 1.5")),
@@ -1152,7 +1153,7 @@ fig2h_dbh <- ggplot() +
                      legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
   scale_x_continuous(limits = c(0,0.50), breaks = seq(0,0.5,0.25)) + 
-  scale_y_continuous(limits = c(-0.25,0), breaks = seq(-0.2,0,0.1)) +
+  scale_y_continuous(limits = c(0,0), breaks = seq(0,0,0.1)) +
   geom_hline(yintercept =  0.0, linetype="dashed")
 fig2h_dbh
 
@@ -1241,7 +1242,7 @@ fig3h_gr <- ggplot() +
                      legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) + 
   scale_x_continuous(limits = c(0,0.50), breaks = seq(0,0.5,0.25)) + 
-  scale_y_continuous(limits = c(-0.25,0), breaks = seq(-0.2,0,0.1)) 
+  scale_y_continuous(limits = c(0,0), breaks = seq(0,0,0.1)) 
 fig3h_gr
 
 # Cohort longevity vs. growth (dbh) ####
@@ -1775,7 +1776,7 @@ plot(allEffects(Fit_QMD))
 plot_model(Fit_QMD, type = "pred",show.data=TRUE, dot.size=1.5,terms = c("logQMD","LUE"))
 
 pred <- ggpredict(Fit_QMD, terms = c("logQMD", "LUE"), full.data = TRUE)
-plot(pred, add.data = F) 
+plot(pred, add.data = F)
 preddataLUE_DBH1 <- as.data.frame(pred)
 
 fig4aLUE_dbh1 <- ggplot() + 
@@ -2237,7 +2238,7 @@ fig5_dbh <- ggplot() +
                      legend.key.size = unit(.01, 'cm'),
                      #legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(0.5,0.8),breaks=seq(0.5,0.8,0.1)) + 
+  scale_x_continuous(limits = c(0.49,0.8),breaks=seq(0.5,0.8,0.1)) + 
   scale_y_continuous(limits = c(-0.001,0.2),breaks=seq(0,0.2,0.05)) +
   geom_hline(yintercept = N15, linetype="dashed") +
   geom_hline(yintercept = N30, linetype="dashed") +
@@ -2359,13 +2360,13 @@ fig5_gr <- ggplot() +
                      legend.text = element_text(size = 9),legend.title = element_text(size = 9),
                      plot.title = element_text(size = 10),
                      legend.key = element_rect(fill = NA, color = NA),
-                     legend.position = c(.30, .9),
+                     legend.position = c(.70, .9),
                      legend.direction="horizontal",
                      legend.margin = margin(.2, .2, .2, .2),
                      legend.key.size = unit(.01, 'cm'),
                      #legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(0.89,0.95),breaks=seq(0.89,0.95,0.01)) + 
+  scale_x_continuous(limits = c(0.92,0.99),breaks=seq(0.92,0.98,0.02)) + 
   scale_y_continuous(limits = c(-0.001,0.2),breaks=seq(0,0.2,0.05)) +
   geom_hline(yintercept = N15, linetype="dashed") +
   geom_hline(yintercept = N30, linetype="dashed") +
@@ -2379,7 +2380,7 @@ ff2 <- fig2a_dbh + fig2b_dbh + fig2c_dbh + fig2d_dbh + fig2e_dbh + fig2f_dbh + f
   theme(plot.margin = unit(rep(0.13,4), "cm"))#+
   #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
 ff2
-ggsave("~/GFDY/manuscript/figures/fig_2.png", width = 10.5, height = 5.5, dpi=300)
+ggsave("~/GFDY/manuscript/figures/fig_2_curve2.png", width = 10.5, height = 5.5, dpi=300)
 
 # Figure 3 ####
 ff3 <- fig3a_gr + fig3b_gr + fig3c_gr + fig3d_gr + fig3e_gr + fig3f_gr + fig3g_gr + fig3h_gr + 
@@ -2419,7 +2420,7 @@ ffs3
 ggsave("~/GFDY/manuscript/figures/fig_S3.png",width = 8.5, height = 4.2, dpi=300)
 
 # Figure S4 ####
-ffs4 <- figS3A + figS3B + figS3C +figS3D +figS3E +figS3F +
+ffs4 <- figS4A + figS4B + figS4C +figS4D +figS4E +figS4F +
   plot_layout(ncol = 3) + 
   plot_annotation(tag_levels = 'A', tag_suffix = ")") & 
   theme(plot.margin = unit(rep(0.13,4), "cm"))#+ 
@@ -2472,12 +2473,12 @@ fig00a <- ggplot() +
 fig00a
 
 fig00b <- ggplot() +
-  geom_abline(aes(col="Reference STL",slope=-1, intercept = 2.49)) +
-  geom_abline(aes(col="Constant turnover rate",slope=-1, intercept = 2.5)) +
+  geom_abline(aes(col="Constant turnover rate",slope=-1, intercept = 2.9)) +
   geom_abline(aes(col="Accelerated turnover",slope=-1, intercept = 2.7)) +
-  geom_abline(aes(col="Constant self-thinning",slope=-1, intercept = 2.9)) +
-  scale_color_manual(breaks = c("Reference STL","Constant turnover rate","Accelerated turnover","Constant self-thinning"), 
-                        values = c("black","#F8766D","#00BA38","#619CFF")) +
+  geom_abline(aes(col="Constant self-thinning",slope=-1, intercept = 2.5)) +
+  geom_abline(aes(col="Reference STL",slope=-1, intercept = 2.49)) +
+  scale_color_manual(breaks = c("Constant turnover rate", "Accelerated turnover","Constant self-thinning","Reference STL"), 
+                        values = c("#619CFF","#00BA38","#F8766D","black")) +
   labs(x = "ln QMD", y = "ln N",title="Change in the STL from change in growth") + 
   scale_x_continuous(limits = c(0,3),breaks=seq(0,3,0.1),expand=c(0,0)) + 
   scale_y_continuous(limits = c(0,3),breaks=seq(0,3,0.1),expand=c(0,0)) +
@@ -2500,226 +2501,3 @@ ff_box <- fig00a + fig00b +
   plot_layout(ncol = 2)  +  plot_annotation(tag_levels = 'A') 
 ff_box
 ggsave("~/GFDY/manuscript/figures/fig_0_box.png", width = 8, height = 4, dpi=300)
-
-# Other figures ####
-# Biomass for DBH param 1
-
-B_DBH_1 <- ggplot() + 
-  geom_line(data=ea1sa1DBHp1gl_out_annual_tile, aes(x=year, y=plantC, linetype='Control'),alpha=1,col="#c43b3b",size = .6) + 
-  geom_line(data=ea2sa1DBHp1gl_out_annual_tile, aes(x=year, y=plantC, linetype='+15%'),alpha=1,col="#c43b3b",size = .6) + 
-  geom_line(data=ea3sa1DBHp1gl_out_annual_tile, aes(x=year, y=plantC, linetype='+30%'),alpha=1,col="#c43b3b",size = .6) + 
-  scale_linetype_manual("Growth", 
-                        breaks = c("Control","+15%", "+30%"),
-                        labels = c("Low","Medium", "High"),
-                        values = c("dotted","dashed","solid")) +
-  labs(x = "Year", y = expression(paste("Biomass (Kg C ", m^-2, " ", yr^-1, ") ")),title = "For size-dependent mortality:",
-       subtitle = "Total biomass",
-       linetype = "Growth") +
-  theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-                      plot.subtitle  = element_text(size = 10),
-                      legend.text = element_text(size = 9),legend.title = element_text(size = 9),
-                      plot.title = element_text(size = 10),
-                      legend.key = element_rect(fill = NA, color = NA),
-                      legend.position = c(.80, .25),
-                      legend.direction="vertical",
-                      legend.box = "horizontal",
-                      legend.key.size = unit(.6, 'cm'),
-                      legend.margin = margin(2, 2, 2, 2),
-                      legend.box.margin = margin(1, 1, 1, 1)) 
-B_DBH_1
-
-# Biomass for GR param 1
-B_GR_1 <- ggplot() + 
-  geom_line(data=ea1sa1GRp1gl_out_annual_tile, aes(x=year, y=plantC, linetype='Control'),alpha=1,col="#c43b3b",size = .6,show.legend = F) + 
-  geom_line(data=ea2sa1GRp1gl_out_annual_tile, aes(x=year, y=plantC, linetype='+15%'),alpha=1,col="#c43b3b",size = .6,show.legend = F) + 
-  geom_line(data=ea3sa1GRp1gl_out_annual_tile, aes(x=year, y=plantC, linetype='+30%'),alpha=1,col="#c43b3b",size = .6,show.legend = F) + 
-  scale_linetype_manual("Level of LUE", breaks = c("Control","+15%", "+30%"), 
-                        values = c("dotted","dashed","solid")) +
-  labs(x = "Year", y = expression(paste("Biomass (Kg C ", m^-2, " ", yr^-1, ") ")),title = "For growth rate-dependent mortality:",
-       subtitle = "Total biomass",
-       linetype = "Level of LUE") +
-  theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-                      plot.subtitle  = element_text(size = 10),
-                      legend.text = element_text(size = 9),legend.title = element_text(size = 9),
-                      plot.title = element_text(size = 10),
-                      legend.key = element_rect(fill = NA, color = NA),
-                      legend.position = c(.85, .25),
-                      legend.direction="vertical",
-                      legend.box = "horizontal",
-                      legend.key.size = unit(.6, 'cm'),
-                      legend.margin = margin(2, 2, 2, 2),
-                      legend.box.margin = margin(1, 1, 1, 1)) 
-B_GR_1
-
-# Carbon residence time for DBH param 1
-CRT_DBH_1 <- ggplot() +  
-  geom_line(data=ea1sa1DBHp1gl_out_annual_tile, aes(x=year, y=plantC/NPP, linetype='Control'),alpha=1,col="#c43b3b",size = .6,show.legend = F) + 
-  geom_line(data=ea2sa1DBHp1gl_out_annual_tile, aes(x=year, y=plantC/NPP, linetype='+15%'),alpha=1,col="#c43b3b",size = .6,show.legend = F) + 
-  geom_line(data=ea3sa1DBHp1gl_out_annual_tile, aes(x=year, y=plantC/NPP, linetype='+30%'),alpha=1,col="#c43b3b",size = .6,show.legend = F) + 
-  scale_linetype_manual("Level of LUE", breaks = c("Control","+15%", "+30%"), 
-                        values = c("dotted","dashed","solid")) +
-  labs(x = "Year", y = expression(paste("Carbon residence time ( ", tau, " , ", yr, ") ")),title = "",
-       subtitle = "Carbon residence time") +
-  theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-                      plot.subtitle  = element_text(size = 10),
-                      legend.text = element_text(size = 9),legend.title = element_text(size = 9),
-                      plot.title = element_text(size = 10),
-                      legend.key = element_rect(fill = NA, color = NA),
-                      legend.position = c(.85, .25),
-                      legend.direction="vertical",
-                      legend.box = "horizontal",
-                      legend.key.size = unit(.6, 'cm'),
-                      legend.margin = margin(2, 2, 2, 2),
-                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(450,1500), breaks = seq(500,1500,500)) + 
-  scale_y_continuous(limits = c(15,21), breaks = seq(10,30,2))
-CRT_DBH_1
-
-# Carbon residence time for GR param 1
-CRT_GR_1 <- ggplot() +  
-  geom_line(data=ea1sa1GRp1gl_out_annual_tile, aes(x=year, y=plantC/NPP, linetype='Control'),alpha=1,col="#c43b3b",size = .6,show.legend = F) + 
-  geom_line(data=ea2sa1GRp1gl_out_annual_tile, aes(x=year, y=plantC/NPP, linetype='+15%'),alpha=1,col="#c43b3b",size = .6,show.legend = F) + 
-  geom_line(data=ea3sa1GRp1gl_out_annual_tile, aes(x=year, y=plantC/NPP, linetype='+30%'),alpha=1,col="#c43b3b",size = .6,show.legend = F) + 
-  scale_linetype_manual("Level of LUE", breaks = c("Control","+15%", "+30%"), 
-                        values = c("dotted","dashed","solid")) +
-  labs(x = "Year", y = expression(paste("Carbon residence time ( ", tau, " , ", yr, ") ")),title = "",
-       subtitle = "Carbon residence time") +
-  theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-                      plot.subtitle  = element_text(size = 10),
-                      legend.text = element_text(size = 9),legend.title = element_text(size = 9),
-                      plot.title = element_text(size = 10),
-                      legend.key = element_rect(fill = NA, color = NA),
-                      legend.position = c(.85, .25),
-                      legend.direction="vertical",
-                      legend.box = "horizontal",
-                      legend.key.size = unit(.6, 'cm'),
-                      legend.margin = margin(2, 2, 2, 2),
-                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(450,1500), breaks = seq(500,1500,500)) + 
-  scale_y_continuous(limits = c(19,27), breaks = seq(10,30,2))
-CRT_GR_1
-
-# STL for DBH param 1
-STL_DBH_1 <- ggplot() + 
-  geom_point(data = data_DBH_p1Den, aes(x = logQMD, y = logDensity12,col=plantC), alpha=0.5, size = 1, inherit.aes = FALSE) +
-  geom_smooth(data= preddataLUE_DBH1, aes(x=x, y=predicted, linetype=group),col="#c43b3b",
-              method = "lm",fullrange = T,size = .6, se=F,show.legend = F) +
-  labs(x = "Quadratic Mean Diameter (ln QMD)", y = "Stand density (ln N)",
-       color  = "Biomass", linetype = "Level of LUE",title = "",
-       subtitle = "Size-density relationship") +
-  scale_color_viridis_c(direction = -1,limits=c(27,41),breaks=seq(30,40,5)) +
-  #scale_colour_scico(direction = -1,palette = "bamako",limits=c(28,39),breaks=c(30,35)) +
-  scale_linetype_manual("Level of LUE", 
-                        breaks = c("Control","+15%", "+30%"), 
-                        values = c("dotted","dashed","solid"),
-                        guide = guide_legend(override.aes = list(color = "#c43b3b"),order=2)) +
-  theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-                      plot.subtitle  = element_text(size = 10),
-                      legend.text = element_text(size = 9),legend.title = element_text(size = 9),
-                      plot.title = element_text(size = 10),
-                      legend.key = element_rect(fill = NA, color = NA),
-                      legend.position = c(.85, .70),
-                      legend.direction="vertical",
-                      legend.box = "horizontal",
-                      legend.key.size = unit(.4, 'cm'),
-                      legend.margin = margin(2, 2, 2, 2),
-                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(3.4,4.0),breaks = seq(3.4,4.0,0.2)) + 
-  scale_y_continuous(limits = c(4.8,6.3),breaks = seq(5,6,.5)) 
-STL_DBH_1
-
-# STL for GR param 1
-STL_GR_1 <- ggplot() + 
-  geom_point(data = data_GR_p1Den, aes(x = logQMD, y = logDensity12,col=plantC), alpha=0.5, size = 1, inherit.aes = FALSE) +
-  geom_smooth(data= preddataLUE_GR1, aes(x=x, y=predicted, linetype=group),col="#c43b3b",
-              method = "lm",fullrange = T,size = .6, se=F,show.legend = F) +
-  labs(x = "Quadratic Mean Diameter (ln QMD)", y = "Stand density (ln N)",
-       color  = "Biomass", linetype = "Level of LUE",title = "",
-       subtitle = "Size-density relationship") +
-  scale_color_viridis_c(direction = -1,limits=c(43,62),breaks=seq(45,60,5)) +
-  #scale_colour_scico(direction = -1,palette = "bamako",limits=c(28,39),breaks=c(30,35)) +
-  scale_linetype_manual("Level of LUE", 
-                        breaks = c("Control","+15%", "+30%"), 
-                        values = c("dotted","dashed","solid"),
-                        guide = guide_legend(override.aes = list(color = "#c43b3b"),order=2)) +
-  theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-                      plot.subtitle  = element_text(size = 10),
-                      legend.text = element_text(size = 9),legend.title = element_text(size = 9),
-                      plot.title = element_text(size = 10),
-                      legend.key = element_rect(fill = NA, color = NA),
-                      legend.position = c(.85, .70),
-                      legend.direction="vertical",
-                      legend.box = "horizontal",
-                      legend.key.size = unit(.4, 'cm'),
-                      legend.margin = margin(2, 2, 2, 2),
-                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(3.6,4.4),breaks = seq(3.6,4.4,0.2)) + 
-  scale_y_continuous(limits = c(4.3,6.2),breaks = seq(4.5,6,.5))
-STL_GR_1
-
-# Figure
-ff_stl <- B_DBH_1 + STL_DBH_1 + B_GR_1 + STL_GR_1 + 
-  plot_layout(ncol = 2) 
-ff_stl
-ggsave("~/GFDY/manuscript/extra_figures/ff_stl.png", width = 7, height = 6, dpi=300)
-
-ff_stl <- B_DBH_1 + STL_DBH_1 + CRT_DBH_1 + B_GR_1 + STL_GR_1 + CRT_GR_1 +
-  plot_layout(ncol = 3) 
-ff_stl
-ggsave("~/GFDY/manuscript/extra_figures/ff_stl_crt.png", width = 9, height = 6, dpi=300)
-
-B_DBH_1 +  CRT_DBH_1 + plot_layout(ncol = 2)
-ggsave("~/GFDY/manuscript/extra_figures/ff_bb_crt.png", width = 6, height = 3, dpi=300)
-
-# More
-ggplot() + 
-  geom_line(data=ea1sa1DBHp1gl_out_annual_tile, aes(x=year, y=plantC, linetype='Control'),alpha=1,col="#c43b3b",size = .6) + 
-  geom_line(data=ea2sa1DBHp1gl_out_annual_tile, aes(x=year, y=plantC, linetype='+15%'),alpha=1,col="#c43b3b",size = .6) + 
-  geom_line(data=ea3sa1DBHp1gl_out_annual_tile, aes(x=year, y=plantC, linetype='+30%'),alpha=1,col="#c43b3b",size = .6) + 
-  scale_linetype_manual("Growth", 
-                        breaks = c("Control","+15%", "+30%"),
-                        labels = c("Low","Medium", "High"),
-                        values = c("dotted","dashed","solid")) +
-  labs(x = "Year", y = expression(paste("Biomass (Kg C ", m^-2, " ", yr^-1, ") ")),title = "Total biomass",
-       linetype = "Growth") +
-  theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-                      plot.subtitle  = element_text(size = 10),
-                      legend.text = element_text(size = 9),legend.title = element_text(size = 9),
-                      plot.title = element_text(size = 10),
-                      legend.key = element_rect(fill = NA, color = NA),
-                      legend.position = c(.80, .25),
-                      legend.direction="vertical",
-                      legend.box = "horizontal",
-                      legend.key.size = unit(.6, 'cm'),
-                      legend.margin = margin(2, 2, 2, 2),
-                      legend.box.margin = margin(1, 1, 1, 1)) 
-
-ggplot() +  
-  geom_line(data=ea1sa1DBHp1gl_out_annual_tile, aes(x=year, y=plantC/NPP, linetype='Control'),alpha=1,col="#c43b3b",size = .6,show.legend = F) + 
-  geom_line(data=ea2sa1DBHp1gl_out_annual_tile, aes(x=year, y=plantC/NPP, linetype='+15%'),alpha=1,col="#c43b3b",size = .6,show.legend = F) + 
-  geom_line(data=ea3sa1DBHp1gl_out_annual_tile, aes(x=year, y=plantC/NPP, linetype='+30%'),alpha=1,col="#c43b3b",size = .6,show.legend = F) + 
-  scale_linetype_manual("Level of LUE", breaks = c("Control","+15%", "+30%"), 
-                        values = c("dotted","dashed","solid")) +
-  labs(x = "Year", y = expression(paste("Carbon residence time ( ", tau, " , ", yr, ") ")),title = "",
-       subtitle = "Carbon residence time") +
-  theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-                      plot.subtitle  = element_text(size = 10),
-                      legend.text = element_text(size = 9),legend.title = element_text(size = 9),
-                      plot.title = element_text(size = 10),
-                      legend.key = element_rect(fill = NA, color = NA),
-                      legend.position = c(.85, .25),
-                      legend.direction="vertical",
-                      legend.box = "horizontal",
-                      legend.key.size = unit(.6, 'cm'),
-                      legend.margin = margin(2, 2, 2, 2),
-                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(450,1500), breaks = seq(500,1500,500)) + 
-  scale_y_continuous(limits = c(15,21), breaks = seq(10,30,2))

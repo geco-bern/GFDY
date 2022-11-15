@@ -10,7 +10,7 @@ library(patchwork)
 
 load("~/GFDY/data/inputs_mod/ddf_obs.RData")
 
-# Evaluation for DBH mortality 
+# Evaluation for DBH mortality ####
 # DBH mortality has the shape params: p1=1.5, p2=2.5, p3=4.0
 # The calibration was done with p2=2.5
 load("~/GFDY/data/inputs_mod/df_drivers_DBH_gs.RData")
@@ -76,7 +76,7 @@ write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_m
 write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_out_annual_tile.csv")
 write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_out_annual_cohorts.csv")
 
-# Compare targets before and after calibration - DBH
+# Compare targets before and after calibration for DBH ####
 
 # Post
 # DBH p2=2.5 and LUE control
@@ -133,9 +133,9 @@ precalibDBH <- ggplot(dff) +
 
 ff <- precalibDBH + postcalibDBH + plot_annotation(tag_levels = 'A')
 ff
-ggsave("~/GFDY/manuscript/extra_figures/fig_dbh.png", width = 8, height = 6, dpi=300)
+ggsave("~/GFDY/manuscript/figures_extra/fig_dbh.png", width = 8, height = 6, dpi=300)
 
-# Evaluation for GR mortality 
+# Evaluation for GR mortality ####
 # Growth-rate mortality has the shape params: p1=-0.5, p2=-0.8, p3=-1.4
 # The calibration was done with p2=-0.8
 load("~/GFDY/data/inputs_mod/df_drivers_GR_gs.RData")
@@ -191,7 +191,7 @@ write.csv(df_calib_GR_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mo
 write.csv(df_calib_GR_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1GRp3gl_out_annual_tile.csv")
 write.csv(df_calib_GR_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1GRp3gl_out_annual_cohorts.csv")
 
-# Compare targets before and after calibration - GR
+# Compare targets before and after calibration for GR ####
 
 # Post
 # GR p2=-0.8 and LUE control
@@ -216,11 +216,11 @@ dff <- data.frame(
 postcalibGR <- dff %>% 
   ggplot() +
   geom_point(aes(x = targets_mod, y = targets_obs, col=variables)) +
-  theme_classic()+labs(x = "Predicted", y = "Observed")+
+  theme_classic()+labs(x = "Predicted", y = "Observed") +
   geom_abline(col="grey") + ggtitle("After calibration - GR gs-Leuning") +
   facet_wrap(~variables,nrow = 4) + theme(legend.position = "none")
 
-#Pre
+# Pre
 preGRgl_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/preGRp2gs_output_annual_tile.csv")
 preGRgl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/preGRp2gs_output_annual_cohorts.csv")
 
@@ -244,11 +244,11 @@ dff <- data.frame(
 precalibGR <- dff %>% 
   ggplot() +
   geom_point(aes(x = targets_mod, y = targets_obs, col=variables)) +
-  theme_classic()+labs(x = "Predicted", y = "Observed")+
+  theme_classic()+labs(x = "Predicted", y = "Observed") +
   geom_abline(col="grey") + ggtitle("Before calibration - GR gs-Leuning") +
   facet_wrap(~variables,nrow = 4) + theme(legend.position = "none")
 
 gg <- precalibGR + postcalibGR + plot_annotation(tag_levels = 'A')
 gg
-ggsave("~/GFDY/manuscript/extra_figures/fig_gr.png", width = 8, height = 6, dpi=300)
+ggsave("~/GFDY/manuscript/figures_extra/fig_gr.png", width = 8, height = 6, dpi=300)
 

@@ -1,4 +1,4 @@
-# This script run the model simulations using the forcing drivers for CH-Lae
+# This script runs the model simulations using the forcing drivers for CH-Lae
 # and the simulation settings used in the LM3-PPA
 
 # load packages
@@ -8,7 +8,7 @@ library(rsofun)
 library(ggplot2)
 library(multidplyr)
 
-# Simulation settings
+# Simulation settings ####
 
 # Site-specific information. Taking 2004 to 2014, corresponding to subset of data for site CH-Lae
 sitename <- "CH-Lae"
@@ -146,7 +146,7 @@ df_soiltexture <- bind_rows(
   bottom = tibble(layer = "bottom", fsand = 0.4, fclay = 0.3, forg = 0.1, fgravel = 0.1)
 )
 
-### Forcing drivers
+# Forcing drivers ####
 load("~/GFDY/data/inputs_mod/forcingLAE.RData")
 
 if (params_siml$method_photosynth == "gs_leuning"){
@@ -179,7 +179,7 @@ df_drivers <- tibble(sitename,
 save(df_drivers, file = "~/GFDY/data/inputs_mod/df_drivers_DBH_gs.RData")
 save(df_drivers, file = "~/GFDY/data/inputs_mod/df_drivers_GR_gs.RData")
 
-# Run the model
+# Run the model ####
 # DBH mortality has the shape params: p1=1.5, p2=2.5, p3=4.0
 # This first simulation is run with p2=2.5
 load("~/GFDY/data/inputs_mod/df_drivers_DBH_gs.RData")

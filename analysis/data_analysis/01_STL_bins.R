@@ -90,8 +90,6 @@ aggData_QMDbinsDen <- aggData_QMDbinsDen %>%
 save(aggData_QMDbinsDen, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
 save(aggData_QMDbinsRest, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsRest75.RData")
 
-# Table S1
+# Summary of selected data
 load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
-length(unique(aggData_QMDbinsDen$PlotID))
-summary(aggData_QMDbinsDen)
-aggData_QMDbinsDen %>% filter()
+aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(count=n_distinct(PlotID))

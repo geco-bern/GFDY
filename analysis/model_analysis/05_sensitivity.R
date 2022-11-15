@@ -299,7 +299,7 @@ DBHp1thetaBM2gl_RelChange_B_NPP_0_15 <- data.frame(dNPP0_15,dB0_15)
 DBHp1thetaBM2gl_RelChange_B_NPP_15_30 <- data.frame(dNPP15_30,dB15_30)
 DBHp1thetaBM2gl_RelChange_B_NPP_0_30 <- data.frame(dNPP0_30,dB0_30)
 
-figS3A <- ggplot() + 
+figS4A <- ggplot() + 
   geom_point(data=DBHp1thetaBM0gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15,col="theta0", shape='+15%'),size=3) + 
   geom_point(data=DBHp1thetaBM0gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30,col="theta0", shape='+30%'),size=3) + 
   geom_point(data=DBHp1thetaBM1gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15,col="theta1", shape='+15%'),size=3) + 
@@ -333,7 +333,7 @@ figS3A <- ggplot() +
   scale_x_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) + 
   scale_y_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) +
   geom_abline(slope=1, intercept = 0.0, linetype="dashed") 
-figS3A
+figS4A
 
 ### DBH p2 ####
 ea1sa1DBHp2gl_thetaBM0_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_out_annual_tile.csv")
@@ -406,7 +406,7 @@ DBHp2thetaBM2gl_RelChange_B_NPP_0_15 <- data.frame(dNPP0_15,dB0_15)
 DBHp2thetaBM2gl_RelChange_B_NPP_15_30 <- data.frame(dNPP15_30,dB15_30)
 DBHp2thetaBM2gl_RelChange_B_NPP_0_30 <- data.frame(dNPP0_30,dB0_30)
 
-figS3B <- ggplot() + 
+figS4B <- ggplot() + 
   geom_point(data=DBHp2thetaBM0gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15, shape='+15%',col="theta0"),size=3) + 
   geom_point(data=DBHp2thetaBM0gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30, shape='+30%',col="theta0"),size=3) + 
   geom_point(data=DBHp2thetaBM1gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15, shape='+15%',col="theta1"),size=3) + 
@@ -439,7 +439,7 @@ figS3B <- ggplot() +
   scale_x_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) + 
   scale_y_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) +
   geom_abline(slope=1, intercept = 0.0, linetype="dashed") 
-figS3B
+figS4B
 
 ### DBH p3 ####
 ea1sa1DBHp3gl_thetaBM0_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_out_annual_tile.csv")
@@ -512,7 +512,7 @@ DBHp3thetaBM2gl_RelChange_B_NPP_0_15 <- data.frame(dNPP0_15,dB0_15)
 DBHp3thetaBM2gl_RelChange_B_NPP_15_30 <- data.frame(dNPP15_30,dB15_30)
 DBHp3thetaBM2gl_RelChange_B_NPP_0_30 <- data.frame(dNPP0_30,dB0_30)
 
-figS3C <- ggplot() + 
+figS4C <- ggplot() + 
   geom_point(data=DBHp3thetaBM0gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15, shape='+15%',col="theta0"),size=3) + 
   geom_point(data=DBHp3thetaBM0gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30, shape='+30%',col="theta0"),size=3) + 
   geom_point(data=DBHp3thetaBM1gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15, shape='+15%',col="theta1"),size=3) + 
@@ -545,7 +545,7 @@ figS3C <- ggplot() +
   scale_x_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) + 
   scale_y_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) +
   geom_abline(slope=1, intercept = 0.0, linetype="dashed") 
-figS3C
+figS4C
 
 ### GR p1 ####
 ea1sa1GRp1gl_thetaBM0_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea1sa1GRp1gl_out_annual_tile.csv")
@@ -618,7 +618,7 @@ GRp1thetaBM2gl_RelChange_B_NPP_0_15 <- data.frame(dNPP0_15,dB0_15)
 GRp1thetaBM2gl_RelChange_B_NPP_15_30 <- data.frame(dNPP15_30,dB15_30)
 GRp1thetaBM2gl_RelChange_B_NPP_0_30 <- data.frame(dNPP0_30,dB0_30)
 
-figS3D <- ggplot() + 
+figS4D <- ggplot() + 
   geom_point(data=GRp1thetaBM0gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15, shape='+15%',col="theta0"),size=3) + 
   geom_point(data=GRp1thetaBM0gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30, shape='+30%',col="theta0"),size=3) + 
   geom_point(data=GRp1thetaBM1gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15, shape='+15%',col="theta1"),size=3) + 
@@ -651,7 +651,7 @@ figS3D <- ggplot() +
   scale_x_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) + 
   scale_y_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) +
   geom_abline(slope=1, intercept = 0.0, linetype="dashed") 
-figS3D
+figS4D
 
 ### GR p2 ####
 ea1sa1GRp2gl_thetaBM0_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea1sa1GRp2gl_out_annual_tile.csv")
@@ -724,7 +724,7 @@ GRp2thetaBM2gl_RelChange_B_NPP_0_15 <- data.frame(dNPP0_15,dB0_15)
 GRp2thetaBM2gl_RelChange_B_NPP_15_30 <- data.frame(dNPP15_30,dB15_30)
 GRp2thetaBM2gl_RelChange_B_NPP_0_30 <- data.frame(dNPP0_30,dB0_30)
 
-figS3E <- ggplot() + 
+figS4E <- ggplot() + 
   geom_point(data=GRp2thetaBM0gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15, shape='+15%',col="theta0"),size=3) + 
   geom_point(data=GRp2thetaBM0gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30, shape='+30%',col="theta0"),size=3) + 
   geom_point(data=GRp2thetaBM1gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15, shape='+15%',col="theta1"),size=3) + 
@@ -757,7 +757,7 @@ figS3E <- ggplot() +
   scale_x_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) + 
   scale_y_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) +
   geom_abline(slope=1, intercept = 0.0, linetype="dashed") 
-figS3E
+figS4E
 
 ### GR p3 ####
 ea1sa1GRp3gl_thetaBM0_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea1sa1GRp3gl_out_annual_tile.csv")
@@ -830,7 +830,7 @@ GRp3thetaBM2gl_RelChange_B_NPP_0_15 <- data.frame(dNPP0_15,dB0_15)
 GRp3thetaBM2gl_RelChange_B_NPP_15_30 <- data.frame(dNPP15_30,dB15_30)
 GRp3thetaBM2gl_RelChange_B_NPP_0_30 <- data.frame(dNPP0_30,dB0_30)
 
-figS3F <- ggplot() + 
+figS4F <- ggplot() + 
   geom_point(data=GRp3thetaBM0gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15, shape='+15%',col="theta0"),size=3) + 
   geom_point(data=GRp3thetaBM0gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30, shape='+30%',col="theta0"),size=3) + 
   geom_point(data=GRp3thetaBM1gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15, shape='+15%',col="theta1"),size=3) + 
@@ -863,13 +863,13 @@ figS3F <- ggplot() +
   scale_x_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) + 
   scale_y_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) +
   geom_abline(slope=1, intercept = 0.0, linetype="dashed") 
-figS3F
+figS4F
 
-# Figure S3 ####
-ffs3 <- figS3A + figS3B + figS3C +figS3D +figS3E +figS3F +
+# Figure S4 ####
+ffs4 <- figS4A + figS4B + figS4C +figS4D +figS4E +figS4F +
   plot_layout(ncol = 3) + 
   plot_annotation(tag_levels = 'A', tag_suffix = ")") & 
   theme(plot.margin = unit(rep(0.13,4), "cm"))#+ 
 #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
-ffs3
-ggsave("~/GFDY/manuscript/figures/fig_S3.png", width = 9.8, height = 6.3, dpi=300)
+ffs4
+ggsave("~/GFDY/manuscript/figures/fig_S4.png", width = 9.8, height = 6.3, dpi=300)

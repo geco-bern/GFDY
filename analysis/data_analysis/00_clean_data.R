@@ -47,7 +47,7 @@ EFM_stand_Allsps <- EFM_stand_Allsps %>% left_join(dominant_speciesEFM[,c(1,3,4)
 percent_speciesEFM <-  EFM_stand_Bysps %>% group_by(FNUM, AJ) %>% mutate(totalBA=sum(BasalAreaAHC1_2_m2perha,na.rm = T)) %>% ungroup() %>%
   group_by(FNUM, AJ, Latin) %>% mutate(percent=BasalAreaAHC1_2_m2perha/totalBA*100) %>% ungroup() %>%
   group_by(FNUM, AJ) %>% top_n(3, BasalAreaAHC1_2_m2perha) %>%
-  select(FNUM, Latin, AJ, BasalAreaAHC1_2_m2perha,totalBA,percent) %>%
+  dplyr::select(FNUM, Latin, AJ, BasalAreaAHC1_2_m2perha,totalBA,percent) %>%
   arrange(AJ,FNUM)
 
 # Bray-Curtis dissimilarity index
@@ -73,6 +73,12 @@ change_speciesEFM <- change_speciesEFM %>% filter(FNUM %in% aggData_QMDbinsDen$P
 mean(change_speciesEFM$BC,na.rm=T)
 sd(change_speciesEFM$BC,na.rm=T)
 
+ggplot() +  
+  geom_smooth(data=EFM_stand_Allsps, aes(x=DBHqAHC1_2_cm, y=BiomassIncrement_KgperhaperPeriod),se=F,size=.5)
+
+ggplot() +  
+  geom_smooth(data=EFM_stand_Allsps, aes(x=DBHqAHC1_2_cm, y=BasalAreaIncrement_m2perhaperPeriod),se=F,size=.5)
+
 ## Tree-level data from EFM ####
 EFM_tree <- readRDS("~/GFDY/data/raw_obs/efm/EFM_tree_data.RDS") # 18 plots
 unique(EFM_tree$Latin)
@@ -80,7 +86,7 @@ unique(EFM_tree$Latin)
 EFM_tree <- EFM_tree %>% filter(FNUM %in% EFM_stand_Allsps$FNUM)
 # Add number of trees per plotID, censusID and SPECIES_ID (n) and multiply by REPRESENTATION to estimate tree density
 EFM_tree <- EFM_tree %>%  group_by(FNUM,AJ,Latin) %>% mutate(Tree_density_perha=n()) # %>% add_tally()
-EFM_tree <- EFM_tree %>% select(FNUM, AJ, Latin, Tree_density_perha, Abovegroundmass_kg) %>%
+EFM_tree <- EFM_tree %>% dplyr::select(FNUM, AJ, Latin, Tree_density_perha, Abovegroundmass_kg) %>%
   rename(PlotID=FNUM, Year=AJ, Species=Latin, N = Tree_density_perha, B = Abovegroundmass_kg) %>%
   mutate(logN=log(N),logB=log(B),data="EFM")
 
@@ -259,7 +265,7 @@ str(NFR_tree)
 NFR_tree <- NFR_tree %>% filter(FNUM %in% NFR_stand_Allsps$FNUM)
 # Add number of trees per plotID, censusID and SPECIES_ID (n) and multiply by REPRESENTATION to estimate tree density
 NFR_tree <- NFR_tree %>%  group_by(FNUM,AJ,species) %>% mutate(Tree_density_perha=n()) # %>% add_tally()
-NFR_tree <- NFR_tree %>% select(FNUM, AJ, species, Tree_density_perha, Abovegroundmass_kg) %>%
+NFR_tree <- NFR_tree %>% dplyr::select(FNUM, AJ, species, Tree_density_perha, Abovegroundmass_kg) %>%
   rename(PlotID=FNUM, Year=AJ, Species=species, N = Tree_density_perha, B = Abovegroundmass_kg) %>%
   mutate(logN=log(N),logB=log(B),data="EFM")
 
@@ -293,55 +299,35 @@ save(aggData, file = "~/GFDY/data/inputs_obs/aggData.RData")
 summary(aggData)
 # EFM
 summary(EFM_stand_Allsps)
-EFM_stand_Allsps %>% summarise(mean=mean())
+EFM_stand_Allsps %>% ungroup() %>% summarise(count=n_distinct(FNUM))
+EFM_stand_Allsps %>% ungroup() %>% summarise(mean=mean(Area_ha),sd=sd(Area_ha))
+EFM_stand_Allsps %>% ungroup() %>% summarise(min=min(AJ),max=max(AJ))
+EFM_stand_Allsps %>% ungroup() %>% summarise(mean=mean(PeriodLength_years,na.rm=T),sd=sd(PeriodLength_years,na.rm=T))
+EFM_stand_Allsps %>% ungroup() %>% summarise(mean=mean(HUM,na.rm=T),sd=sd(HUM,na.rm=T))
+EFM_stand_Allsps %>% ungroup() %>% summarise(mean=mean(DBHqAHC1_2_cm,na.rm=T),sd=sd(DBHqAHC1_2_cm,na.rm=T))
+EFM_stand_Allsps %>% ungroup() %>% summarise(mean=mean(DBHqAHC1_2_cm,na.rm=T),sd=sd(DBHqAHC1_2_cm,na.rm=T))
+EFM_stand_Allsps %>% ungroup() %>% summarise(mean=mean(TreesPerHectareAHC1_2,na.rm=T),sd=sd(TreesPerHectareAHC1_2,na.rm=T))
+EFM_stand_Allsps %>% ungroup() %>% summarise(mean=mean(BiomassIncrement_KgperhaperYear,na.rm=T),sd=sd(BiomassIncrement_KgperhaperYear,na.rm=T))
+
 # NFI
 summary(NFI_plot_census)
-NFI_plot_census %>% summarise(mean=mean())
+NFI_plot_census %>% ungroup() %>% summarise(count=n_distinct(PLOTID))
+NFI_plot_census %>% ungroup() %>% summarise(mean=mean(PLOT_AREA_LARGE),sd=sd(PLOT_AREA_LARGE))
+NFI_plot_census %>% ungroup() %>% summarise(min=min(Year),max=max(Year))
+NFI_plot_census %>% ungroup() %>% summarise(mean=mean(PeriodLength_years,na.rm=T),sd=sd(PeriodLength_years,na.rm=T))
+NFI_plot_census %>% ungroup() %>% summarise(mean=mean(ELEVATION,na.rm=T),sd=sd(ELEVATION,na.rm=T))
+NFI_plot_census %>% ungroup() %>% summarise(mean=mean(MEAN_DBH_HA,na.rm=T),sd=sd(MEAN_DBH_HA,na.rm=T))
+NFI_plot_census %>% ungroup() %>% summarise(mean=mean(NPH,na.rm=T),sd=sd(NPH,na.rm=T))
+NFI_plot_census %>% ungroup() %>% summarise(mean=mean(BiomassIncrement_Kg_ha_year,na.rm=T),sd=sd(BiomassIncrement_Kg_ha_year,na.rm=T))
+
 # NFR
 summary(NFR_stand_Allsps)
-NFR_stand_Allsps %>% summarise(mean=mean())
+NFR_stand_Allsps %>% ungroup() %>% summarise(count=n_distinct(FNUM))
+NFR_stand_Allsps %>% ungroup() %>% summarise(mean=mean(plot_area_ha),sd=sd(plot_area_ha))
+NFR_stand_Allsps %>% ungroup() %>% summarise(min=min(AJ),max=max(AJ))
+NFR_stand_Allsps %>% ungroup() %>% summarise(mean=mean(PeriodLength_years,na.rm=T),sd=sd(PeriodLength_years,na.rm=T))
+NFR_stand_Allsps %>% ungroup() %>% summarise(mean=mean(ele,na.rm=T),sd=sd(ele,na.rm=T))
+NFR_stand_Allsps %>% ungroup() %>% summarise(mean=mean(DBHqAHC1_2_cm,na.rm=T),sd=sd(DBHqAHC1_2_cm,na.rm=T))
+NFR_stand_Allsps %>% ungroup() %>% summarise(mean=mean(TreesPerHectareAHC1_2,na.rm=T),sd=sd(TreesPerHectareAHC1_2,na.rm=T))
+NFR_stand_Allsps %>% ungroup() %>% summarise(mean=mean(BiomassIncrement_KgperhaperYear,na.rm=T),sd=sd(BiomassIncrement_KgperhaperYear,na.rm=T))
 
-
-# Tree-level analysis logN ~ logB and Year ####
-# Using tree-level biomass
-tree_level_data <- rbind(EFM_tree,NFI_tree,NFR_tree)
-str(tree_level_data)
-
-Fit = lmer(logN ~ scale(logB) + (1|PlotID) + (1|Species), data = tree_level_data, na.action = "na.exclude")
-summary(Fit)
-plot(allEffects(Fit))
-plot_model(Fit,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logB"))
-FitB = lmer(logB ~ scale(logN) + scale(Year) + (1|PlotID) + (1|Species), data = tree_level_data, na.action = "na.exclude")
-FitB = lmer(logN ~ scale(logB) + scale(Year) + (1|PlotID) + (1|Species), data = tree_level_data, na.action = "na.exclude")
-summary(FitB)
-plot(allEffects(FitB))
-plot_model(FitB,type = "pred",show.data=F, dot.size=1.5, terms = c("logB","Year[1985,2000,2015]"))
-plot_model(FitB,type = "pred",show.data=F, dot.size=1.5, terms = c("logN","Year[1946,1985,2019]"))
-
-pred <- ggpredict(FitB, terms = c("logN","Year[1946,1985,2019]"), full.data = TRUE)
-plot(pred, add.data = F) 
-preddata <- as.data.frame(pred)
-
-plotB <- ggplot() + 
-  geom_smooth(data= preddata, aes(x=x, y=predicted, color=group), method = "lm",fullrange = T,size = .6, se=F) +
-  labs(x = "ln QMD", y = "ln N",title = "STL changes as a function of time",color  = "Year") + 
-  scale_color_manual(expression(paste(italic("Year"))), 
-                     breaks = c("1946","1985", "2019"), 
-                     values = c("#FC4E07", "#00AFBB", "#E7B800")) +
-  theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-                      legend.text = element_text(size = 9),legend.title = element_text(size = 9),
-                      plot.title = element_text(size = 10),
-                      legend.key = element_rect(fill = NA, color = NA),
-                      legend.position = c(.11, .20),
-                      legend.direction="vertical",
-                      legend.box = "horizontal",
-                      legend.margin = margin(2, 2, 2, 2),
-                      legend.key.size = unit(.6, 'cm'),
-                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(1.95,4.7),breaks = seq(2.5,4.5,1))+
-  scale_y_continuous(limits = c(3.6,9.2))
-plot75Year
-
-#library(LRQMM)
-#FitB = lqmm(logN ~ scale(logB) + (1|PlotID) + (1|Species), data = tree_level_data, tau = 0.5, nK = 11, type = "normal")

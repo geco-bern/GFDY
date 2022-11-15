@@ -12,6 +12,7 @@ library(MuMIn)
 library(sjPlot)
 library(ggeffects)
 library(patchwork)
+library(nlme)
 
 # load data
 load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen55.RData")
@@ -21,6 +22,8 @@ load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen90.RData")
 
 # LME model N ~ QMD and Year with 75th percentile
 Fit_Year = lmer(logDensity ~ scale(logQMD) + scale(Year) + (1|PlotID) + (1|Species), data = aggData_QMDbinsDen, na.action = "na.exclude")
+#Fit_Year = lme(logDensity ~ scale(logQMD) + scale(Year),random=list(PlotID=~1, Species=~1), 
+#               data = aggData_QMDbinsDen, correlation = corAR1())
 summary(Fit_Year)
 Fit = lmer(logDensity ~ scale(logQMD) + (1|PlotID) + (1|Species), data = aggData_QMDbinsDen, na.action = "na.exclude")
 summary(Fit)
@@ -162,3 +165,48 @@ anim_save("~/GFDY/manuscript/figures_extra/fig_STL_anim_yr.gif", q)
 anim_save("~/GFDY/manuscript/figures_extra/fig_STL_anim.png", width = 5, height = 4.5)
 anim_save("~/GFDY/manuscript/figures_extra/fig_STL_anim2.gif", width = 5, height = 4.5)
 
+# All plots
+ggplot() + 
+  geom_point(data = aggData_QMDbinsDen, aes(x = logQMD, y = logDensity), alpha=0.3, size = .8,col="black", shape = 16, inherit.aes = FALSE) + 
+  geom_point(data = aggData_QMDbinsRest, aes(x = logQMD, y = logDensity), alpha=0.2, size = .8,col="black",shape = 16, inherit.aes = FALSE) + 
+  labs(x = "ln QMD", y = "ln N",title = "") + 
+  scale_color_manual("Year", #expression(paste(italic("Year"))), 
+                     breaks = c("1946","1985", "2019"), 
+                     values = c("#FC4E07", "#00AFBB", "#E7B800")) +
+  theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
+                      legend.text = element_text(size = 8),legend.title = element_text(size = 8),
+                      plot.title = element_text(size = 10),
+                      legend.key = element_rect(fill = NA, color = NA),
+                      legend.position = c(.11, .20),
+                      legend.direction="vertical",
+                      legend.box = "horizontal",
+                      legend.margin = margin(2, 2, 2, 2),
+                      legend.key.size = unit(.6, 'cm'),
+                      legend.box.margin = margin(1, 1, 1, 1)) +
+  scale_x_continuous(limits = c(1.95,4.7),breaks = seq(2.5,4.5,1))+
+  scale_y_continuous(limits = c(3.6,9.2))
+ggsave("~/GFDY/manuscript/extra_figures/fig_STL_all.png", width = 5, height = 4.5, dpi=300)
+
+# Selected plots
+ggplot() + 
+  geom_point(data = aggData_QMDbinsDen, aes(x = logQMD, y = logDensity), alpha=0.3, size = .8,col="black", shape = 16, inherit.aes = FALSE) + 
+  geom_point(data = aggData_QMDbinsRest, aes(x = logQMD, y = logDensity), alpha=0.2, size = .8,col="grey",shape = 16, inherit.aes = FALSE) + 
+  labs(x = "ln QMD", y = "ln N",title = "") + 
+  scale_color_manual("Year", #expression(paste(italic("Year"))), 
+                     breaks = c("1946","1985", "2019"), 
+                     values = c("#FC4E07", "#00AFBB", "#E7B800")) +
+  theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
+                      legend.text = element_text(size = 8),legend.title = element_text(size = 8),
+                      plot.title = element_text(size = 10),
+                      legend.key = element_rect(fill = NA, color = NA),
+                      legend.position = c(.11, .20),
+                      legend.direction="vertical",
+                      legend.box = "horizontal",
+                      legend.margin = margin(2, 2, 2, 2),
+                      legend.key.size = unit(.6, 'cm'),
+                      legend.box.margin = margin(1, 1, 1, 1)) +
+  scale_x_continuous(limits = c(1.95,4.7),breaks = seq(2.5,4.5,1))+
+  scale_y_continuous(limits = c(3.6,9.2))
+ggsave("~/GFDY/manuscript/extra_figures/fig_STL_sel.png", width = 5, height = 4.5, dpi=300)

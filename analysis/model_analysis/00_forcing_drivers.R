@@ -6,7 +6,7 @@ library(dplyr)
 library(readr)
 library(ingestr)
 
-# Meteo data
+# Meteo data ####
 FLX_HH_LAE <- read_csv("~/GFDY/data/raw_mod/FLX_CH-Lae_FLUXNET2015_FULLSET_HH_2004-2014_1-3.csv") %>%
   dplyr::select(TIMESTAMP_START,PPFD_IN,SW_IN_F,TA_F,TS_F_MDS_1,RH,P_F,WS_F,PA_F,SWC_F_MDS_1) %>% 
   dplyr::mutate_all(funs(ifelse(.==-9999, NA, .))) %>% 
@@ -47,14 +47,14 @@ FluxForcing <- FluxForcing %>%
   summarise_at(vars(1:14), list(~mean(., na.rm = TRUE)))  %>% 
   mutate(sitename = "CH-Lae") 
 
-## convert rain to units per seconds
+# convert rain to units per seconds
 dt_secs <- lubridate::interval(FluxForcing$datehour[1], FluxForcing$datehour[2]) %>% 
   time_length("seconds")
 FluxForcing <- FluxForcing %>% 
   mutate(RAIN = RAIN / dt_secs)
 FluxForcing <- FluxForcing[,-c(1:4)]
 
-# CO2 for one specific site
+# CO2 for one specific site ####
 df_co2 <- ingestr::ingest_bysite(
   sitename  = "CH-Lae",
   source  = "co2_mlo",
@@ -73,6 +73,7 @@ FluxForcing <- FluxForcing %>%
   #group_by(sitename) %>% 
   #tidyr::nest()
 
+# Save forcing data ####
 FluxForcing <- FluxForcing %>% relocate(aCO2_AW, .after = PRESSURE) 
 forcingLAE <- FluxForcing
 save(forcingLAE, file = "~/GFDY/data/inputs_mod/forcingLAE.RData")
