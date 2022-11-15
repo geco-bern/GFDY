@@ -1,4 +1,12 @@
-# GFDY
+# Grow Fast Die Young (GFDY)
+
+## Abstract
+
+
+
+![](https://github.com/computationales/GFDY/raw/master/manuscript/figures/fig_1.png)
+
+## Repository use
 
 This repository includes the scripts to analyse the links between growth and biomass.
 
