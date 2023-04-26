@@ -299,20 +299,23 @@ DBHp1thetaBM2gl_RelChange_B_NPP_0_15 <- data.frame(dNPP0_15,dB0_15)
 DBHp1thetaBM2gl_RelChange_B_NPP_15_30 <- data.frame(dNPP15_30,dB15_30)
 DBHp1thetaBM2gl_RelChange_B_NPP_0_30 <- data.frame(dNPP0_30,dB0_30)
 
-figS4A <- ggplot() + 
-  geom_point(data=DBHp1thetaBM0gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15,col="theta0", shape='+15%'),size=3) + 
-  geom_point(data=DBHp1thetaBM0gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30,col="theta0", shape='+30%'),size=3) + 
-  geom_point(data=DBHp1thetaBM1gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15,col="theta1", shape='+15%'),size=3) + 
-  geom_point(data=DBHp1thetaBM1gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30,col="theta1", shape='+30%'),size=3) + 
-  geom_point(data=DBHp1thetaBM2gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15,col="theta2", shape='+15%'),size=3) + 
-  geom_point(data=DBHp1thetaBM2gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30,col="theta2", shape='+30%'),size=3) + 
-  scale_color_manual("Parameter", breaks = c("theta1", "theta0", "theta2"), 
-                     values = c("#009E73", "#0072B2", "#D55E00"),
-                     labels =c(expression(paste(theta)[italic("BM")]~ "= 2.20"),
-                               expression(paste(theta)[italic("BM")]~ "= 2.36"),
-                               expression(paste(theta)[italic("BM")]~ "= 2.50")),
-                     guide = guide_legend(override.aes = list(size=1.6),order=1)) +
-  scale_shape_manual("Level of LUE", breaks = c("+15%","+30%"), 
+figS6A <- ggplot() + 
+  geom_abline(slope=1, intercept = 0.0, linetype="dashed") +
+  geom_point(data=DBHp1thetaBM0gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15,col="theta0", shape='0-15%'),size=3) + 
+  geom_point(data=DBHp1thetaBM0gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30,col="theta0", shape='0-30%'),size=3) + 
+  geom_point(data=DBHp1thetaBM1gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15,col="theta1", shape='0-15%'),size=3) + 
+  geom_point(data=DBHp1thetaBM1gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30,col="theta1", shape='0-30%'),size=3) + 
+  geom_point(data=DBHp1thetaBM2gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15,col="theta2", shape='0-15%'),size=3) + 
+  geom_point(data=DBHp1thetaBM2gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30,col="theta2", shape='0-30%'),size=3) + 
+  scale_color_viridis(discrete=TRUE,option="viridis",
+                      "Parameter",breaks = c("theta1", "theta0", "theta2"),
+                      labels =c(expression(paste(theta)[italic("BM")]~ "= 2.20"),
+                                expression(paste(theta)[italic("BM")]~ "= 2.36"),
+                                expression(paste(theta)[italic("BM")]~ "= 2.50")),
+                      guide = guide_legend(override.aes = list(size=1.6),order=1)) +
+#  scale_color_manual("Parameter", breaks = c("theta1", "theta0", "theta2"), 
+#                     values = c("#009E73", "#0072B2", "#D55E00")) +
+  scale_shape_manual("Change in LUE", breaks = c("0-15%","0-30%"), 
                      values = c(16,17),
                      guide = guide_legend(override.aes = list(color = "black",size=1.6),order=2)) +  
   labs(x = expression(frac(dG, G)), y = expression(frac(dB, B)),
@@ -320,20 +323,20 @@ figS4A <- ggplot() +
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
-                     legend.text = element_text(size = 8),legend.title = element_text(size = 8),
+                     legend.text = element_text(size = 9),legend.title = element_text(size = 9),
                      plot.title = element_text(size = 10),
                      legend.key = element_rect(fill = NA, color = NA),
-                     legend.position = c(.35, .79),
+                     legend.position = c(.41, .83),
                      legend.direction="vertical",
                      legend.box = "horizontal",
                      legend.margin = margin(.2, .2, .2, .2),
-                     legend.key.size = unit(.5, 'cm'),
+                     legend.key.size = unit(.7, 'cm'),
                      legend.key.height = unit(.4, 'cm'),
+                     legend.spacing.x = unit(0.05, 'cm'),
                      legend.box.margin = margin(1, 1, 1, 1)) + 
   scale_x_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) + 
-  scale_y_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) +
-  geom_abline(slope=1, intercept = 0.0, linetype="dashed") 
-figS4A
+  scale_y_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) 
+figS6A
 
 ### DBH p2 ####
 ea1sa1DBHp2gl_thetaBM0_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_out_annual_tile.csv")
@@ -413,11 +416,11 @@ figS4B <- ggplot() +
   geom_point(data=DBHp2thetaBM1gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30, shape='+30%',col="theta1"),size=3) + 
   geom_point(data=DBHp2thetaBM2gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15, shape='+15%',col="theta2"),size=3) + 
   geom_point(data=DBHp2thetaBM2gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30, shape='+30%',col="theta2"),size=3) + 
-  scale_color_manual("Parameter", breaks = c("theta1", "theta0", "theta2"), 
-                     values = c("#009E73", "#0072B2", "#D55E00"),
-                     labels =c(expression(paste(theta)[italic("BM")]~ "= 2.20"),
-                               expression(paste(theta)[italic("BM")]~ "= 2.36"),
-                               expression(paste(theta)[italic("BM")]~ "= 2.50"))) +
+  scale_color_viridis(discrete=TRUE,option="viridis",
+                      "Parameter",breaks = c("theta1", "theta0", "theta2"),
+                      labels =c(expression(paste(theta)[italic("BM")]~ "= 2.20"),
+                                expression(paste(theta)[italic("BM")]~ "= 2.36"),
+                                expression(paste(theta)[italic("BM")]~ "= 2.50")))+
   scale_shape_manual("Level of LUE", breaks = c("+15%","+30%"), 
                      values = c(16,17),
                      guide = guide_legend(override.aes = list(color = "black",size=1.6))) +  
@@ -519,11 +522,11 @@ figS4C <- ggplot() +
   geom_point(data=DBHp3thetaBM1gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30, shape='+30%',col="theta1"),size=3) + 
   geom_point(data=DBHp3thetaBM2gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15, shape='+15%',col="theta2"),size=3) + 
   geom_point(data=DBHp3thetaBM2gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30, shape='+30%',col="theta2"),size=3) + 
-  scale_color_manual("Parameter", breaks = c("theta1", "theta0", "theta2"), 
-                     values = c("#009E73", "#0072B2", "#D55E00"),
-                     labels =c(expression(paste(theta)[italic("BM")]~ "= 2.20"),
-                               expression(paste(theta)[italic("BM")]~ "= 2.36"),
-                               expression(paste(theta)[italic("BM")]~ "= 2.50"))) +
+  scale_color_viridis(discrete=TRUE,option="viridis",
+                      "Parameter",breaks = c("theta1", "theta0", "theta2"),
+                      labels =c(expression(paste(theta)[italic("BM")]~ "= 2.20"),
+                                expression(paste(theta)[italic("BM")]~ "= 2.36"),
+                                expression(paste(theta)[italic("BM")]~ "= 2.50")))+
   scale_shape_manual("Level of LUE", breaks = c("+15%","+30%"), 
                      values = c(16,17),
                      guide = guide_legend(override.aes = list(color = "black",size=1.6))) +  
