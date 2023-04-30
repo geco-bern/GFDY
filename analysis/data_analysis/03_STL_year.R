@@ -165,7 +165,7 @@ plot_model(Fit_Year, type='diag')[[4]]
 plot(Fit_Year)
 plot_homocedasticity1 <- ggplot(data.frame(fitted=fitted(Fit_Year),residuals=residuals(Fit_Year,type="pearson")),
        aes(x=fitted,y=residuals)) + geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
-  xlab("Fitted Values") + ylab("Residuals") + theme_bw() +  
+  xlab("Fitted (ln N)") + ylab("Residuals") + theme_bw() +  
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.text = element_text(size = 10),axis.title = element_text(size = 10))
 plot_homocedasticity1

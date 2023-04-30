@@ -2,6 +2,7 @@
 # load packages
 library(dplyr)
 library(ggplot2)
+library(viridis)
 
 # Relative change biomass (plantC) vs. NPP ####
 
@@ -158,7 +159,7 @@ for (i in 1:n.samples)
   obs <- sample(1:sample.size, replace=TRUE)
   bootstrap.results.NPP[i] <- mean(data_beta_NPP[obs]) # Mean of the bootstrap sample
 }
-length(bootstrap.results.NPP) # Sanity check: this should contain the mean of 1000 different samples
+length(bootstrap.results.NPP) # Sanity check: this should contain the mean of 25000 different samples
 summary(bootstrap.results.NPP) # Sanity check
 boots_sd_NPP <- sd(bootstrap.results.NPP) # Checking the standard deviation of the distribution of means (this is what we are interested in!)
 boots_sd_NPP
@@ -195,7 +196,7 @@ for (i in 1:n.samples)
   obs <- sample(1:sample.size, replace=TRUE)
   bootstrap.results.plantC[i] <- mean(data_beta_plantC[obs]) # Mean of the bootstrap sample
 }
-length(bootstrap.results.plantC) # Sanity check: this should contain the mean of 1000 different samples
+length(bootstrap.results.plantC) # Sanity check: this should contain the mean of 25000 different samples
 summary(bootstrap.results.plantC) # Sanity check
 boots_sd_plantC <- sd(bootstrap.results.plantC) # Checking the standard deviation of the distribution of means (this is what we are interested in!)
 boots_sd_plantC
@@ -223,11 +224,14 @@ bootstrap_tb <- bootstrap_tb %>%
          boots_upper.ci_plantC = boots_mean_plantC + qt(1 - (0.05 / 2), n - 1) * boots_se_plantC) %>% 
   ungroup()
 
-fig_boots <- ggplot(data=bootstrap_tb, aes(x=boots_mean_NPP, y=boots_mean_plantC)) + 
-  geom_point(col="#009E73",size=2) + 
-  geom_errorbar(aes(xmin=boots_lower.ci_NPP, xmax=boots_upper.ci_NPP,
+fig_boots <- ggplot(data=bootstrap_tb) + 
+  geom_point(aes(x=boots_mean_NPP, y=boots_mean_plantC),col="#009E73",size=2) + 
+  geom_errorbar(aes(x=boots_mean_NPP, y=boots_mean_plantC,
                     ymin=boots_upper.ci_plantC, ymax=boots_upper.ci_plantC), 
-                width=0,col="#009E73") +
+                width=0,col="#009E73",alpha=0.5) +
+  geom_errorbarh(aes(y=boots_mean_plantC,
+                    xmin=boots_upper.ci_NPP, xmax=boots_upper.ci_NPP), 
+                 height=0,col="#009E73",alpha=0.5) +
   labs(x = expression(frac(dG, G)), y = expression(frac(dB, B)),title="From literature") + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
@@ -241,8 +245,8 @@ fig_boots <- ggplot(data=bootstrap_tb, aes(x=boots_mean_NPP, y=boots_mean_plantC
                      legend.key.size = unit(.5, 'cm'),
                      #legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) + 
-  scale_x_continuous(limits = c(0,1),breaks=seq(0,1,0.25)) + 
-  scale_y_continuous(limits = c(0,1),breaks=seq(0,1,0.25)) +
+  scale_x_continuous(limits = c(0,1),breaks=seq(0,1,0.5)) + 
+  scale_y_continuous(limits = c(0,1),breaks=seq(0,1,0.5)) +
   geom_abline(slope=1, intercept = 0.0, linetype="dashed") 
 fig_boots
 
@@ -318,7 +322,7 @@ fig_data <- ggplot(data=tb_relchanges_analysis) +
                      legend.text = element_text(size = 9),legend.title = element_text(size = 9),
                      plot.title = element_text(size = 10),
                      legend.key = element_rect(fill = NA, color = NA),
-                     legend.position = c(.72, .15),
+                     legend.position = c(.62, .15),
                      legend.direction="horizontal",
                      legend.margin = margin(.2, .2, .2, .2),
                      legend.key.size = unit(.5, 'cm'),
@@ -328,7 +332,7 @@ fig_data <- ggplot(data=tb_relchanges_analysis) +
   scale_y_continuous(limits = c(-0.6,0.8),breaks=seq(-0.5,1,0.5)) 
 fig_data
 # Figure 4 ####
-ff4 <- fig_boots + fig_data +
+ff4 <- fig_data + fig_boots +
   plot_layout(ncol = 2) + 
   plot_annotation(tag_levels = 'A', tag_suffix = ")") & 
   theme(plot.margin = unit(rep(0.13,4), "cm"))#+ 

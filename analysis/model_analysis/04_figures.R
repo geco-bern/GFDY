@@ -1199,6 +1199,27 @@ fig4aLUE_dbh1 <- ggplot() +
   scale_y_continuous(limits = c(4.3,6.8),breaks = seq(4.5,7,1)) 
 fig4aLUE_dbh1
 
+# Checking assumptions for linear models
+# Homoscedasticity (constant variance of residuals)
+# Amount and distance of points scattered above/below line is equal or randomly spread
+plot_model(Fit_QMD, type='diag')[[4]] 
+plot(Fit_QMD)
+plot_homocedasticity1 <- ggplot(data.frame(fitted=fitted(Fit_QMD),residuals=residuals(Fit_QMD,type="pearson")),
+                                aes(x=fitted,y=residuals)) + geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
+  xlab("Fitted (ln N)") + ylab("Residuals") + theme_bw() +  
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 10),axis.title = element_text(size = 10))
+plot_homocedasticity1
+
+# Linearity in each variable: Models are assumed to be linear in each of the independent variables. 
+# This assumption can be checked with plots of the residuals versus each of the variables.
+plot_linearity_var_qmd1 <- ggplot(data.frame(logQMD=data_DBH_p1$logQMD,residuals=residuals(Fit_QMD,type="pearson")),
+                                  aes(x=logQMD,y=residuals)) + geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
+  xlab("ln QMD") + ylab("Residuals") + theme_bw() +  
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 10),axis.title = element_text(size = 10))
+plot_linearity_var_qmd1
+
 # DBH2
 data_DBH_ea1p2 <- ea1sa1DBHp2gl_out_annual_tile %>% 
   mutate(Mortality = "DBH") %>% 
@@ -1258,6 +1279,27 @@ fig4bLUE_dbh2 <- ggplot() +
   scale_x_continuous(limits = c(3.2,4.4),breaks = seq(3.2,4.6,0.6)) + 
   scale_y_continuous(limits = c(4.3,6.8),breaks = seq(4.5,7,1))
 fig4bLUE_dbh2
+
+# Checking assumptions for linear models
+# Homoscedasticity (constant variance of residuals)
+# Amount and distance of points scattered above/below line is equal or randomly spread
+plot_model(Fit_QMD, type='diag')[[4]] 
+plot(Fit_QMD)
+plot_homocedasticity1 <- ggplot(data.frame(fitted=fitted(Fit_QMD),residuals=residuals(Fit_QMD,type="pearson")),
+                                aes(x=fitted,y=residuals)) + geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
+  xlab("Fitted (ln N)") + ylab("Residuals") + theme_bw() +  
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 10),axis.title = element_text(size = 10))
+plot_homocedasticity1
+
+# Linearity in each variable: Models are assumed to be linear in each of the independent variables. 
+# This assumption can be checked with plots of the residuals versus each of the variables.
+plot_linearity_var_qmd1 <- ggplot(data.frame(logQMD=data_DBH_p2$logQMD,residuals=residuals(Fit_QMD,type="pearson")),
+                                  aes(x=logQMD,y=residuals)) + geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
+  xlab("ln QMD") + ylab("Residuals") + theme_bw() +  
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 10),axis.title = element_text(size = 10))
+plot_linearity_var_qmd1
 
 # DBH3
 data_DBH_ea1p3 <- ea1sa1DBHp3gl_out_annual_tile %>% 
@@ -1328,76 +1370,72 @@ preddataLUE_DBH1
 preddataLUE_DBH1_agg <- preddataLUE_DBH1 %>% group_by(x) %>% 
   mutate(STL_15=predicted-lag(predicted)) %>%
   mutate(STL_30=predicted-lag(lag(predicted))) %>%
-  mutate(increment_15=predicted/lag(predicted)) %>%
-  mutate(increment_30=predicted/lag(lag(predicted)))
+  #mutate(increment_15=predicted/lag(predicted)) %>%
+  #mutate(increment_30=predicted/lag(lag(predicted))) %>%
+  mutate(percent_15=STL_15*100/lag(predicted)) %>%
+  mutate(percent_30=STL_30*100/lag(lag(predicted)))
 
 N30 <- preddataLUE_DBH1_agg %>%
   filter(group=="+30%") %>%
   ungroup(x) %>%
-  summarise(STL_30=mean(STL_30)) %>% pull()
+  summarise(mean=mean(percent_30),sd=sd(percent_30)) 
+N30
 
 N15 <- preddataLUE_DBH1_agg %>%
   filter(group=="+15%") %>%
   ungroup(x) %>%
-  summarise(STL_15=mean(STL_15)) %>% pull()
-
-# Relative change biomass (plantC) vs. NPP
-DBHp1gl_RelChange_B_NPP_0_30 <- DBHp1gl_RelChange_B_NPP_0_30 %>%
-  mutate(dlnB_dlnG = dB0_30/dNPP0_30) %>%
-  mutate(N30=N30)
-DBHp1gl_RelChange_B_NPP_0_15 <- DBHp1gl_RelChange_B_NPP_0_15 %>%
-  mutate(dlnB_dlnG = dB0_15/dNPP0_15) %>%
-  mutate(N15=N15)
+  summarise(mean=mean(percent_15),sd=sd(percent_15)) 
+N15
 
 # DBH2
 preddataLUE_DBH2
 preddataLUE_DBH2_agg <- preddataLUE_DBH2 %>% group_by(x) %>% 
   mutate(STL_15=predicted-lag(predicted)) %>%
   mutate(STL_30=predicted-lag(lag(predicted))) %>%
-  mutate(increment_15=predicted/lag(predicted)) %>%
-  mutate(increment_30=predicted/lag(lag(predicted)))
+  #mutate(increment_15=predicted/lag(predicted)) %>%
+  #mutate(increment_30=predicted/lag(lag(predicted))) %>%
+  mutate(percent_15=STL_15*100/lag(predicted)) %>%
+  mutate(percent_30=STL_30*100/lag(lag(predicted)))
 
 N30 <- preddataLUE_DBH2_agg %>%
   filter(group=="+30%") %>%
   ungroup(x) %>%
-  summarise(STL_30=mean(STL_30)) %>% pull()
+  summarise(mean=mean(percent_30),sd=sd(percent_30)) 
+N30
 
 N15 <- preddataLUE_DBH2_agg %>%
   filter(group=="+15%") %>%
   ungroup(x) %>%
-  summarise(STL_15=mean(STL_15)) %>% pull()
-
-# Relative change biomass (plantC) vs. NPP
-DBHp2gl_RelChange_B_NPP_0_30 <- DBHp2gl_RelChange_B_NPP_0_30 %>%
-  mutate(dlnB_dlnG = dB0_30/dNPP0_30) %>%
-  mutate(N30=N30)
-DBHp2gl_RelChange_B_NPP_0_15 <- DBHp2gl_RelChange_B_NPP_0_15 %>%
-  mutate(dlnB_dlnG = dB0_15/dNPP0_15) %>%
-  mutate(N15=N15)
+  summarise(mean=mean(percent_15),sd=sd(percent_15)) 
+N15
 
 # DBH3
 preddataLUE_DBH3
 preddataLUE_DBH3_agg <- preddataLUE_DBH3 %>% group_by(x) %>%  
   mutate(STL_15=predicted-lag(predicted)) %>%
   mutate(STL_30=predicted-lag(lag(predicted))) %>%
-  mutate(increment_15=predicted/lag(predicted)) %>%
-  mutate(increment_30=predicted/lag(lag(predicted)))
+  #mutate(increment_15=predicted/lag(predicted)) %>%
+  #mutate(increment_30=predicted/lag(lag(predicted))) %>%
+  mutate(percent_15=STL_15*100/lag(predicted)) %>%
+  mutate(percent_30=STL_30*100/lag(lag(predicted)))
 
 N30 <- preddataLUE_DBH3_agg %>%
   filter(group=="+30%") %>%
   ungroup(x) %>%
-  summarise(STL_30=mean(STL_30)) %>% pull()
+  summarise(mean=mean(percent_30),sd=sd(percent_30)) 
+N30
 
 N15 <- preddataLUE_DBH3_agg %>%
   filter(group=="+15%") %>%
   ungroup(x) %>%
-  summarise(STL_15=mean(STL_15)) %>% pull()
+  summarise(mean=mean(percent_15),sd=sd(percent_15)) 
+N15
 
 # Relative change biomass (plantC) vs. NPP
-DBHp3gl_RelChange_B_NPP_0_30 <- DBHp3gl_RelChange_B_NPP_0_30 %>%
+DBHp3gl_RelChange_B_NPP_0_30 <- DBHp3gl_RelChange_0_30 %>%
   mutate(dlnB_dlnG = dB0_30/dNPP0_30) %>%
   mutate(N30=N30)
-DBHp3gl_RelChange_B_NPP_0_15 <- DBHp3gl_RelChange_B_NPP_0_15 %>%
+DBHp3gl_RelChange_B_NPP_0_15 <- DBHp3gl_RelChange_0_15 %>%
   mutate(dlnB_dlnG = dB0_15/dNPP0_15) %>%
   mutate(N15=N15)
 

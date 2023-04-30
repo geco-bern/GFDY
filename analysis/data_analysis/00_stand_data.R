@@ -163,11 +163,14 @@ NFI_tree_agg <- NFI_tree_census %>% group_by(PLOTID,Year,SPECIES_NAME) %>%
   ungroup()
 # Identify which species dominates in each site (FNUM) and year (AJ)
 dominant_speciesNFI <- NFI_tree_agg %>% group_by(PLOTID, Year) %>% 
-  top_n(1, Total_BA_perha) %>% rename(Species=SPECIES_NAME)
+  top_n(1, Total_BA_perha) %>% rename(Species=SPECIES_NAME) %>%
+  ungroup()
 # Add dominant species per plot to NFI_plot_census
-NFI_plot_census <- NFI_plot_census %>% left_join(dominant_speciesNFI[,c(1,2,3)])
+NFI_plot_census <- NFI_plot_census %>% left_join(dominant_speciesNFI[,c(1,2,3)]) %>%
+  ungroup()
 length(unique(NFI_plot_census$PLOTID))
 sort(table(NFI_plot_census$PLOTID))
+str(NFI_plot_census)
 
 # NFR - Natural Forests Reserves NFR ####
 
@@ -244,23 +247,23 @@ str(NFR_stand_Allsps)
 # Aggregated stand level data from EFM, NFI and NFR ####
 EFM_stand_agg <- EFM_stand_Allsps %>% dplyr::select(c(FNUM,AJ,DBHqAHC1_2_cm,QMD,logQMD,BiomassKgperha,TreesPerHectareAHC1_2,
                                                logTreesPerHectareAHC1_2,BiomassIncrement_KgperhaperYear,Species,
-                                               PlotArea_ha,years_since_management,elevation,longitude,latitude,PeriodLength_years)) %>% 
+                                               PlotArea_ha,years_since_management,elevation,longitude,latitude,temp,prec,PeriodLength_years)) %>% 
   rename(PlotID=FNUM, Year=AJ, DBH =DBHqAHC1_2_cm, Density=TreesPerHectareAHC1_2,logDensity=logTreesPerHectareAHC1_2,
          Biomass_Kg_ha=BiomassKgperha,BiomassIncrement_Kg_ha_year=BiomassIncrement_KgperhaperYear) %>% mutate(dataset="EFM")
 length(unique(EFM_stand_agg$PlotID))
 sort(table(EFM_stand_agg$PlotID))
 
 NFI_stand_agg <- NFI_plot_census %>% dplyr::select(c(PLOTID,Year,MEAN_DBH_HA, QMD,logQMD,Biomass_Kg_ha,NPH,logNPH,
-                                              BiomassIncrement_Kg_ha_year,Species,PlotArea_ha,LETZTENU,elevation,longitude,latitude,PeriodLength_years)) %>% 
+                                              BiomassIncrement_Kg_ha_year,Species,PlotArea_ha,LETZTENU,elevation,longitude,latitude,temp,prec,PeriodLength_years)) %>% 
   rename(PlotID=PLOTID, DBH=MEAN_DBH_HA, Density=NPH, logDensity=logNPH,years_since_management=LETZTENU) %>% mutate(dataset="NFI")
 length(unique(NFI_stand_agg$PlotID))
 sort(table(NFI_stand_agg$PlotID))
 
 NFR_stand_agg <- NFR_stand_Allsps %>% dplyr::select(c(FNUM,AJ,DBHqAHC1_2_cm,QMD,logQMD,BiomassKgperha,TreesPerHectareAHC1_2,
                                                logTreesPerHectareAHC1_2,BiomassIncrement_KgperhaperYear,Species,
-                                               PlotArea_ha,years_since_management,elevation,longitude,latitude,PeriodLength_years)) %>% 
+                                               PlotArea_ha,years_since_management,elevation,longitude,latitude,temp,precip,PeriodLength_years)) %>% 
   rename(PlotID=FNUM, Year=AJ, DBH =DBHqAHC1_2_cm, Density=TreesPerHectareAHC1_2,logDensity=logTreesPerHectareAHC1_2,
-         Biomass_Kg_ha=BiomassKgperha,BiomassIncrement_Kg_ha_year=BiomassIncrement_KgperhaperYear) %>% mutate(dataset="NFR")
+         Biomass_Kg_ha=BiomassKgperha,BiomassIncrement_Kg_ha_year=BiomassIncrement_KgperhaperYear,prec=precip) %>% mutate(dataset="NFR")
 length(unique(NFR_stand_agg$PlotID))
 sort(table(NFR_stand_agg$PlotID))
 
@@ -276,6 +279,7 @@ aggStandData <- aggStandData %>%
 save(aggStandData, file = "~/GFDY/data/inputs_obs/aggStandData.RData")
 length(unique(aggStandData$PlotID))
 sort(table(aggStandData$PlotID))
+str(aggStandData)
 
 # Select upper quantile by QMD bins ####
 # calculate the QMD bins to select those plots with higher density 
@@ -395,6 +399,8 @@ aggData_QMDbinsDen %>% count(dataset,PlotID) %>% group_by(dataset) %>%
 aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(elevation,na.rm=T),sd=sd(elevation,na.rm=T),max=max(elevation,na.rm=T),min=min(elevation,na.rm=T))
 aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(latitude,na.rm=T),sd=sd(latitude,na.rm=T),max=max(latitude,na.rm=T),min=min(latitude,na.rm=T))
 aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(longitude,na.rm=T),sd=sd(longitude,na.rm=T),max=max(longitude,na.rm=T),min=min(longitude,na.rm=T))
+aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(temp,na.rm=T),sd=sd(temp,na.rm=T),max=max(temp,na.rm=T),min=min(temp,na.rm=T))
+aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(prec,na.rm=T),sd=sd(prec,na.rm=T),max=max(prec,na.rm=T),min=min(prec,na.rm=T))
 aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(DBH,na.rm=T),sd=sd(DBH,na.rm=T))
 aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(Density,na.rm=T),sd=sd(Density,na.rm=T))
 aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(Biomass_Kg_m2,na.rm=T),sd=sd(Biomass_Kg_m2,na.rm=T))
