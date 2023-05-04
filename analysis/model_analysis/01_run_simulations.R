@@ -45,7 +45,7 @@ params_tile <- tibble(
   K2           = 0.05,  # turnover rate of slow SOM per year
   K_nitrogen   = 8.0,   # mineral Nitrogen turnover rate
   MLmixRatio   = 0.8,   # the ratio of C and N returned to litters from microbes
-  etaN         = 0.025, # loss rate with runoff
+  etaN         = 0.025, # N loss through runoff (organic and mineral)
   LMAmin       = 0.02,  # minimum LMA, boundary condition
   fsc_fine     = 1.0,   # fraction of fast turnover carbon in fine biomass
   fsc_wood     = 0.0,   # fraction of fast turnover carbon in wood biomass

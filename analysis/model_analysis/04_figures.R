@@ -201,6 +201,7 @@ G_DBH_ea3p3/G_DBH_ea1p3
 
 # Mortality (Both mortality and biomass turnover) ####
 # DBH
+
 fig2d_dbh <- ggplot() + 
   geom_vline(xintercept = 700, linetype="solid", color = "grey", size=0.4) +
   geom_line(data=ea1sa1DBHp1gl_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='Control'), col="#0072B2", alpha=.8,linewidth=.6) + 
@@ -230,6 +231,30 @@ fig2d_dbh <- ggplot() +
   scale_x_continuous(limits=c(0,1515),breaks=seq(0,1500,750)) +
   scale_y_continuous(limits=c(0,2.5),breaks=seq(0,2.5,1))
 fig2d_dbh
+
+ggplot() + 
+  geom_line(data=ea1sa1DBHp1gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='Control'), col="#0072B2", alpha=.8,linewidth=.6) + 
+  geom_line(data=ea1sa1DBHp2gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='Control'), col="#D55E00",alpha=.8,linewidth=.6) +
+  geom_line(data=ea1sa1DBHp3gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='Control'), col="#009E73",alpha=.8,linewidth=.6)
+ea1sa1DBHp1gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
+ea1sa1DBHp2gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
+ea1sa1DBHp3gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
+
+ggplot() +
+  geom_line(data=ea2sa1DBHp1gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='+15%'), col="#0072B2", alpha=.8,linewidth=.6) + 
+  geom_line(data=ea2sa1DBHp2gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='+15%'), col="#D55E00",alpha=.8,linewidth=.6) +
+  geom_line(data=ea2sa1DBHp3gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='+15%'), col="#009E73",alpha=.8,linewidth=.6) 
+ea2sa1DBHp1gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
+ea2sa1DBHp2gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
+ea2sa1DBHp3gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
+
+ggplot() +
+  geom_line(data=ea3sa1DBHp1gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='+30%'), col="#0072B2",alpha=.8,linewidth=.6) + 
+  geom_line(data=ea3sa1DBHp2gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='+30%'), col="#D55E00",alpha=.8,linewidth=.6) +
+  geom_line(data=ea3sa1DBHp3gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='+30%'), col="#009E73",alpha=.8,linewidth=.6) 
+ea3sa1DBHp1gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
+ea3sa1DBHp2gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
+ea3sa1DBHp3gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
 
 # Relative change biomass (plantC) vs. NPP ####
 

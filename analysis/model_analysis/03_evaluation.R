@@ -43,6 +43,11 @@ df_calib_DBH_gs$data[[1]]$output_annual_tile %>%
   geom_line(aes(x = year, y = c_deadtrees+m_turnover)) +
   theme_classic()+labs(x = "Year", y = "c_deadtrees+m_turnover")
 
+df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
+  ggplot() +
+  geom_line(aes(x = year, y = n_deadtrees)) +
+  theme_classic()+labs(x = "Year", y = "n_deadtrees")
+
 # DBH p1=1.5
 # LUE control
 write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_out_annual_tile.csv")
@@ -104,6 +109,45 @@ postcalibDBH <- ggplot(dff) +
   theme_classic()+labs(x = "Predicted", y = "Observed")+
   geom_abline(col="grey") + ggtitle("After calibration - DBH gs-Leuning") +
   facet_wrap(~variables,nrow = 4) + theme(legend.position = "none")
+
+# Plotting separately
+dff_sel1 <- dff %>% filter(variables=="GPP"|variables=="LAI"|variables=="Biomass") 
+ffs8 <- ggplot(dff_sel1) +
+  geom_abline(col="grey") + 
+  geom_point(aes(x = targets_mod, y = targets_obs, col=variables)) +
+  #facet_wrap(~variables,ncol = 3,labeller = labeller(variables = c("Biomass"="Biomass","GPP"="GPP","LAI"="LAI"))) +
+  scale_color_viridis(discrete=TRUE,option="viridis",
+                    "Variable",breaks = c("Biomass", "GPP", "LAI"),
+                    guide = guide_legend(override.aes = list(size=1.6),order=1)) +
+  labs(x = "Modeled", y = "Observed") + 
+  theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+                     axis.text = element_text(size = 10),axis.title = element_text(size = 10),
+                     legend.text = element_text(size = 9),legend.title = element_text(size = 9),
+                     plot.title = element_text(size = 10),
+                     legend.key = element_rect(fill = NA, color = NA),
+                     legend.position = c(.85, .20),
+                     legend.direction="vertical",
+                     legend.box = "horizontal",
+                     legend.margin = margin(.2, .2, .2, .2),
+                     legend.key.size = unit(.7, 'cm'),
+                     legend.key.height = unit(.4, 'cm'),
+                     legend.spacing.x = unit(0.05, 'cm'),
+                     legend.box.margin = margin(1, 1, 1, 1)) + 
+  scale_x_continuous(limits = c(0,45),breaks = seq(0,40,20)) +
+  scale_y_continuous(limits = c(0,45),breaks = seq(0,40,20))
+ffs8
+ggsave("~/GFDY/manuscript/figures/fig_S8.png", width = 5, height = 4, dpi=300)
+
+dff_sel2 <- dff %>% filter(variables!="GPP"&variables!="LAI"&variables!="Biomass") 
+ggplot(dff_sel2) +
+  geom_point(aes(x = targets_mod, y = targets_obs, col=variables)) +
+  labs(x = "Predicted", y = "Observed") + theme_classic() +
+  geom_abline(col="grey") + 
+  #facet_wrap(~variables,ncol = 3,labeller = labeller(variables = c("Biomass"="Biomass","GPP"="GPP","LAI"="LAI"))) +
+  scale_x_continuous(limits = c(40,85)) +
+  scale_y_continuous(limits = c(40,85))
+
+
 
 #Pre
 preDBHp1gl_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/preDBHp2gs_output_annual_tile.csv")

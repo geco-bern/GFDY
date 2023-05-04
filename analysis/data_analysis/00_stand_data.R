@@ -411,7 +411,7 @@ aggData_QMDbinsDen %>% group_by(PlotID) %>% arrange(Year) %>%
   group_by(dataset) %>%
   summarise(mean=mean(years_since_management,na.rm=T),sd=sd(years_since_management,na.rm=T))
 
-# Table S2 - stand ####
+# Table S3 - stand ####
 aggData_QMDbinsDen %>% group_by(PlotID) %>% arrange(Year) %>% 
   filter(row_number()==1 | row_number()==n()) %>% arrange(PlotID) %>%
   mutate(changeQMD = (QMD - lag(QMD))/lag(QMD)*100) %>% relocate(changeQMD, .after = QMD) %>%

@@ -29,7 +29,7 @@ library(patchwork)
 # 2. Parameters controlling N losses need to be set to 0: (see N_loss in vegetation_lm3ppa.mod.f90)
 # K_nitrogen   = 0
 # etaN         = 0
-# 3. Parameters controling N deposition (N_input) and initial mineral N (init_Nmineral) 
+# 3. Parameters controlling N deposition (N_input) and initial mineral N (init_Nmineral) 
 # and initial soil organic matter (init_slow_soil_C) need to be high
 # init_slow_soil_C    = 40
 # init_Nmineral       = 0.5
@@ -45,7 +45,7 @@ library(patchwork)
 # 2. Parameters controlling N losses can be higher than 0: (see N_loss in vegetation_lm3ppa.mod.f90)
 # K_nitrogen   = 0.05
 # etaN         = 0
-# 3. Parameters controling N deposition (N_input) and initial mineral N (init_Nmineral) 
+# 3. Parameters controlling N deposition (N_input) and initial mineral N (init_Nmineral) 
 # and initial soil organic matter (init_slow_soil_C) need to be low
 # init_slow_soil_C    = 0
 # init_Nmineral       = 0.002
@@ -74,9 +74,11 @@ library(patchwork)
 # Unlimited (high values)
 # init_slow_soil_C    = 40
 # init_Nmineral       = 0.5
+# N_input             = 0.0008 
 # Limited (low values)
 # init_slow_soil_C    = 0
 # init_Nmineral       = 0.002
+# N_input             = 0.0008 
 
 # DBH mortality ####
 # DBH mortality has the shape params: p1=1.5, p2=2.5, p3=4.0

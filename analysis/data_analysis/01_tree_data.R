@@ -8,6 +8,10 @@ library(sjPlot)
 library(ggeffects)
 library(patchwork)
 library(lmerTest) 
+library(lme4) 
+library(lmerTest) 
+library(effects) 
+library(MuMIn)
 
 # read selected data at stand level
 load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
@@ -157,12 +161,15 @@ load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
 load("~/GFDY/data/inputs_obs/aggTreeData75.RData")
 
 # QMD
-fit_qmd=gamm4(QMD~s(Year),random=~(1|PlotID) + (1|Species), 
-              data=aggData_QMDbinsDen,na.action = "na.omit")
-summary(fit_qmd$gam)
-plot.gam(fit_qmd$gam,pages = 1)
-plot_model(fit_qmd$gam,type = "pred",terms = c("Year"),show.data=T)
-pred <- ggpredict(fit_qmd$gam, terms = c("Year"), full.data = TRUE,ci.lvl = 0.95)
+fit_qmd = lmer(QMD ~ Year + (1|PlotID) + (1|Species),
+                data = aggData_QMDbinsDen, na.action = "na.exclude")
+summary(fit_qmd)
+out <- summary(fit_qmd)
+out$coefficients
+r.squaredGLMM(fit_qmd)
+plot(allEffects(fit_qmd))
+plot_model(fit_qmd,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("Year"))
+pred <- ggpredict(fit_qmd, terms = c("Year"), full.data = TRUE)
 plot(pred, add.data = F) 
 preddata <- as.data.frame(pred)
 fig_fit_qmd <- ggplot() + 
@@ -173,18 +180,20 @@ fig_fit_qmd <- ggplot() +
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 11),
                      plot.title = element_text(size = 8)) +
-  scale_x_continuous(limits = c(1933,2020),breaks = seq(1940,2020,20))
+  scale_x_continuous(limits = c(1930,2020),breaks = seq(1940,2020,40))
 fig_fit_qmd
 
 # Stand density
-fit_stden=gamm4(Density~s(Year),random=~(1|PlotID) + (1|Species), 
-                data=aggData_QMDbinsDen,na.action = "na.omit")
-summary(fit_stden$gam)
-summary(fit_stden$gam)$s.table
-summary(fit_stden$gam)$p.table
-plot.gam(fit_stden$gam,pages = 1)
-plot_model(fit_stden$gam,type = "pred",terms = c("Year"),show.data=T)
-pred <- ggpredict(fit_stden$gam, terms = c("Year"), full.data = TRUE)
+fit_stden = lmer(Density ~ Year + (1|PlotID) + (1|Species),
+               data = aggData_QMDbinsDen, na.action = "na.exclude")
+summary(fit_stden)
+out <- summary(fit_stden)
+out$coefficients
+formatC(out$coefficients, format = "e")
+r.squaredGLMM(fit_stden)
+plot(allEffects(fit_stden))
+plot_model(fit_stden,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("Year"))
+pred <- ggpredict(fit_stden, terms = c("Year"), full.data = TRUE)
 plot(pred, add.data = F) 
 preddata <- as.data.frame(pred)
 fig_fit_stden <- ggplot() + 
@@ -195,16 +204,21 @@ fig_fit_stden <- ggplot() +
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 11),
                      plot.title = element_text(size = 8)) +
-  scale_x_continuous(limits = c(1933,2020),breaks = seq(1940,2020,20))
+  scale_x_continuous(limits = c(1930,2020),breaks = seq(1940,2020,40)) +
+  scale_y_continuous(limits = c(0,4000),breaks = seq(0,4000,2000))
 fig_fit_stden
 
 # Stand biomass
-fit_biomass=gamm4(Biomass_Kg_m2~s(Year),random=~(1|PlotID) + (1|Species), 
-                  data=aggData_QMDbinsDen,na.action = "na.omit")
-summary(fit_biomass$gam)
-plot.gam(fit_biomass$gam,pages = 1)
-plot_model(fit_biomass$gam,type = "pred",terms = c("Year"),show.data=T)
-pred <- ggpredict(fit_biomass$gam, terms = c("Year"), full.data = TRUE)
+fit_biomass = lmer(Biomass_Kg_m2 ~ Year + (1|PlotID) + (1|Species),
+                 data = aggData_QMDbinsDen, na.action = "na.exclude")
+summary(fit_biomass)
+out <- summary(fit_biomass)
+out$coefficients
+formatC(out$coefficients, format = "e")
+r.squaredGLMM(fit_biomass)
+plot(allEffects(fit_biomass))
+plot_model(fit_biomass,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("Year"))
+pred <- ggpredict(fit_biomass, terms = c("Year"), full.data = TRUE)
 plot(pred, add.data = F) 
 preddata <- as.data.frame(pred)
 fig_fit_biomass <- ggplot() + 
@@ -215,16 +229,21 @@ fig_fit_biomass <- ggplot() +
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 11),
                      plot.title = element_text(size = 8)) +
-  scale_x_continuous(limits = c(1933,2020),breaks = seq(1940,2020,20))
+  scale_x_continuous(limits = c(1930,2020),breaks = seq(1940,2020,40)) +
+  scale_y_continuous(limits = c(0,101),breaks = seq(0,100,50))
 fig_fit_biomass
 
 # Stand net biomass change
-fit_biomass_change=gamm4(BiomassIncrement_Kg_m2_year~s(Year),random=~(1|PlotID) + (1|Species), 
-                         data=aggData_QMDbinsDen,na.action = "na.omit")
-summary(fit_biomass_change$gam)
-plot.gam(fit_biomass_change$gam,pages = 1)
-plot_model(fit_biomass_change$gam,type = "pred",terms = c("Year"),show.data=T)
-pred <- ggpredict(fit_biomass_change$gam, terms = c("Year"), full.data = TRUE)
+fit_biomass_change = lmer(BiomassIncrement_Kg_m2_year ~ Year + (1|PlotID) + (1|Species),
+                   data = aggData_QMDbinsDen, na.action = "na.exclude")
+summary(fit_biomass_change)
+out <- summary(fit_biomass_change)
+out$coefficients
+formatC(out$coefficients, format = "e")
+r.squaredGLMM(fit_biomass_change)
+plot(allEffects(fit_biomass_change))
+plot_model(fit_biomass_change,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("Year"))
+pred <- ggpredict(fit_biomass_change, terms = c("Year"), full.data = TRUE)
 plot(pred, add.data = F) 
 preddata <- as.data.frame(pred)
 fig_fit_biomass_change <- ggplot() + 
@@ -235,16 +254,20 @@ fig_fit_biomass_change <- ggplot() +
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 11),
                      plot.title = element_text(size = 8)) +
-  scale_x_continuous(limits = c(1960,2020),breaks = seq(1960,2020,20))
+  scale_x_continuous(limits = c(1960,2020),breaks = seq(1960,2020,30))
 fig_fit_biomass_change
 
 # Mean tree biomass
-fit_treebiomass=gamm4(mean_tree_biomass_kg~s(Year),random=~(1|PlotID), 
-                  data=aggTreeData,na.action = "na.omit")
-summary(fit_treebiomass$gam)
-plot.gam(fit_treebiomass$gam,pages = 1)
-plot_model(fit_treebiomass$gam,type = "pred",terms = c("Year"),show.data=T)
-pred <- ggpredict(fit_treebiomass$gam, terms = c("Year"), full.data = TRUE)
+fit_treebiomass = lmer(mean_tree_biomass_kg ~ Year + (1|PlotID),
+                          data = aggTreeData, na.action = "na.exclude")
+summary(fit_treebiomass)
+out <- summary(fit_treebiomass)
+out$coefficients
+formatC(out$coefficients, format = "e")
+r.squaredGLMM(fit_treebiomass)
+plot(allEffects(fit_treebiomass))
+plot_model(fit_treebiomass,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("Year"))
+pred <- ggpredict(fit_treebiomass, terms = c("Year"), full.data = TRUE)
 plot(pred, add.data = F) 
 preddata <- as.data.frame(pred)
 fig_fit_treebiomass <- ggplot() + 
@@ -255,16 +278,21 @@ fig_fit_treebiomass <- ggplot() +
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 11),
                      plot.title = element_text(size = 8)) +
-  scale_x_continuous(limits = c(1933,2020),breaks = seq(1940,2020,20))
+  scale_x_continuous(limits = c(1930,2020),breaks = seq(1940,2020,40)) +
+  scale_y_continuous(limits = c(0,4000),breaks = seq(0,4000,2000))
 fig_fit_treebiomass
 
 # Mean tree biomass change
-fit_treebiomass_change=gamm4(mean_tree_biomass_growth_kgperyear~s(Year),random=~(1|PlotID), 
-                         data=aggTreeData,na.action = "na.omit")
-summary(fit_treebiomass_change$gam)
-plot.gam(fit_treebiomass_change$gam,pages = 1)
-plot_model(fit_treebiomass_change$gam,type = "pred",terms = c("Year"),show.data=T)
-pred <- ggpredict(fit_treebiomass_change$gam, terms = c("Year"), full.data = TRUE)
+fit_treebiomass_change = lmer(mean_tree_biomass_growth_kgperyear ~ Year + (1|PlotID),
+                       data = aggTreeData, na.action = "na.exclude")
+summary(fit_treebiomass_change)
+out <- summary(fit_treebiomass_change)
+out$coefficients
+formatC(out$coefficients, format = "e")
+r.squaredGLMM(fit_treebiomass_change)
+plot(allEffects(fit_treebiomass_change))
+plot_model(fit_treebiomass_change,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("Year"))
+pred <- ggpredict(fit_treebiomass_change, terms = c("Year"), full.data = TRUE)
 plot(pred, add.data = F) 
 preddata <- as.data.frame(pred)
 fig_fit_treebiomass_change <- ggplot() + 
@@ -275,7 +303,8 @@ fig_fit_treebiomass_change <- ggplot() +
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 11),
                      plot.title = element_text(size = 8)) +
-  scale_x_continuous(limits = c(1960,2020),breaks = seq(1960,2020,20))
+  scale_x_continuous(limits = c(1960,2020),breaks = seq(1960,2020,30)) +
+  scale_y_continuous(limits = c(-9,60),breaks = seq(0,60,30))
 fig_fit_treebiomass_change
 
 # Figure S2 ####
@@ -289,7 +318,7 @@ ffS2 <- fig_fit_qmd + fig_fit_stden + fig_fit_biomass +
 ffS2
 ggsave("~/GFDY/manuscript/figures/fig_S2.png", width = 10, height = 6, dpi=300)
 
-# Table S2 - tree ####
+# Table S3 - tree ####
 load("~/GFDY/data/inputs_obs/aggTreeData75.RData")
 
 aggTreeData %>% group_by(PlotID) %>% arrange(Year) %>% 
