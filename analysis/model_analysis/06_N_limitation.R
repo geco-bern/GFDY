@@ -8,6 +8,129 @@ library(ggplot2)
 library(multidplyr)
 library(patchwork)
 
+# Calibration discussed with Beni
+# N inputs
+# 1. From Lamarque et al. 2013, select values of N deposition (N_input) for Swistzerland and Scandinavia
+# CH 400-500 mg(N) m−2yr−1 -> N_input = 0.00045 kgN m-2 yr-1
+# SW 100-200 mg(N) m−2yr−1 -> N_input = 0.00015 kgN m-2 yr-1
+# 2. Parameters controling N deposition (N_input) and initial mineral N (init_Nmineral) 
+# init_slow_soil_C    = 0.0,    # initial slow soil C, kg C/m2
+# init_Nmineral       = 0.015,  # Mineral nitrogen pool, (kg N/m2)
+# 3. Parameters controlling N losses: (see N_loss in vegetation_lm3ppa.mod.f90)
+# K_nitrogen   = 8.0,   # mineral Nitrogen turnover rate
+# etaN         = 0.025, # loss rate with runoff
+
+# DBH mortality has the shape params: p1=1.5, p2=2.5, p3=4.0
+load("~/GFDY/data/inputs_mod/df_drivers_DBH_gs.RData")
+load("~/GFDY/data/inputs_mod/settings_calib_DBH_gs_uniq_euler.RData")
+df_drivers$params_siml[[1]]$method_mortality
+df_drivers$params_siml[[1]]$method_photosynth
+
+df_drivers$params_species[[1]]$phiRL      <-  settings_calib_DBH_gs$par_opt["phiRL"]  
+df_drivers$params_species[[1]]$LAI_light  <-  settings_calib_DBH_gs$par_opt["LAI_light"]
+df_drivers$params_tile[[1]]$tf_base       <-  settings_calib_DBH_gs$par_opt["tf_base"]
+df_drivers$params_tile[[1]]$par_mort      <-  settings_calib_DBH_gs$par_opt["par_mort"]
+df_drivers$params_tile[[1]]$par_mort_under<-  settings_calib_DBH_gs$par_opt["par_mort_under"]
+
+# run the model CH ####
+# df_drivers$params_siml[[1]]$do_closedN_run <- FALSE
+x <- 0.00001 #set value
+df_drivers$params_tile[[1]]$K_nitrogen <- 1 * x  # 0.00002
+df_drivers$params_tile[[1]]$etaN <- 0.1 * x  # 0.000004
+df_drivers$init_soil[[1]]$init_Nmineral <- 0.5 #0.015, 0.5 or 0.1 # kg N/m2 really high
+df_drivers$init_soil[[1]]$init_slow_soil_C <- 40 # 0 or 40 kg C/m2 really high
+df_drivers$init_soil[[1]]$N_input <- 0.00045 #0.00045 (high N) or 0.00015 (low N) # forcing from data
+
+df_calib_DBH_gs <- runread_lm3ppa_f(
+  df_drivers,
+  makecheck = TRUE,
+  parallel = FALSE
+)
+
+N0_B <- df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
+  ggplot() +
+  geom_line(aes(x = year, y = plantC)) +
+  labs(title = "N 0") + 
+  annotate("text", x = 1000, y = 12, 
+           label = "K_nitrogen = 0.00001 \netaN = 0.000001 \nN_input = 0 mg N/m2/yr \ninit_Nmineral = 0.015 kg N/m2 \ninit_slow_soil_C = 0 kg C/m2")+
+  theme_classic()+labs(x = "Year", y = "plantC") 
+N0_B
+
+N0_G <- df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
+  ggplot() +
+  geom_line(aes(x = year, y = NPP)) +
+  labs(title = "N 0") + 
+  annotate("text", x = 1000, y = 0.7, 
+           label = "K_nitrogen = 0.00001 \netaN = 0.000001 \nN_input = 0 mg N/m2/yr \ninit_Nmineral = 0.015 kg N/m2 \ninit_slow_soil_C = 0 kg C/m2")+
+  theme_classic()+labs(x = "Year", y = "NPP")
+N0_G
+
+NL_B <- df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
+  ggplot() +
+  geom_line(aes(x = year, y = plantC)) +
+  labs(title = "N low") + 
+  annotate("text", x = 1000, y = 12, 
+           label = "K_nitrogen = 0.00001 \netaN = 0.000001 \nN_input = 150 mg N/m2/yr \ninit_Nmineral = 0.015 kg N/m2 \ninit_slow_soil_C = 0 kg C/m2")+
+  theme_classic()+labs(x = "Year", y = "plantC") 
+NL_B
+
+NL_G <- df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
+  ggplot() +
+  geom_line(aes(x = year, y = NPP)) +
+  labs(title = "N low") + 
+  annotate("text", x = 1000, y = 0.7, 
+           label = "K_nitrogen = 0.00001 \netaN = 0.000001 \nN_input = 150 mg N/m2/yr \ninit_Nmineral = 0.015 kg N/m2 \ninit_slow_soil_C = 0 kg C/m2")+
+  theme_classic()+labs(x = "Year", y = "NPP")
+NL_G
+
+NH_B <- df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
+  ggplot() +
+  geom_line(aes(x = year, y = plantC)) +
+  labs(title = "N high") + 
+  annotate("text", x = 1000, y = 12, 
+           label = "K_nitrogen = 0.00001 \netaN = 0.000001 \nN_input = 450 mg N/m2/yr \ninit_Nmineral = 0.5 kg N/m2 \ninit_slow_soil_C = 40 kg C/m2")+
+  theme_classic()+labs(x = "Year", y = "plantC") 
+NH_B
+
+NH_G <- df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
+  ggplot() +
+  geom_line(aes(x = year, y = NPP)) +
+  labs(title = "N high") + 
+  annotate("text", x = 1000, y = 0.7, 
+           label = "K_nitrogen = 0.00001 \netaN = 0.000001 \nN_input = 450 mg N/m2/yr \ninit_Nmineral = 0.5 kg N/m2 \ninit_slow_soil_C = 40 kg C/m2")+
+  theme_classic()+labs(x = "Year", y = "NPP")
+NH_G
+
+N0_B + N0_G + NL_B + NL_G + NH_B + NH_G + 
+  plot_layout(ncol = 2) + 
+  plot_annotation(tag_levels = 'A', tag_suffix = ")") & 
+  theme(plot.margin = unit(rep(0.13,4), "cm")) #+
+#plot_layout(guides = "collect") & theme(legend.position = 'bottom')
+ggsave("~/GFDY/manuscript/figures/fig_N_inputs_param.png", width = 10, height = 8, dpi=300)
+
+# Post
+df_mod <- df_calib_DBH_gs$data[[1]]$output_annual_tile %>%  
+  tail(df_drivers$params_siml[[1]]$nyeartrend) %>% 
+  dplyr::summarise(GPP = mean(GPP), LAI= quantile(LAI, probs = 0.95, na.rm=T), Biomass=mean(plantC))
+
+df_mod_sizedist <- df_calib_DBH_gs$data[[1]]$output_annual_cohorts %>%
+  dplyr::filter(year>df_drivers$params_siml[[1]]$spinupyears) %>% 
+  dplyr::filter(dbh>12.1) %>% mutate(size_bins = cut(dbh, breaks = sizedist)) %>%
+  group_by(size_bins,year) %>% summarise(nTrees=sum(density)) %>% ungroup() %>% 
+  group_by(size_bins) %>% summarise(nTrees=mean(nTrees))
+
+dff <- data.frame(
+  variables = c("GPP","LAI","Biomass","dbh_c1","dbh_c2","dbh_c3","dbh_c4","dbh_c5"),
+  targets_mod = c(df_mod$GPP, df_mod$LAI, df_mod$Biomass,
+                  df_mod_sizedist$nTrees[1],df_mod_sizedist$nTrees[2],df_mod_sizedist$nTrees[3],df_mod_sizedist$nTrees[4],df_mod_sizedist$nTrees[5])
+) %>% dplyr::left_join(ddf_obs, by = "variables")
+
+ggplot(dff) +
+  geom_point(aes(x = targets_mod, y = targets_obs, col=variables)) +
+  theme_classic()+labs(x = "Predicted", y = "Observed")+
+  geom_abline(col="grey") + ggtitle("After calibration - DBH gs-Leuning") +
+  facet_wrap(~variables,nrow = 4) + theme(legend.position = "none")
+
 # Original simulations where run with the following set-up: ####
 # 1. turn OFF N limitation: (see vegetation_lm3ppa.mod.f90)
 # spdata(i)%LAImax = MAX(LAImin, sp%LAI_light)

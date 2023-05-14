@@ -103,6 +103,13 @@ save(aggData_analysis, file = "~/GFDY/data/inputs_obs/aggData_analysis55.RData")
 save(aggData_analysis, file = "~/GFDY/data/inputs_obs/aggData_analysis90.RData")
 length(unique(aggData_analysis$PlotID))
 
+# Trends in forest attributes ####
+load("~/GFDY/data/inputs_obs/aggData_analysis.RData")
+fit_biomass_res = lmer(Res_Growth0 ~ Year + (1|PlotID) + (1|Species),
+                   data = aggData_analysis, na.action = "na.exclude")
+summary(fit_biomass_res)
+plot_model(fit_biomass_res,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("Year"))
+
 # xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx #
 # Residuals Tree Growth ~ QMD or growth anomalies ####
 # To analyse the effect of growth enhancement (growth anomalies, i.e., residuals) in STL relationships.

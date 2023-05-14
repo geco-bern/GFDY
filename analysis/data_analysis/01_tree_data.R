@@ -187,12 +187,16 @@ fig_fit_qmd
 fit_stden = lmer(Density ~ Year + (1|PlotID) + (1|Species),
                data = aggData_QMDbinsDen, na.action = "na.exclude")
 summary(fit_stden)
+fit_stden = lmer(Density ~ Year + DBH + (1|PlotID) + (1|Species),
+                 data = aggData_QMDbinsDen, na.action = "na.exclude")
+summary(fit_stden)
 out <- summary(fit_stden)
 out$coefficients
 formatC(out$coefficients, format = "e")
 r.squaredGLMM(fit_stden)
 plot(allEffects(fit_stden))
 plot_model(fit_stden,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("Year"))
+plot_model(fit_stden,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("DBH"))
 pred <- ggpredict(fit_stden, terms = c("Year"), full.data = TRUE)
 plot(pred, add.data = F) 
 preddata <- as.data.frame(pred)
@@ -212,12 +216,16 @@ fig_fit_stden
 fit_biomass = lmer(Biomass_Kg_m2 ~ Year + (1|PlotID) + (1|Species),
                  data = aggData_QMDbinsDen, na.action = "na.exclude")
 summary(fit_biomass)
+fit_biomass = lmer(Biomass_Kg_m2 ~ Year + DBH + (1|PlotID) + (1|Species),
+                   data = aggData_QMDbinsDen, na.action = "na.exclude")
+summary(fit_biomass)
 out <- summary(fit_biomass)
 out$coefficients
 formatC(out$coefficients, format = "e")
 r.squaredGLMM(fit_biomass)
 plot(allEffects(fit_biomass))
 plot_model(fit_biomass,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("Year"))
+plot_model(fit_biomass,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("DBH"))
 pred <- ggpredict(fit_biomass, terms = c("Year"), full.data = TRUE)
 plot(pred, add.data = F) 
 preddata <- as.data.frame(pred)
@@ -237,12 +245,16 @@ fig_fit_biomass
 fit_biomass_change = lmer(BiomassIncrement_Kg_m2_year ~ Year + (1|PlotID) + (1|Species),
                    data = aggData_QMDbinsDen, na.action = "na.exclude")
 summary(fit_biomass_change)
+fit_biomass_change = lmer(BiomassIncrement_Kg_m2_year ~ Year + DBH + (1|PlotID) + (1|Species),
+                          data = aggData_QMDbinsDen, na.action = "na.exclude")
+summary(fit_biomass_change)
 out <- summary(fit_biomass_change)
 out$coefficients
 formatC(out$coefficients, format = "e")
 r.squaredGLMM(fit_biomass_change)
 plot(allEffects(fit_biomass_change))
 plot_model(fit_biomass_change,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("Year"))
+plot_model(fit_biomass_change,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("DBH"))
 pred <- ggpredict(fit_biomass_change, terms = c("Year"), full.data = TRUE)
 plot(pred, add.data = F) 
 preddata <- as.data.frame(pred)
@@ -260,6 +272,9 @@ fig_fit_biomass_change
 # Mean tree biomass
 fit_treebiomass = lmer(mean_tree_biomass_kg ~ Year + (1|PlotID),
                           data = aggTreeData, na.action = "na.exclude")
+summary(fit_treebiomass)
+fit_treebiomass = lmer(mean_tree_biomass_kg ~ Year + mean_dbh + (1|PlotID),
+                       data = aggTreeData, na.action = "na.exclude")
 summary(fit_treebiomass)
 out <- summary(fit_treebiomass)
 out$coefficients
@@ -285,6 +300,9 @@ fig_fit_treebiomass
 # Mean tree biomass change
 fit_treebiomass_change = lmer(mean_tree_biomass_growth_kgperyear ~ Year + (1|PlotID),
                        data = aggTreeData, na.action = "na.exclude")
+summary(fit_treebiomass_change)
+fit_treebiomass_change = lmer(mean_tree_biomass_growth_kgperyear ~ Year + mean_dbh + (1|PlotID),
+                              data = aggTreeData, na.action = "na.exclude")
 summary(fit_treebiomass_change)
 out <- summary(fit_treebiomass_change)
 out$coefficients
@@ -317,6 +335,7 @@ ffS2 <- fig_fit_qmd + fig_fit_stden + fig_fit_biomass +
 #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
 ffS2
 ggsave("~/GFDY/manuscript/figures/fig_S2.png", width = 10, height = 6, dpi=300)
+ggsave("~/GFDY/manuscript/figures/fig_S2_DBH.png", width = 10, height = 6, dpi=300)
 
 # Table S3 - tree ####
 load("~/GFDY/data/inputs_obs/aggTreeData75.RData")
