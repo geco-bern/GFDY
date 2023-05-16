@@ -137,9 +137,10 @@ ggplot(data=agg_table2, aes(x=mean_NPP, y=mean_plantC)) +
   scale_x_continuous(limits = c(0,1.5),breaks=seq(0,1.5,0.5)) + 
   scale_y_continuous(limits = c(0,1.5),breaks=seq(0,1.5,0.5)) 
 
+
+# Beni's version of the Walker-plot ------------
 table2_walker <- readr::read_csv("~/GFDY/data/raw_obs/table2_walker.csv") |> 
   rename(X95CI_beta = `95CI_beta`)
-
 
 # Need to convert 95% CI to SD by dividing by 1.96
 # Replace the NAs values in 95% CI for the coefficient of variation (SD/mean)
@@ -155,23 +156,7 @@ table2_walker_G <- table2_walker %>%
          CV=SD_beta/beta, CV = ifelse(CV>=0, CV, NA),
          SD_beta = ifelse(is.na(SD_beta), mean(CV,na.rm=T), SD_beta))
 
-# out_B <- data.frame()
-# out_G <- data.frame()
-out <- data.frame()
-
-for (n in 1:1e5){
-  
-  i <- sample(dim(table2_walker_B)[1], 1)
-  j <- sample(dim(table2_walker_G)[1], 1)
-
-  B_sample <- rnorm(1, table2_walker_B$beta[i], table2_walker_B$SD_beta[i])
-  G_sample <- rnorm(1, table2_walker_G$beta[j], table2_walker_G$SD_beta[j])
-  
-  out <- tibble(id = n, biomass = B_sample, growth = G_sample, ratio = B_sample / G_sample) |> 
-    bind_rows(out)
-}  
-
-sample_walker <- function(table2_walker_G, table2_walker_B){
+sample_walker <- function(id, table2_walker_G, table2_walker_B){
   
   i <- sample(dim(table2_walker_B)[1], 1)
   j <- sample(dim(table2_walker_G)[1], 1)
@@ -179,18 +164,18 @@ sample_walker <- function(table2_walker_G, table2_walker_B){
   B_sample <- rnorm(1, table2_walker_B$beta[i], table2_walker_B$SD_beta[i])
   G_sample <- rnorm(1, table2_walker_G$beta[j], table2_walker_G$SD_beta[j])
   
-  out <- tibble(id = n, biomass = B_sample, growth = G_sample, ratio = B_sample / G_sample)
+  out <- tibble(id = id, biomass = B_sample, growth = G_sample, ratio = B_sample / G_sample)
   
   return(out)
 }
 
 out <- purrr::map_dfr(
   as.list(seq(1e5)),
-  ~sample_walker(table2_walker_G, table2_walker_B)
+  ~sample_walker(., table2_walker_G, table2_walker_B)
 )
 
 
-out |> 
+gg1 <- out |> 
   ggplot(aes(growth, biomass)) +
   geom_hex() +
   scale_fill_gradientn(
@@ -202,12 +187,27 @@ out |>
 
 out |> 
   ggplot(aes(growth, ..density..)) +
-  geom_density()
+  geom_density() +
+  theme_classic()
 
 out |> 
   ggplot(aes(biomass, ..density..)) +
-  geom_density()
-  
+  geom_density() +
+  theme_classic()
+
+gg2 <- out |> 
+  ggplot(aes(ratio, ..density..)) +
+  geom_density() +
+  xlim(-0.3, 5) +
+  geom_vline(xintercept = 1, linetype="dotted") +
+  geom_vline(xintercept = 0, linetype="dotted") +
+  theme_classic()
+
+cowplot::plot_grid(gg1, gg2, rel_widths = c(1, 0.8), labels = c("a", "b"))
+ggsave(paste0(here::here(), "/manuscript/figures/fig_SXXX.pdf"), width = 8, height = 4)
+ggsave(paste0(here::here(), "/manuscript/figures/fig_SXXX.png"), width = 8, height = 4)
+
+# Laura's stuff ------------  
 out_agg <- out %>% 
   summarise(mean_beta_B = mean(B_sample, na.rm = TRUE),
             sd_beta_B = sd(B_sample, na.rm = TRUE),
