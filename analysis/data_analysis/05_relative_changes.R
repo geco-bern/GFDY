@@ -4,6 +4,8 @@ library(dplyr)
 library(ggplot2)
 library(viridis)
 
+
+
 # Relative change biomass (plantC) vs. NPP ####
 
 # From model simulations ####
@@ -98,10 +100,10 @@ fig2e_dbh <- ggplot() +
 fig2e_dbh
 
 # From Walker et al. 2020 ####
-table2_walker <- read.csv("~/GFDY/data/raw_obs/table2_walker.csv")
-str(table2_walker)
+table2_walker <- readr::read_csv("~/GFDY/data/raw_obs/table2_walker.csv")
 
-agg_table2 <- table2_walker %>% group_by(Plotted,biomeE_var) %>% 
+agg_table2 <- table2_walker %>% 
+  group_by(Plotted,biomeE_var) %>% 
   summarise(mean=mean(beta, na.rm = TRUE),
             sd = sd(beta, na.rm = TRUE),
             n = n()) %>%
@@ -135,39 +137,77 @@ ggplot(data=agg_table2, aes(x=mean_NPP, y=mean_plantC)) +
   scale_x_continuous(limits = c(0,1.5),breaks=seq(0,1.5,0.5)) + 
   scale_y_continuous(limits = c(0,1.5),breaks=seq(0,1.5,0.5)) 
 
-table2_walker <- read.csv("~/GFDY/data/raw_obs/table2_walker.csv")
-str(table2_walker)
+
+# Beni's version of the Walker-plot ------------
+table2_walker <- readr::read_csv("~/GFDY/data/raw_obs/table2_walker.csv") |> 
+  rename(X95CI_beta = `95CI_beta`)
 
 # Need to convert 95% CI to SD by dividing by 1.96
 # Replace the NAs values in 95% CI for the coefficient of variation (SD/mean)
 
-table2_walker_B <- table2_walker %>% filter(biomeE_var=="plantC") %>%
+table2_walker_B <- table2_walker %>% 
+  filter(biomeE_var=="plantC") %>%
   mutate(SD_beta = X95CI_beta/1.96,
          SD_beta = ifelse(is.na(SD_beta), mean(SD_beta/beta,na.rm=T), SD_beta))
          
-table2_walker_G <- table2_walker %>% filter(biomeE_var=="NPP") %>%
+table2_walker_G <- table2_walker %>% 
+  filter(biomeE_var=="NPP") %>%
   mutate(SD_beta = X95CI_beta/1.96,
          CV=SD_beta/beta, CV = ifelse(CV>=0, CV, NA),
          SD_beta = ifelse(is.na(SD_beta), mean(CV,na.rm=T), SD_beta))
 
-out_B <- data.frame()
-out_G <- data.frame()
-out <- data.frame()
+sample_walker <- function(id, table2_walker_G, table2_walker_B){
+  
+  i <- sample(dim(table2_walker_B)[1], 1)
+  j <- sample(dim(table2_walker_G)[1], 1)
+  
+  B_sample <- rnorm(1, table2_walker_B$beta[i], table2_walker_B$SD_beta[i])
+  G_sample <- rnorm(1, table2_walker_G$beta[j], table2_walker_G$SD_beta[j])
+  
+  out <- tibble(id = id, biomass = B_sample, growth = G_sample, ratio = B_sample / G_sample)
+  
+  return(out)
+}
 
-for (n in 1:100000){
-  
-  i <- sample(dim(table2_walker_B)[1],1)
-  j <- sample(dim(table2_walker_G)[1],1)
+out <- purrr::map_dfr(
+  as.list(seq(1e5)),
+  ~sample_walker(., table2_walker_G, table2_walker_B)
+)
 
-  B_sample <- rnorm(1000,table2_walker_B$beta[i], table2_walker_B$SD_beta[i])
-  G_sample <- rnorm(1000,table2_walker_G$beta[j], table2_walker_G$SD_beta[j])
-  
-  out_B <- rbind(out_B, data.frame(B_sample,i))
-  out_G <- rbind(out_G, data.frame(G_sample,j,n))
-  out   <- cbind(out_B, out_G)
-  
-}  
-  
+
+gg1 <- out |> 
+  ggplot(aes(growth, biomass)) +
+  geom_hex() +
+  scale_fill_gradientn(
+    colours = colorRampPalette( c("gray65", "navy", "red", "yellow"))(5)) +
+  geom_abline(intercept=0, slope=1, linetype="dotted") +
+  geom_hline(yintercept = 0, linetype="dotted") +
+  geom_vline(xintercept = 0, linetype="dotted") +
+  theme_classic()
+
+out |> 
+  ggplot(aes(growth, ..density..)) +
+  geom_density() +
+  theme_classic()
+
+out |> 
+  ggplot(aes(biomass, ..density..)) +
+  geom_density() +
+  theme_classic()
+
+gg2 <- out |> 
+  ggplot(aes(ratio, ..density..)) +
+  geom_density() +
+  xlim(-0.3, 5) +
+  geom_vline(xintercept = 1, linetype="dotted") +
+  geom_vline(xintercept = 0, linetype="dotted") +
+  theme_classic()
+
+cowplot::plot_grid(gg1, gg2, rel_widths = c(1, 0.8), labels = c("a", "b"))
+ggsave(paste0(here::here(), "/manuscript/figures/fig_SXXX.pdf"), width = 8, height = 4)
+ggsave(paste0(here::here(), "/manuscript/figures/fig_SXXX.png"), width = 8, height = 4)
+
+# Laura's stuff ------------  
 out_agg <- out %>% 
   summarise(mean_beta_B = mean(B_sample, na.rm = TRUE),
             sd_beta_B = sd(B_sample, na.rm = TRUE),

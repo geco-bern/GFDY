@@ -3,7 +3,7 @@
 # load packages
 library(dplyr)
 library(tibble)
-library(rsofun)
+library(rsofun)  # XXX install directly from lauramarques/rsofun, branch GFDY
 library(ggplot2)
 library(multidplyr)
 library(patchwork)
@@ -21,8 +21,9 @@ library(patchwork)
 # etaN         = 0.025, # loss rate with runoff
 
 # DBH mortality has the shape params: p1=1.5, p2=2.5, p3=4.0
-load("~/GFDY/data/inputs_mod/df_drivers_DBH_gs.RData")
+load("~/GFDY/data/inputs_mod/df_drivers_DBH_gs.RData")  # XXX change all paths to paste0(here::here(), "/data/...") or similar
 load("~/GFDY/data/inputs_mod/settings_calib_DBH_gs_uniq_euler.RData")
+
 df_drivers$params_siml[[1]]$method_mortality
 df_drivers$params_siml[[1]]$method_photosynth
 
@@ -34,18 +35,120 @@ df_drivers$params_tile[[1]]$par_mort_under<-  settings_calib_DBH_gs$par_opt["par
 
 # run the model CH ####
 # df_drivers$params_siml[[1]]$do_closedN_run <- FALSE
-x <- 0.00001 #set value
-df_drivers$params_tile[[1]]$K_nitrogen <- 1 * x  # 0.00002
-df_drivers$params_tile[[1]]$etaN <- 0.1 * x  # 0.000004
-df_drivers$init_soil[[1]]$init_Nmineral <- 0.5 #0.015, 0.5 or 0.1 # kg N/m2 really high
-df_drivers$init_soil[[1]]$init_slow_soil_C <- 40 # 0 or 40 kg C/m2 really high
-df_drivers$init_soil[[1]]$N_input <- 0.00045 #0.00045 (high N) or 0.00015 (low N) # forcing from data
+x <- 1e-7 # set value
+a <- 0.5
+df_drivers$params_tile[[1]]$K_nitrogen <- x * a
+df_drivers$params_tile[[1]]$etaN <- x * (1-a)
+df_drivers$init_soil[[1]]$init_Nmineral <- 0.05 # 0.015, 0.5 or 0.1 # kg N/m2 really high
+df_drivers$init_soil[[1]]$init_slow_soil_C <- 20 # 20 kg C/m2 total SOC stock is relatively relatively high
+df_drivers$init_soil[[1]]$init_fast_soil_C <- 10 # 20 kg C/m2 total SOC stock is relatively relatively high
+df_drivers$init_soil[[1]]$N_input <- 800 * 1e-6 # In Europe: 150-800 mg N m-2 yr-1 -> kg N m-2 yr-1 0.00045 (high N) or 0.00015 (low N) # forcing from data
+df_drivers$params_species[[1]]$Nfixrate0 = 0.0 # turn off N fixation
 
+## N-fertilisation experiments-------------
+get_outputs <- function(df_drivers, nfert_mg_n){
+  
+  df_drivers$init_soil[[1]]$N_input <- nfert_mg_n * 1e-6 # In Europe: 150-800 mg N m-2 yr-1 -> kg N m-2 yr-1 0.00045 (high N) or 0.00015 (low N) # forcing from data
+  
+  # turn off N fixation
+  df_drivers$params_species[[1]]$Nfixrate0 = 0.0
+  
+  df_calib_DBH_gs <- runread_lm3ppa_f(
+    df_drivers,
+    makecheck = TRUE,
+    parallel = FALSE
+  )
+  
+  return(df_calib_DBH_gs)
+}
+
+out_nfert <- purrr::map(
+  as.list(c(150, 300, 500, 800)),
+  ~get_outputs(df_drivers, .)
+)
+
+get_steadystate <- function(tmp, var){
+  tmp$data[[1]]$output_annual_tile |> 
+    tail(1000) |> 
+    pull(!!var) |> 
+    mean()
+}
+
+df_nfert <- tibble(
+  nfert = c(150, 300, 500, 800),
+  plantc = purrr::map_dbl(
+    out_nfert,
+    ~get_steadystate(., "plantC")
+    ),
+  plantn = purrr::map_dbl(
+    out_nfert,
+    ~get_steadystate(., "plantN")
+  ),
+  nmin = purrr::map_dbl(
+    out_nfert,
+    ~get_steadystate(., "mineralN")
+  ),
+  nloss = purrr::map_dbl(
+    out_nfert,
+    ~get_steadystate(., "N_loss")
+  )
+  )
+
+df_nfert |> 
+  tidyr::pivot_longer(2:5, names_to = "var", values_to = "val") |> 
+  ggplot(aes(nfert, val)) +
+  geom_point(size = 3) +
+  facet_wrap(~var, scales = "free_y")
+
+# simulations with single N-input level
 df_calib_DBH_gs <- runread_lm3ppa_f(
   df_drivers,
   makecheck = TRUE,
   parallel = FALSE
 )
+
+# N uptake equilibrates 
+df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
+  ggplot() +
+  geom_line(aes(x = year, y = N_uptk))
+
+# N losses (g N m-2 yr-1)
+df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
+  tail(1000) |> 
+  ggplot() +
+  geom_line(aes(x = year, y = N_loss))
+
+# mineral N
+df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
+  tail(1000) |> 
+  ggplot() +
+  geom_line(aes(x = year, y = mineralN))
+
+# Plant N equilibrates
+df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
+  ggplot() +
+  geom_line(aes(x = year, y = plantN))
+
+# Total (Plant + Soil) N equilibrates (g N m-2)
+df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
+  ggplot() +
+  geom_line(aes(x = year, y = totN))
+
+# N residence time based on inputs
+df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
+  tail(1000) |> 
+  ggplot() +
+  geom_line(aes(x = year, y = totN/(df_drivers$init_soil[[1]]$N_input * 1e3)))
+
+# soil N
+df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
+  ggplot() +
+  geom_line(aes(x = year, y = slowSoilN + fastSoilN))
+
+# soil C
+df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
+  ggplot() +
+  geom_line(aes(x = year, y = SlowSOM + fastSOM))
 
 N0_B <- df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
   ggplot() +
@@ -114,10 +217,14 @@ df_mod <- df_calib_DBH_gs$data[[1]]$output_annual_tile %>%
   dplyr::summarise(GPP = mean(GPP), LAI= quantile(LAI, probs = 0.95, na.rm=T), Biomass=mean(plantC))
 
 df_mod_sizedist <- df_calib_DBH_gs$data[[1]]$output_annual_cohorts %>%
-  dplyr::filter(year>df_drivers$params_siml[[1]]$spinupyears) %>% 
-  dplyr::filter(dbh>12.1) %>% mutate(size_bins = cut(dbh, breaks = sizedist)) %>%
-  group_by(size_bins,year) %>% summarise(nTrees=sum(density)) %>% ungroup() %>% 
-  group_by(size_bins) %>% summarise(nTrees=mean(nTrees))
+  dplyr::filter(year > df_drivers$params_siml[[1]]$spinupyears) %>% 
+  dplyr::filter(dbh>12.1) %>% 
+  mutate(size_bins = cut(dbh, breaks = sizedist)) %>%
+  group_by(size_bins, year) %>% 
+  summarise(nTrees=sum(density)) %>% 
+  ungroup() %>% 
+  group_by(size_bins) %>% 
+  summarise(nTrees=mean(nTrees))
 
 dff <- data.frame(
   variables = c("GPP","LAI","Biomass","dbh_c1","dbh_c2","dbh_c3","dbh_c4","dbh_c5"),
