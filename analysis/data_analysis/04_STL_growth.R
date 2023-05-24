@@ -27,7 +27,6 @@ summary(aggData_analysis$Year)
 Fit_ResBio = lmer(logDensity ~ scale(logQMD) + scale(Res_Growth0) + (1|PlotID) + (1|Species) + (1|years_since_management_bins), 
                   data = aggData_analysis, na.action = "na.exclude")
 summary(Fit_ResBio)
-
 # Weighted model with PlotArea_ha
 Fit_ResBio_PlotArea = lmer(logDensity ~ scale(logQMD) + scale(Res_Growth0) + scale(PlotArea_ha) +
                              (1|PlotID) + (1|Species) + (1|years_since_management_bins), 

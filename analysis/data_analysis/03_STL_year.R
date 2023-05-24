@@ -27,6 +27,27 @@ summary(aggData_analysis$Year)
 Fit_Year = lmer(logDensity ~ scale(logQMD) + scale(Year) + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
                 data = aggData_analysis, na.action = "na.exclude")
 summary(Fit_Year)
+plot_model(Fit_Year,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logQMD","Year[1950,1985,2019]"))
+Res_Fit_Year <- residuals(Fit_Year, type = "pearson")
+rowindex_outliers <- as.integer(names(boxplot.stats(Res_Fit_Year, coef = 1.5)$out))
+aggData_analysis <- aggData_analysis |> 
+  mutate(rowindex = dplyr::row_number()) |>
+  mutate(outlier = rowindex %in% rowindex_outliers) 
+aggData_analysis_out <- aggData_analysis |>
+  filter(outlier==FALSE)
+
+Fit_Year_out = lmer(logDensity ~ scale(logQMD) + scale(Year) + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
+                data = aggData_analysis_out, na.action = "na.exclude")
+summary(Fit_Year_out)
+plot_model(Fit_Year_out,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logQMD","Year[1950,1985,2019]"))
+
+aggData_QMDbinsDen |> 
+  ggplot(aes(x = logQMD, y = logDensity, color = outlier)) + 
+  geom_point() + 
+  scale_color_manual("Outlier?",                    # Set title of legend
+                     values = c("black", "red"),    # Highlight in red
+                     labels = c("No", "Yes")        # Add labels to the legend
+  ) + theme_classic()
 
 # Weighted model with PlotArea_ha
 Fit_Year_PlotArea = lmer(logDensity ~ scale(logQMD) + scale(Year) + scale(PlotArea_ha) + 
@@ -194,6 +215,39 @@ ffS4 <- plot_homocedasticity1 + plot_linearity_var_qmd1 + plot_linearity_var_yr 
 #theme(plot.margin = unit(rep(0.13,4), "cm"))#+
 #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
 ffS4
+
+aggData_analysis_subs <- aggData_analysis %>% filter(logDensity > 6)
+Fit_Year_subs = lmer(logDensity ~ scale(logQMD) + scale(Year) + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
+                data = aggData_analysis_subs, na.action = "na.exclude")
+summary(Fit_Year_subs)
+plot_model(Fit_Year_subs,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logQMD","Year[1950,1985,2019]"))
+
+# Homoscedasticity (constant variance of residuals)
+# Amount and distance of points scattered above/below line is equal or randomly spread
+plot_homocedasticity1 <- ggplot(data.frame(fitted=fitted(Fit_Year_subs),residuals=residuals(Fit_Year_subs,type="pearson")),
+                                aes(x=fitted,y=residuals)) + geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
+  xlab("Fitted (ln N)") + ylab("Residuals") + theme_bw() +  
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 10),axis.title = element_text(size = 10))
+plot_homocedasticity1
+
+# Linearity in each variable: Models are assumed to be linear in each of the independent variables. 
+# This assumption can be checked with plots of the residuals versus each of the variables.
+plot_linearity_var_qmd1 <- ggplot(data.frame(logQMD=aggData_analysis_subs$logQMD,residuals=residuals(Fit_Year_subs,type="pearson")),
+                                  aes(x=logQMD,y=residuals)) + geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
+  xlab("ln QMD") + ylab("Residuals") + theme_bw() +  
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 10),axis.title = element_text(size = 10))
+plot_linearity_var_qmd1
+
+plot_linearity_var_yr <- ggplot(data.frame(Year=aggData_analysis_subs$Year,residuals=residuals(Fit_Year_subs,type="pearson")),
+                                aes(x=Year,y=residuals)) + geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
+  xlab("Year") + ylab("Residuals") + theme_bw() +  
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 10),axis.title = element_text(size = 10))
+plot_linearity_var_yr
+
+
 
 # Animations ####
 p <- ggplot() + 

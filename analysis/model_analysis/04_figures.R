@@ -1362,8 +1362,8 @@ levels(df$lev)
 df$lev <- factor(df$lev, levels = c("Constant turnover rate","Accelerated turnover","Constant self-thinning"))
 
 fig00a <- ggplot() + 
-  geom_point(data=df, aes(x=xx, y=yy,shape=lev,col=lev),size=3) + 
   geom_abline(slope=1, intercept = 0.0, linetype="dashed") +
+  geom_point(data=df, aes(x=xx, y=yy,shape=lev,col=lev),size=3) + 
   labs(x = expression(frac(dG, G)), y = expression(frac(dB, B)),title="Relative change in biomass per relative change in growth") + 
   #scale_shape_manual(values = c(15, 1, 16)) + 
   scale_shape_manual(values = c(16, 16, 16)) + 
@@ -1387,15 +1387,19 @@ fig00a <- ggplot() +
 fig00a
 
 fig00b <- ggplot() +
-  geom_abline(aes(col="Constant turnover rate",slope=-1, intercept = 2.9)) +
-  geom_abline(aes(col="Accelerated turnover",slope=-1, intercept = 2.7)) +
-  geom_abline(aes(col="Constant self-thinning",slope=-1, intercept = 2.5)) +
-  geom_abline(aes(col="Reference STL",slope=-1, intercept = 2.49)) +
-  scale_color_manual(breaks = c("Constant turnover rate", "Accelerated turnover","Constant self-thinning","Reference STL"), 
-                        values = c("#619CFF","#00BA38","#F8766D","black")) +
-  labs(x = "ln QMD", y = "ln N",title="Change in the STL from change in growth") + 
+  geom_abline(aes(col="Constant turnover rate",slope=-1, intercept = 2.9,linetype="Constant turnover rate")) +
+  geom_abline(aes(col="Accelerated turnover",slope=-1, intercept = 2.7,linetype="Accelerated turnover")) +
+  geom_abline(aes(col="Constant self-thinning",slope=-1, intercept = 2.5,linetype="Constant self-thinning")) +
+  geom_abline(aes(col="Reference STL",slope=-1, intercept = 2.49, linetype="Reference STL")) +
   scale_x_continuous(limits = c(0,3),breaks=seq(0,3,0.1),expand=c(0,0)) + 
   scale_y_continuous(limits = c(0,3),breaks=seq(0,3,0.1),expand=c(0,0)) +
+  scale_color_manual(name="",breaks = c("Constant turnover rate", "Accelerated turnover",
+                                "Constant self-thinning","Reference STL"), 
+                        values = c("#619CFF","#00BA38","#F8766D","black")) +
+  scale_linetype_manual(name="",breaks = c("Constant turnover rate", "Accelerated turnover",
+                                              "Constant self-thinning","Reference STL"), 
+                     values = c("solid","solid","solid","dashed")) + 
+  labs(x = "ln QMD", y = "ln N",title="Change in the STL from change in growth") +
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.ticks = element_blank(),
                      axis.text = element_blank(),axis.title = element_text(size = 9),

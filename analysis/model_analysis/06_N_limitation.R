@@ -42,7 +42,7 @@ df_drivers$params_tile[[1]]$etaN <- x * (1-a)
 df_drivers$init_soil[[1]]$init_Nmineral <- 0.05 # 0.015, 0.5 or 0.1 # kg N/m2 really high
 df_drivers$init_soil[[1]]$init_slow_soil_C <- 20 # 20 kg C/m2 total SOC stock is relatively relatively high
 df_drivers$init_soil[[1]]$init_fast_soil_C <- 10 # 20 kg C/m2 total SOC stock is relatively relatively high
-df_drivers$init_soil[[1]]$N_input <- 800 * 1e-6 # In Europe: 150-800 mg N m-2 yr-1 -> kg N m-2 yr-1 0.00045 (high N) or 0.00015 (low N) # forcing from data
+df_drivers$init_soil[[1]]$N_input <- 150 * 1e-6 # In Europe: 150-800 mg N m-2 yr-1 -> kg N m-2 yr-1 0.00045 (high N) or 0.00015 (low N) # forcing from data
 df_drivers$params_species[[1]]$Nfixrate0 = 0.0 # turn off N fixation
 
 ## N-fertilisation experiments-------------
@@ -100,7 +100,7 @@ df_nfert |>
   geom_point(size = 3) +
   facet_wrap(~var, scales = "free_y")
 
-# simulations with single N-input level
+# single N-input level ####
 df_calib_DBH_gs <- runread_lm3ppa_f(
   df_drivers,
   makecheck = TRUE,
@@ -150,66 +150,86 @@ df_calib_DBH_gs$data[[1]]$output_annual_tile %>%
   ggplot() +
   geom_line(aes(x = year, y = SlowSOM + fastSOM))
 
-N0_B <- df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
+# plant C
+df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
   ggplot() +
-  geom_line(aes(x = year, y = plantC)) +
-  labs(title = "N 0") + 
-  annotate("text", x = 1000, y = 12, 
-           label = "K_nitrogen = 0.00001 \netaN = 0.000001 \nN_input = 0 mg N/m2/yr \ninit_Nmineral = 0.015 kg N/m2 \ninit_slow_soil_C = 0 kg C/m2")+
-  theme_classic()+labs(x = "Year", y = "plantC") 
-N0_B
+  geom_line(aes(x = year, y = plantC)) 
 
-N0_G <- df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
+# NPP
+df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
   ggplot() +
-  geom_line(aes(x = year, y = NPP)) +
-  labs(title = "N 0") + 
-  annotate("text", x = 1000, y = 0.7, 
-           label = "K_nitrogen = 0.00001 \netaN = 0.000001 \nN_input = 0 mg N/m2/yr \ninit_Nmineral = 0.015 kg N/m2 \ninit_slow_soil_C = 0 kg C/m2")+
-  theme_classic()+labs(x = "Year", y = "NPP")
-N0_G
+  geom_line(aes(x = year, y = NPP)) 
 
-NL_B <- df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
-  ggplot() +
-  geom_line(aes(x = year, y = plantC)) +
-  labs(title = "N low") + 
-  annotate("text", x = 1000, y = 12, 
-           label = "K_nitrogen = 0.00001 \netaN = 0.000001 \nN_input = 150 mg N/m2/yr \ninit_Nmineral = 0.015 kg N/m2 \ninit_slow_soil_C = 0 kg C/m2")+
-  theme_classic()+labs(x = "Year", y = "plantC") 
-NL_B
+# DBH p1 = 1.5 ####
 
-NL_G <- df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
-  ggplot() +
-  geom_line(aes(x = year, y = NPP)) +
-  labs(title = "N low") + 
-  annotate("text", x = 1000, y = 0.7, 
-           label = "K_nitrogen = 0.00001 \netaN = 0.000001 \nN_input = 150 mg N/m2/yr \ninit_Nmineral = 0.015 kg N/m2 \ninit_slow_soil_C = 0 kg C/m2")+
-  theme_classic()+labs(x = "Year", y = "NPP")
-NL_G
+# N unlimited
+# LUE control
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_Nunlim_out_annual_tile.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_Nunlim_out_annual_cohorts.csv")
+# LUE +15% (modified in the model)
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_Nunlim_out_annual_tile.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_Nunlim_out_annual_cohorts.csv")
+# LUE +30% (modified in the model)
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_Nunlim_out_annual_tile.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_Nunlim_out_annual_cohorts.csv")
 
-NH_B <- df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
-  ggplot() +
-  geom_line(aes(x = year, y = plantC)) +
-  labs(title = "N high") + 
-  annotate("text", x = 1000, y = 12, 
-           label = "K_nitrogen = 0.00001 \netaN = 0.000001 \nN_input = 450 mg N/m2/yr \ninit_Nmineral = 0.5 kg N/m2 \ninit_slow_soil_C = 40 kg C/m2")+
-  theme_classic()+labs(x = "Year", y = "plantC") 
-NH_B
+# N limited
+# LUE control
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_Nlim_out_annual_tile.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_Nlim_out_annual_cohorts.csv")
+# LUE +15% (modified in the model)
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_Nlim_out_annual_tile.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_Nlim_out_annual_cohorts.csv")
+# LUE +30% (modified in the model)
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_Nlim_out_annual_tile.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_Nlim_out_annual_cohorts.csv")
 
-NH_G <- df_calib_DBH_gs$data[[1]]$output_annual_tile %>% 
-  ggplot() +
-  geom_line(aes(x = year, y = NPP)) +
-  labs(title = "N high") + 
-  annotate("text", x = 1000, y = 0.7, 
-           label = "K_nitrogen = 0.00001 \netaN = 0.000001 \nN_input = 450 mg N/m2/yr \ninit_Nmineral = 0.5 kg N/m2 \ninit_slow_soil_C = 40 kg C/m2")+
-  theme_classic()+labs(x = "Year", y = "NPP")
-NH_G
+# DBH p2 = 2.5 ####
+# N unlimited 
+# LUE control
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_Nunlim_out_annual_tile.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_Nunlim_out_annual_cohorts.csv")
+# LUE +15% (modified in the model)
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_Nunlim_out_annual_tile.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_Nunlim_out_annual_cohorts.csv")
+# LUE +30% (modified in the model)
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_Nunlim_out_annual_tile.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_Nunlim_out_annual_cohorts.csv")
 
-N0_B + N0_G + NL_B + NL_G + NH_B + NH_G + 
-  plot_layout(ncol = 2) + 
-  plot_annotation(tag_levels = 'A', tag_suffix = ")") & 
-  theme(plot.margin = unit(rep(0.13,4), "cm")) #+
-#plot_layout(guides = "collect") & theme(legend.position = 'bottom')
-ggsave("~/GFDY/manuscript/figures/fig_N_inputs_param.png", width = 10, height = 8, dpi=300)
+# N limited 
+# LUE control
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_Nlim_out_annual_tile.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_Nlim_out_annual_cohorts.csv")
+# LUE +15% (modified in the model)
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_Nlim_out_annual_tile.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_Nlim_out_annual_cohorts.csv")
+# LUE +30% (modified in the model)
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_Nlim_out_annual_tile.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_Nlim_out_annual_cohorts.csv")
+
+# DBH p3 = 4.0 ####
+
+# N unlimited
+# LUE control
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_Nunlim_out_annual_tile.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_Nunlim_out_annual_cohorts.csv")
+# LUE +15% (modified in the model)
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_Nunlim_out_annual_tile.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_Nunlim_out_annual_cohorts.csv")
+# LUE +30% (modified in the model)
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_Nunlim_out_annual_tile.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_Nunlim_out_annual_cohorts.csv")
+
+# N limited
+# LUE control
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_Nlim_out_annual_tile.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_Nlim_out_annual_cohorts.csv")
+# LUE +15% (modified in the model)
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_Nlim_out_annual_tile.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_Nlim_out_annual_cohorts.csv")
+# LUE +30% (modified in the model)
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_Nlim_out_annual_tile.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_Nlim_out_annual_cohorts.csv")
 
 # Post
 df_mod <- df_calib_DBH_gs$data[[1]]$output_annual_tile %>%  
@@ -357,158 +377,31 @@ df_calib_DBH_gs$data[[1]]$output_annual_tile %>%
   geom_line(aes(x = year, y = NPP)) +
   theme_classic()+labs(x = "Year", y = "NPP")
 
-# DBH p1 = 1.5 ####
-
-# N-closed and N unlimited
-# LUE control
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_closedN_Nunlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_closedN_Nunlim_out_annual_cohorts.csv")
-# LUE +15% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_closedN_Nunlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_closedN_Nunlim_out_annual_cohorts.csv")
-# LUE +30% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_closedN_Nunlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_closedN_Nunlim_out_annual_cohorts.csv")
-
-# N-closed and N limited
-# LUE control
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_closedN_Nlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_closedN_Nlim_out_annual_cohorts.csv")
-# LUE +15% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_closedN_Nlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_closedN_Nlim_out_annual_cohorts.csv")
-# LUE +30% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_closedN_Nlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_closedN_Nlim_out_annual_cohorts.csv")
-
-# N limited (no N-closed)
-# LUE control
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_Nlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_Nlim_out_annual_cohorts.csv")
-# LUE +15% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_Nlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_Nlim_out_annual_cohorts.csv")
-# LUE +30% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_Nlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_Nlim_out_annual_cohorts.csv")
-
-# DBH p2 = 2.5 ####
-
-# N-closed and N unlimited
-# LUE control
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_closedN_Nunlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_closedN_Nunlim_out_annual_cohorts.csv")
-# LUE +15% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_closedN_Nunlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_closedN_Nunlim_out_annual_cohorts.csv")
-# LUE +30% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_closedN_Nunlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_closedN_Nunlim_out_annual_cohorts.csv")
-
-# N-closed and N limited
-# LUE control
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_closedN_Nlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_closedN_Nlim_out_annual_cohorts.csv")
-# LUE +15% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_closedN_Nlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_closedN_Nlim_out_annual_cohorts.csv")
-# LUE +30% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_closedN_Nlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_closedN_Nlim_out_annual_cohorts.csv")
-
-# N limited (no N-closed)
-# LUE control
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_Nlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_Nlim_out_annual_cohorts.csv")
-# LUE +15% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_Nlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_Nlim_out_annual_cohorts.csv")
-# LUE +30% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_Nlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_Nlim_out_annual_cohorts.csv")
-
-# DBH p3 = 4.0 ####
-
-# N-closed and N unlimited
-# LUE control
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_closedN_Nunlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_closedN_Nunlim_out_annual_cohorts.csv")
-# LUE +15% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_closedN_Nunlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_closedN_Nunlim_out_annual_cohorts.csv")
-# LUE +30% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_closedN_Nunlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_closedN_Nunlim_out_annual_cohorts.csv")
-
-# N-closed and N limited
-# LUE control
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_closedN_Nlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_closedN_Nlim_out_annual_cohorts.csv")
-# LUE +15% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_closedN_Nlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_closedN_Nlim_out_annual_cohorts.csv")
-# LUE +30% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_closedN_Nlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_closedN_Nlim_out_annual_cohorts.csv")
-
-# N limited (no N-closed)
-# LUE control
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_Nlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_Nlim_out_annual_cohorts.csv")
-# LUE +15% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_Nlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_Nlim_out_annual_cohorts.csv")
-# LUE +30% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_Nlim_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_Nlim_out_annual_cohorts.csv")
-
 # Figures ####
 
-# N-closed and N unlimited
-ea1sa1DBHp1gl_closedN_Nunlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_closedN_Nunlim_out_annual_tile.csv")
-ea1sa1DBHp1gl_closedN_Nunlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_closedN_Nunlim_out_annual_cohorts.csv")
-ea1sa1DBHp2gl_closedN_Nunlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_closedN_Nunlim_out_annual_tile.csv")
-ea1sa1DBHp2gl_closedN_Nunlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_closedN_Nunlim_out_annual_cohorts.csv")
-ea1sa1DBHp3gl_closedN_Nunlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_closedN_Nunlim_out_annual_tile.csv")
-ea1sa1DBHp3gl_closedN_Nunlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_closedN_Nunlim_out_annual_cohorts.csv")
+# N unlimited
+ea1sa1DBHp1gl_Nunlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_Nunlim_out_annual_tile.csv")
+ea1sa1DBHp1gl_Nunlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_Nunlim_out_annual_cohorts.csv")
+ea1sa1DBHp2gl_Nunlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_Nunlim_out_annual_tile.csv")
+ea1sa1DBHp2gl_Nunlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_Nunlim_out_annual_cohorts.csv")
+ea1sa1DBHp3gl_Nunlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_Nunlim_out_annual_tile.csv")
+ea1sa1DBHp3gl_Nunlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_Nunlim_out_annual_cohorts.csv")
 
-ea2sa1DBHp1gl_closedN_Nunlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_closedN_Nunlim_out_annual_tile.csv")
-ea2sa1DBHp1gl_closedN_Nunlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_closedN_Nunlim_out_annual_cohorts.csv")
-ea2sa1DBHp2gl_closedN_Nunlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_closedN_Nunlim_out_annual_tile.csv")
-ea2sa1DBHp2gl_closedN_Nunlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_closedN_Nunlim_out_annual_cohorts.csv")
-ea2sa1DBHp3gl_closedN_Nunlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_closedN_Nunlim_out_annual_tile.csv")
-ea2sa1DBHp3gl_closedN_Nunlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_closedN_Nunlim_out_annual_cohorts.csv")
+ea2sa1DBHp1gl_Nunlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_Nunlim_out_annual_tile.csv")
+ea2sa1DBHp1gl_Nunlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_Nunlim_out_annual_cohorts.csv")
+ea2sa1DBHp2gl_Nunlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_Nunlim_out_annual_tile.csv")
+ea2sa1DBHp2gl_Nunlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_Nunlim_out_annual_cohorts.csv")
+ea2sa1DBHp3gl_Nunlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_Nunlim_out_annual_tile.csv")
+ea2sa1DBHp3gl_Nunlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_Nunlim_out_annual_cohorts.csv")
 
-ea3sa1DBHp1gl_closedN_Nunlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_closedN_Nunlim_out_annual_tile.csv")
-ea3sa1DBHp1gl_closedN_Nunlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_closedN_Nunlim_out_annual_cohorts.csv")
-ea3sa1DBHp2gl_closedN_Nunlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_closedN_Nunlim_out_annual_tile.csv")
-ea3sa1DBHp2gl_closedN_Nunlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_closedN_Nunlim_out_annual_cohorts.csv")
-ea3sa1DBHp3gl_closedN_Nunlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_closedN_Nunlim_out_annual_tile.csv")
-ea3sa1DBHp3gl_closedN_Nunlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_closedN_Nunlim_out_annual_cohorts.csv")
+ea3sa1DBHp1gl_Nunlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_Nunlim_out_annual_tile.csv")
+ea3sa1DBHp1gl_Nunlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_Nunlim_out_annual_cohorts.csv")
+ea3sa1DBHp2gl_Nunlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_Nunlim_out_annual_tile.csv")
+ea3sa1DBHp2gl_Nunlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_Nunlim_out_annual_cohorts.csv")
+ea3sa1DBHp3gl_Nunlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_Nunlim_out_annual_tile.csv")
+ea3sa1DBHp3gl_Nunlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_Nunlim_out_annual_cohorts.csv")
 
-# N-closed and N limited
-ea1sa1DBHp1gl_closedN_Nlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_closedN_Nlim_out_annual_tile.csv")
-ea1sa1DBHp1gl_closedN_Nlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_closedN_Nlim_out_annual_cohorts.csv")
-ea1sa1DBHp2gl_closedN_Nlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_closedN_Nlim_out_annual_tile.csv")
-ea1sa1DBHp2gl_closedN_Nlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_closedN_Nlim_out_annual_cohorts.csv")
-ea1sa1DBHp3gl_closedN_Nlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_closedN_Nlim_out_annual_tile.csv")
-ea1sa1DBHp3gl_closedN_Nlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_closedN_Nlim_out_annual_cohorts.csv")
-
-ea2sa1DBHp1gl_closedN_Nlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_closedN_Nlim_out_annual_tile.csv")
-ea2sa1DBHp1gl_closedN_Nlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_closedN_Nlim_out_annual_cohorts.csv")
-ea2sa1DBHp2gl_closedN_Nlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_closedN_Nlim_out_annual_tile.csv")
-ea2sa1DBHp2gl_closedN_Nlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_closedN_Nlim_out_annual_cohorts.csv")
-ea2sa1DBHp3gl_closedN_Nlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_closedN_Nlim_out_annual_tile.csv")
-ea2sa1DBHp3gl_closedN_Nlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_closedN_Nlim_out_annual_cohorts.csv")
-
-ea3sa1DBHp1gl_closedN_Nlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_closedN_Nlim_out_annual_tile.csv")
-ea3sa1DBHp1gl_closedN_Nlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_closedN_Nlim_out_annual_cohorts.csv")
-ea3sa1DBHp2gl_closedN_Nlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_closedN_Nlim_out_annual_tile.csv")
-ea3sa1DBHp2gl_closedN_Nlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_closedN_Nlim_out_annual_cohorts.csv")
-ea3sa1DBHp3gl_closedN_Nlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_closedN_Nlim_out_annual_tile.csv")
-ea3sa1DBHp3gl_closedN_Nlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_closedN_Nlim_out_annual_cohorts.csv")
-
-# N limited (no N-closed)
+# N limited
 ea1sa1DBHp1gl_Nlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_Nlim_out_annual_tile.csv")
 ea1sa1DBHp1gl_Nlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_Nlim_out_annual_cohorts.csv")
 ea1sa1DBHp2gl_Nlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_Nlim_out_annual_tile.csv")
@@ -529,7 +422,6 @@ ea3sa1DBHp2gl_Nlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa
 ea3sa1DBHp2gl_Nlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_Nlim_out_annual_cohorts.csv")
 ea3sa1DBHp3gl_Nlim_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_Nlim_out_annual_tile.csv")
 ea3sa1DBHp3gl_Nlim_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_Nlim_out_annual_cohorts.csv")
-
 
 # Mortality formulations ####
 
@@ -563,16 +455,16 @@ fig2a_dbh
 # Stand develop: Stand biomass vs. time ####
 
 ## N unlimited ####
-fig2b_dbh_closedN_Nunlim <- ggplot() + 
-  geom_line(data=ea1sa1DBHp1gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=plantC, linetype='Control'), col="#0072B2", alpha=.8,linewidth=.6) +  
-  geom_line(data=ea1sa1DBHp2gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=plantC, linetype='Control'), col="#D55E00",alpha=.8,linewidth=.6) + 
-  geom_line(data=ea1sa1DBHp3gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=plantC, linetype='Control'), col="#009E73",alpha=.8,linewidth=.6) + 
-  geom_line(data=ea2sa1DBHp1gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=plantC, linetype='+15%'), col="#0072B2", alpha=.8,linewidth=.6) +  
-  geom_line(data=ea2sa1DBHp2gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=plantC, linetype='+15%'), col="#D55E00",alpha=.8,linewidth=.6) + 
-  geom_line(data=ea2sa1DBHp3gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=plantC, linetype='+15%'), col="#009E73",alpha=.8,linewidth=.6) + 
-  geom_line(data=ea3sa1DBHp1gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=plantC, linetype='+30%'), col="#0072B2",alpha=.8,linewidth=.6) + 
-  geom_line(data=ea3sa1DBHp2gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=plantC, linetype='+30%'), col="#D55E00",alpha=.8,linewidth=.6) + 
-  geom_line(data=ea3sa1DBHp3gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=plantC, linetype='+30%'), col="#009E73",alpha=.8,linewidth=.6) + 
+fig2b_dbh_Nunlim <- ggplot() + 
+  geom_line(data=ea1sa1DBHp1gl_Nunlim_out_annual_tile, aes(x=year, y=plantC, linetype='Control'), col="#0072B2", alpha=.8,linewidth=.6) +  
+  geom_line(data=ea1sa1DBHp2gl_Nunlim_out_annual_tile, aes(x=year, y=plantC, linetype='Control'), col="#D55E00",alpha=.8,linewidth=.6) + 
+  geom_line(data=ea1sa1DBHp3gl_Nunlim_out_annual_tile, aes(x=year, y=plantC, linetype='Control'), col="#009E73",alpha=.8,linewidth=.6) + 
+  geom_line(data=ea2sa1DBHp1gl_Nunlim_out_annual_tile, aes(x=year, y=plantC, linetype='+15%'), col="#0072B2", alpha=.8,linewidth=.6) +  
+  geom_line(data=ea2sa1DBHp2gl_Nunlim_out_annual_tile, aes(x=year, y=plantC, linetype='+15%'), col="#D55E00",alpha=.8,linewidth=.6) + 
+  geom_line(data=ea2sa1DBHp3gl_Nunlim_out_annual_tile, aes(x=year, y=plantC, linetype='+15%'), col="#009E73",alpha=.8,linewidth=.6) + 
+  geom_line(data=ea3sa1DBHp1gl_Nunlim_out_annual_tile, aes(x=year, y=plantC, linetype='+30%'), col="#0072B2",alpha=.8,linewidth=.6) + 
+  geom_line(data=ea3sa1DBHp2gl_Nunlim_out_annual_tile, aes(x=year, y=plantC, linetype='+30%'), col="#D55E00",alpha=.8,linewidth=.6) + 
+  geom_line(data=ea3sa1DBHp3gl_Nunlim_out_annual_tile, aes(x=year, y=plantC, linetype='+30%'), col="#009E73",alpha=.8,linewidth=.6) + 
   scale_linetype_manual("Level of LUE", breaks = c('Control',"+15%", "+30%"), 
                         values = c("dotted","dashed","solid"),
                         guide = guide_legend(override.aes = list(color = "black"))) +
@@ -592,40 +484,9 @@ fig2b_dbh_closedN_Nunlim <- ggplot() +
                      legend.box.margin = margin(1, 1, 1, 1)) +
   scale_x_continuous(limits=c(0,1520),breaks=seq(0,1500,750)) +
   scale_y_continuous(limits=c(0,70),breaks=seq(0,60,30))
-fig2b_dbh_closedN_Nunlim
+fig2b_dbh_Nunlim
 
 ## N limited ####
-fig2b_dbh_closedN_Nlim <- ggplot() + 
-  geom_line(data=ea1sa1DBHp1gl_closedN_Nlim_out_annual_tile, aes(x=year, y=plantC, linetype='Control'), col="#0072B2", alpha=.8,linewidth=.6) +  
-  geom_line(data=ea1sa1DBHp2gl_closedN_Nlim_out_annual_tile, aes(x=year, y=plantC, linetype='Control'), col="#D55E00",alpha=.8,linewidth=.6) + 
-  geom_line(data=ea1sa1DBHp3gl_closedN_Nlim_out_annual_tile, aes(x=year, y=plantC, linetype='Control'), col="#009E73",alpha=.8,linewidth=.6) + 
-  geom_line(data=ea2sa1DBHp1gl_closedN_Nlim_out_annual_tile, aes(x=year, y=plantC, linetype='+15%'), col="#0072B2", alpha=.8,linewidth=.6) +  
-  geom_line(data=ea2sa1DBHp2gl_closedN_Nlim_out_annual_tile, aes(x=year, y=plantC, linetype='+15%'), col="#D55E00",alpha=.8,linewidth=.6) + 
-  geom_line(data=ea2sa1DBHp3gl_closedN_Nlim_out_annual_tile, aes(x=year, y=plantC, linetype='+15%'), col="#009E73",alpha=.8,linewidth=.6) + 
-  geom_line(data=ea3sa1DBHp1gl_closedN_Nlim_out_annual_tile, aes(x=year, y=plantC, linetype='+30%'), col="#0072B2",alpha=.8,linewidth=.6) + 
-  geom_line(data=ea3sa1DBHp2gl_closedN_Nlim_out_annual_tile, aes(x=year, y=plantC, linetype='+30%'), col="#D55E00",alpha=.8,linewidth=.6) + 
-  geom_line(data=ea3sa1DBHp3gl_closedN_Nlim_out_annual_tile, aes(x=year, y=plantC, linetype='+30%'), col="#009E73",alpha=.8,linewidth=.6) + 
-  scale_linetype_manual("Level of LUE", breaks = c('Control',"+15%", "+30%"), 
-                        values = c("dotted","dashed","solid"),
-                        guide = guide_legend(override.aes = list(color = "black"))) +
-  labs(x = "t", y = "B",title=expression(paste("Biomass (kg C ", m^-2, ") "))) + 
-  theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                     axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-                     axis.title.y=element_text(angle=0, vjust = 0.5),
-                     legend.text = element_text(size = 9),legend.title = element_text(size = 9),
-                     plot.title = element_text(size = 10),
-                     legend.key = element_rect(fill = NA, color = NA),
-                     legend.position = c(.23, .79),
-                     legend.direction="vertical",
-                     legend.margin = margin(.2, .2, .2, .2),
-                     legend.key.size = unit(0.4, 'cm'),
-                     legend.key.width = unit(1.5, "line"),
-                     #legend.box.background = element_rect(color="black",size=0.2),
-                     legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits=c(0,1520),breaks=seq(0,1500,750)) +
-  scale_y_continuous(limits=c(0,70),breaks=seq(0,60,30))
-fig2b_dbh_closedN_Nlim
-
 fig2b_dbh_Nlim <- ggplot() + 
   geom_line(data=ea1sa1DBHp1gl_Nlim_out_annual_tile, aes(x=year, y=plantC, linetype='Control'), col="#0072B2", alpha=.8,linewidth=.6) +  
   geom_line(data=ea1sa1DBHp2gl_Nlim_out_annual_tile, aes(x=year, y=plantC, linetype='Control'), col="#D55E00",alpha=.8,linewidth=.6) + 
@@ -660,16 +521,16 @@ fig2b_dbh_Nlim
 # Growth (NPP) ####
 
 ## N unlimited #### 
-fig2c_dbh_closedN_Nunlim <- ggplot() + 
-  geom_line(data=ea1sa1DBHp1gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=NPP, linetype='Control'), col="#0072B2", alpha=.8,linewidth=.6) + 
-  geom_line(data=ea1sa1DBHp2gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=NPP, linetype='Control'), col="#D55E00",alpha=.8,linewidth=.6) +
-  geom_line(data=ea1sa1DBHp3gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=NPP, linetype='Control'), col="#009E73",alpha=.8,linewidth=.6) +
-  geom_line(data=ea2sa1DBHp1gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=NPP, linetype='+15%'), col="#0072B2", alpha=.8,linewidth=.6) + 
-  geom_line(data=ea2sa1DBHp2gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=NPP, linetype='+15%'), col="#D55E00",alpha=.8,linewidth=.6) +
-  geom_line(data=ea2sa1DBHp3gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=NPP, linetype='+15%'), col="#009E73",alpha=.8,linewidth=.6) +
-  geom_line(data=ea3sa1DBHp1gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=NPP, linetype='+30%'), col="#0072B2",alpha=.8,linewidth=.6) + 
-  geom_line(data=ea3sa1DBHp2gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=NPP, linetype='+30%'), col="#D55E00",alpha=.8,linewidth=.6) +
-  geom_line(data=ea3sa1DBHp3gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=NPP, linetype='+30%'), col="#009E73",alpha=.8,linewidth=.6) +
+fig2c_dbh_Nunlim <- ggplot() + 
+  geom_line(data=ea1sa1DBHp1gl_Nunlim_out_annual_tile, aes(x=year, y=NPP, linetype='Control'), col="#0072B2", alpha=.8,linewidth=.6) + 
+  geom_line(data=ea1sa1DBHp2gl_Nunlim_out_annual_tile, aes(x=year, y=NPP, linetype='Control'), col="#D55E00",alpha=.8,linewidth=.6) +
+  geom_line(data=ea1sa1DBHp3gl_Nunlim_out_annual_tile, aes(x=year, y=NPP, linetype='Control'), col="#009E73",alpha=.8,linewidth=.6) +
+  geom_line(data=ea2sa1DBHp1gl_Nunlim_out_annual_tile, aes(x=year, y=NPP, linetype='+15%'), col="#0072B2", alpha=.8,linewidth=.6) + 
+  geom_line(data=ea2sa1DBHp2gl_Nunlim_out_annual_tile, aes(x=year, y=NPP, linetype='+15%'), col="#D55E00",alpha=.8,linewidth=.6) +
+  geom_line(data=ea2sa1DBHp3gl_Nunlim_out_annual_tile, aes(x=year, y=NPP, linetype='+15%'), col="#009E73",alpha=.8,linewidth=.6) +
+  geom_line(data=ea3sa1DBHp1gl_Nunlim_out_annual_tile, aes(x=year, y=NPP, linetype='+30%'), col="#0072B2",alpha=.8,linewidth=.6) + 
+  geom_line(data=ea3sa1DBHp2gl_Nunlim_out_annual_tile, aes(x=year, y=NPP, linetype='+30%'), col="#D55E00",alpha=.8,linewidth=.6) +
+  geom_line(data=ea3sa1DBHp3gl_Nunlim_out_annual_tile, aes(x=year, y=NPP, linetype='+30%'), col="#009E73",alpha=.8,linewidth=.6) +
   scale_linetype_manual("Level of LUE", breaks = c('Control',"+15%", "+30%"), 
                         values = c("dotted","dashed","solid"),
                         guide = guide_legend(override.aes = list(color = "black"))) +
@@ -687,38 +548,9 @@ fig2c_dbh_closedN_Nunlim <- ggplot() +
                      legend.box.margin = margin(1, 1, 1, 1)) +
   scale_x_continuous(limits=c(0,1520),breaks=seq(0,1500,750)) +
   scale_y_continuous(limits=c(0,2.5),breaks=seq(0,2.5,1))
-fig2c_dbh_closedN_Nunlim
+fig2c_dbh_Nunlim
 
 ## N limited #### 
-fig2c_dbh_closedN_Nlim <- ggplot() + 
-  geom_line(data=ea1sa1DBHp1gl_closedN_Nlim_out_annual_tile, aes(x=year, y=NPP, linetype='Control'), col="#0072B2", alpha=.8,linewidth=.6) + 
-  geom_line(data=ea1sa1DBHp2gl_closedN_Nlim_out_annual_tile, aes(x=year, y=NPP, linetype='Control'), col="#D55E00",alpha=.8,linewidth=.6) +
-  geom_line(data=ea1sa1DBHp3gl_closedN_Nlim_out_annual_tile, aes(x=year, y=NPP, linetype='Control'), col="#009E73",alpha=.8,linewidth=.6) +
-  geom_line(data=ea2sa1DBHp1gl_closedN_Nlim_out_annual_tile, aes(x=year, y=NPP, linetype='+15%'), col="#0072B2", alpha=.8,linewidth=.6) + 
-  geom_line(data=ea2sa1DBHp2gl_closedN_Nlim_out_annual_tile, aes(x=year, y=NPP, linetype='+15%'), col="#D55E00",alpha=.8,linewidth=.6) +
-  geom_line(data=ea2sa1DBHp3gl_closedN_Nlim_out_annual_tile, aes(x=year, y=NPP, linetype='+15%'), col="#009E73",alpha=.8,linewidth=.6) +
-  geom_line(data=ea3sa1DBHp1gl_closedN_Nlim_out_annual_tile, aes(x=year, y=NPP, linetype='+30%'), col="#0072B2",alpha=.8,linewidth=.6) + 
-  geom_line(data=ea3sa1DBHp2gl_closedN_Nlim_out_annual_tile, aes(x=year, y=NPP, linetype='+30%'), col="#D55E00",alpha=.8,linewidth=.6) +
-  geom_line(data=ea3sa1DBHp3gl_closedN_Nlim_out_annual_tile, aes(x=year, y=NPP, linetype='+30%'), col="#009E73",alpha=.8,linewidth=.6) +
-  scale_linetype_manual("Level of LUE", breaks = c('Control',"+15%", "+30%"), 
-                        values = c("dotted","dashed","solid"),
-                        guide = guide_legend(override.aes = list(color = "black"))) +
-  labs(x = "t", y = "G",title=expression(paste("Growth (kg C ", m^-2, " ", yr^-1, ") "))) + 
-  theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                     axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-                     axis.title.y=element_text(angle=0, vjust = 0.5),
-                     legend.text = element_text(size = 9),legend.title = element_text(size = 9),
-                     plot.title = element_text(size = 10),
-                     legend.key = element_rect(fill = NA, color = NA),
-                     legend.position = "none",
-                     legend.direction="vertical",
-                     legend.margin = margin(2, 2, 2, 2),
-                     legend.box.background = element_rect(color="black",size=0.2),
-                     legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits=c(0,1520),breaks=seq(0,1500,750)) +
-  scale_y_continuous(limits=c(0,2.5),breaks=seq(0,2.5,1))
-fig2c_dbh_closedN_Nlim
-
 fig2c_dbh_Nlim <- ggplot() + 
   geom_line(data=ea1sa1DBHp1gl_Nlim_out_annual_tile, aes(x=year, y=NPP, linetype='Control'), col="#0072B2", alpha=.8,linewidth=.6) + 
   geom_line(data=ea1sa1DBHp2gl_Nlim_out_annual_tile, aes(x=year, y=NPP, linetype='Control'), col="#D55E00",alpha=.8,linewidth=.6) +
@@ -751,16 +583,16 @@ fig2c_dbh_Nlim
 # Mortality (Both mortality and biomass turnover) ####
 
 ## N unlimited #### 
-fig2d_dbh_closedN_Nunlim <- ggplot() + 
-  geom_line(data=ea1sa1DBHp1gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='Control'), col="#0072B2", alpha=.8,linewidth=.6) + 
-  geom_line(data=ea1sa1DBHp2gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='Control'), col="#D55E00",alpha=.8,linewidth=.6) +
-  geom_line(data=ea1sa1DBHp3gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='Control'), col="#009E73",alpha=.8,linewidth=.6) +
-  geom_line(data=ea2sa1DBHp1gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='+15%'), col="#0072B2", alpha=.8,linewidth=.6) + 
-  geom_line(data=ea2sa1DBHp2gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='+15%'), col="#D55E00",alpha=.8,linewidth=.6) +
-  geom_line(data=ea2sa1DBHp3gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='+15%'), col="#009E73",alpha=.8,linewidth=.6) +
-  geom_line(data=ea3sa1DBHp1gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='+30%'), col="#0072B2",alpha=.8,linewidth=.6) + 
-  geom_line(data=ea3sa1DBHp2gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='+30%'), col="#D55E00",alpha=.8,linewidth=.6) +
-  geom_line(data=ea3sa1DBHp3gl_closedN_Nunlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='+30%'), col="#009E73",alpha=.8,linewidth=.6) +
+fig2d_dbh_Nunlim <- ggplot() + 
+  geom_line(data=ea1sa1DBHp1gl_Nunlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='Control'), col="#0072B2", alpha=.8,linewidth=.6) + 
+  geom_line(data=ea1sa1DBHp2gl_Nunlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='Control'), col="#D55E00",alpha=.8,linewidth=.6) +
+  geom_line(data=ea1sa1DBHp3gl_Nunlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='Control'), col="#009E73",alpha=.8,linewidth=.6) +
+  geom_line(data=ea2sa1DBHp1gl_Nunlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='+15%'), col="#0072B2", alpha=.8,linewidth=.6) + 
+  geom_line(data=ea2sa1DBHp2gl_Nunlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='+15%'), col="#D55E00",alpha=.8,linewidth=.6) +
+  geom_line(data=ea2sa1DBHp3gl_Nunlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='+15%'), col="#009E73",alpha=.8,linewidth=.6) +
+  geom_line(data=ea3sa1DBHp1gl_Nunlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='+30%'), col="#0072B2",alpha=.8,linewidth=.6) + 
+  geom_line(data=ea3sa1DBHp2gl_Nunlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='+30%'), col="#D55E00",alpha=.8,linewidth=.6) +
+  geom_line(data=ea3sa1DBHp3gl_Nunlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='+30%'), col="#009E73",alpha=.8,linewidth=.6) +
   scale_linetype_manual("Level of LUE", breaks = c('Control',"+15%", "+30%"), 
                         values = c("dotted","dashed","solid"),
                         guide = guide_legend(override.aes = list(color = "black"))) +
@@ -778,38 +610,9 @@ fig2d_dbh_closedN_Nunlim <- ggplot() +
                      legend.box.margin = margin(1, 1, 1, 1)) +
   scale_x_continuous(limits=c(0,1515),breaks=seq(0,1500,750)) +
   scale_y_continuous(limits=c(0,2.5),breaks=seq(0,2.5,1))
-fig2d_dbh_closedN_Nunlim
+fig2d_dbh_Nunlim
 
 ## N limited #### 
-fig2d_dbh_closedN_Nlim <- ggplot() + 
-  geom_line(data=ea1sa1DBHp1gl_closedN_Nlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='Control'), col="#0072B2", alpha=.8,linewidth=.6) + 
-  geom_line(data=ea1sa1DBHp2gl_closedN_Nlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='Control'), col="#D55E00",alpha=.8,linewidth=.6) +
-  geom_line(data=ea1sa1DBHp3gl_closedN_Nlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='Control'), col="#009E73",alpha=.8,linewidth=.6) +
-  geom_line(data=ea2sa1DBHp1gl_closedN_Nlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='+15%'), col="#0072B2", alpha=.8,linewidth=.6) + 
-  geom_line(data=ea2sa1DBHp2gl_closedN_Nlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='+15%'), col="#D55E00",alpha=.8,linewidth=.6) +
-  geom_line(data=ea2sa1DBHp3gl_closedN_Nlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='+15%'), col="#009E73",alpha=.8,linewidth=.6) +
-  geom_line(data=ea3sa1DBHp1gl_closedN_Nlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='+30%'), col="#0072B2",alpha=.8,linewidth=.6) + 
-  geom_line(data=ea3sa1DBHp2gl_closedN_Nlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='+30%'), col="#D55E00",alpha=.8,linewidth=.6) +
-  geom_line(data=ea3sa1DBHp3gl_closedN_Nlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='+30%'), col="#009E73",alpha=.8,linewidth=.6) +
-  scale_linetype_manual("Level of LUE", breaks = c('Control',"+15%", "+30%"), 
-                        values = c("dotted","dashed","solid"),
-                        guide = guide_legend(override.aes = list(color = "black"))) +
-  labs(x = "t", y = "M",title=expression(paste("Mortality (kg C ", m^-2, " ", yr^-1, ") "))) + 
-  theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                     axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-                     axis.title.y=element_text(angle=0, vjust = 0.5),
-                     legend.text = element_text(size = 9),legend.title = element_text(size = 9),
-                     plot.title = element_text(size = 10),
-                     legend.key = element_rect(fill = NA, color = NA),
-                     legend.position = "none",
-                     legend.direction="vertical",
-                     legend.margin = margin(2, 2, 2, 2),
-                     legend.box.background = element_rect(color="black",size=0.2),
-                     legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits=c(0,1515),breaks=seq(0,1500,750)) +
-  scale_y_continuous(limits=c(0,2.5),breaks=seq(0,2.5,1))
-fig2d_dbh_closedN_Nlim
-
 fig2d_dbh_Nlim <- ggplot() + 
   geom_line(data=ea1sa1DBHp1gl_Nlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='Control'), col="#0072B2", alpha=.8,linewidth=.6) + 
   geom_line(data=ea1sa1DBHp2gl_Nlim_out_annual_tile, aes(x=year, y=c_deadtrees+m_turnover, linetype='Control'), col="#D55E00",alpha=.8,linewidth=.6) +
@@ -844,16 +647,16 @@ fig2d_dbh_Nlim
 ## N unlimited #### 
 # DBH p1
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1DBHp1gl_closedN_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1DBHp1gl_closedN_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1DBHp1gl_closedN_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1DBHp1gl_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1DBHp1gl_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1DBHp1gl_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-B30 <- ea3sa1DBHp1gl_closedN_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B30=mean(plantC)) 
-B15 <- ea2sa1DBHp1gl_closedN_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B15=mean(plantC))
-B0  <- ea1sa1DBHp1gl_closedN_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B0=mean(plantC))
+B30 <- ea3sa1DBHp1gl_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B30=mean(plantC)) 
+B15 <- ea2sa1DBHp1gl_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B15=mean(plantC))
+B0  <- ea1sa1DBHp1gl_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B0=mean(plantC))
 dB0_15 <- (B15$B15 - B0$B0)/B0$B0
 dB15_30 <- (B30$B30 - B15$B15)/B15$B15
 dB0_30 <- (B30$B30 - B0$B0)/B0$B0
@@ -864,16 +667,16 @@ DBHp1gl_RelChange_B_NPP_0_30 <- data.frame(dNPP0_30,dB0_30)
 
 # DBH p2
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1DBHp2gl_closedN_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1DBHp2gl_closedN_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1DBHp2gl_closedN_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1DBHp2gl_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1DBHp2gl_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1DBHp2gl_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-B30 <- ea3sa1DBHp2gl_closedN_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B30=mean(plantC)) 
-B15 <- ea2sa1DBHp2gl_closedN_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B15=mean(plantC))
-B0  <- ea1sa1DBHp2gl_closedN_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B0=mean(plantC))
+B30 <- ea3sa1DBHp2gl_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B30=mean(plantC)) 
+B15 <- ea2sa1DBHp2gl_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B15=mean(plantC))
+B0  <- ea1sa1DBHp2gl_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B0=mean(plantC))
 dB0_15 <- (B15$B15 - B0$B0)/B0$B0
 dB15_30 <- (B30$B30 - B15$B15)/B15$B15
 dB0_30 <- (B30$B30 - B0$B0)/B0$B0
@@ -884,16 +687,16 @@ DBHp2gl_RelChange_B_NPP_0_30 <- data.frame(dNPP0_30,dB0_30)
 
 # DBH p3
 # Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1DBHp3gl_closedN_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1DBHp3gl_closedN_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1DBHp3gl_closedN_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
+NPP30 <- ea3sa1DBHp3gl_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
+NPP15 <- ea2sa1DBHp3gl_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
+NPP0  <- ea1sa1DBHp3gl_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
 dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
 dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
 dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
 
-B30 <- ea3sa1DBHp3gl_closedN_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B30=mean(plantC)) 
-B15 <- ea2sa1DBHp3gl_closedN_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B15=mean(plantC))
-B0  <- ea1sa1DBHp3gl_closedN_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B0=mean(plantC))
+B30 <- ea3sa1DBHp3gl_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B30=mean(plantC)) 
+B15 <- ea2sa1DBHp3gl_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B15=mean(plantC))
+B0  <- ea1sa1DBHp3gl_Nunlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B0=mean(plantC))
 dB0_15 <- (B15$B15 - B0$B0)/B0$B0
 dB15_30 <- (B30$B30 - B15$B15)/B15$B15
 dB0_30 <- (B30$B30 - B0$B0)/B0$B0
@@ -902,7 +705,7 @@ DBHp3gl_RelChange_B_NPP_0_15 <- data.frame(dNPP0_15,dB0_15)
 DBHp3gl_RelChange_B_NPP_15_30 <- data.frame(dNPP15_30,dB15_30)
 DBHp3gl_RelChange_B_NPP_0_30 <- data.frame(dNPP0_30,dB0_30)
 
-fig2e_dbh_closedN_Nunlim <- ggplot() + 
+fig2e_dbh_Nunlim <- ggplot() + 
   geom_point(data=DBHp1gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15, shape='0-15%'),col="#0072B2",size=3) + 
   geom_point(data=DBHp1gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30, shape='0-30%'),col="#0072B2",size=3) + 
   geom_point(data=DBHp2gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15, shape='0-15%'),col="#D55E00",size=3) + 
@@ -912,7 +715,7 @@ fig2e_dbh_closedN_Nunlim <- ggplot() +
   scale_shape_manual("Change in LUE", breaks = c("0-15%","0-30%"), 
                      values = c(16,17),
                      guide = guide_legend(override.aes = list(color = "black",size=1.6))) +  
-  labs(x = expression(frac(dG, G)), y = expression(frac(dB, B)),title="Changes in biomass") + 
+  labs(x = expression(frac(dG, G)), y = expression(frac(dB, B)),title="N-unlimited") + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -925,100 +728,12 @@ fig2e_dbh_closedN_Nunlim <- ggplot() +
                      legend.key.size = unit(.5, 'cm'),
                      #legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) + 
-  scale_y_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) +
+  scale_x_continuous(limits = c(0,0.15),breaks=seq(0,0.15,0.05)) + 
+  scale_y_continuous(limits = c(0,0.15),breaks=seq(0,0.15,0.05)) +
   geom_abline(slope=1, intercept = 0.0, linetype="dashed") 
-fig2e_dbh_closedN_Nunlim
+fig2e_dbh_Nunlim
 
 ## N unlimited ####
-# DBH p1
-# Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1DBHp1gl_closedN_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1DBHp1gl_closedN_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1DBHp1gl_closedN_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
-dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
-dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
-dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
-
-B30 <- ea3sa1DBHp1gl_closedN_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B30=mean(plantC)) 
-B15 <- ea2sa1DBHp1gl_closedN_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B15=mean(plantC))
-B0  <- ea1sa1DBHp1gl_closedN_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B0=mean(plantC))
-dB0_15 <- (B15$B15 - B0$B0)/B0$B0
-dB15_30 <- (B30$B30 - B15$B15)/B15$B15
-dB0_30 <- (B30$B30 - B0$B0)/B0$B0
-
-DBHp1gl_RelChange_B_NPP_0_15 <- data.frame(dNPP0_15,dB0_15)
-DBHp1gl_RelChange_B_NPP_15_30 <- data.frame(dNPP15_30,dB15_30)
-DBHp1gl_RelChange_B_NPP_0_30 <- data.frame(dNPP0_30,dB0_30)
-
-# DBH p2
-# Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1DBHp2gl_closedN_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1DBHp2gl_closedN_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1DBHp2gl_closedN_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
-dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
-dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
-dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
-
-B30 <- ea3sa1DBHp2gl_closedN_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B30=mean(plantC)) 
-B15 <- ea2sa1DBHp2gl_closedN_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B15=mean(plantC))
-B0  <- ea1sa1DBHp2gl_closedN_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B0=mean(plantC))
-dB0_15 <- (B15$B15 - B0$B0)/B0$B0
-dB15_30 <- (B30$B30 - B15$B15)/B15$B15
-dB0_30 <- (B30$B30 - B0$B0)/B0$B0
-
-DBHp2gl_RelChange_B_NPP_0_15 <- data.frame(dNPP0_15,dB0_15)
-DBHp2gl_RelChange_B_NPP_15_30 <- data.frame(dNPP15_30,dB15_30)
-DBHp2gl_RelChange_B_NPP_0_30 <- data.frame(dNPP0_30,dB0_30)
-
-# DBH p3
-# Calculate the relative change as (Final value - initial value)/initial value
-NPP30 <- ea3sa1DBHp3gl_closedN_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
-NPP15 <- ea2sa1DBHp3gl_closedN_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP15=mean(NPP))  
-NPP0  <- ea1sa1DBHp3gl_closedN_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP0=mean(NPP))
-dNPP0_15 <- (NPP15$NPP15 - NPP0$NPP0)/NPP0$NPP0
-dNPP15_30 <- (NPP30$NPP30 - NPP15$NPP15)/NPP15$NPP15
-dNPP0_30 <- (NPP30$NPP30 - NPP0$NPP0)/NPP0$NPP0
-
-B30 <- ea3sa1DBHp3gl_closedN_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B30=mean(plantC)) 
-B15 <- ea2sa1DBHp3gl_closedN_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B15=mean(plantC))
-B0  <- ea1sa1DBHp3gl_closedN_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(B0=mean(plantC))
-dB0_15 <- (B15$B15 - B0$B0)/B0$B0
-dB15_30 <- (B30$B30 - B15$B15)/B15$B15
-dB0_30 <- (B30$B30 - B0$B0)/B0$B0
-
-DBHp3gl_RelChange_B_NPP_0_15 <- data.frame(dNPP0_15,dB0_15)
-DBHp3gl_RelChange_B_NPP_15_30 <- data.frame(dNPP15_30,dB15_30)
-DBHp3gl_RelChange_B_NPP_0_30 <- data.frame(dNPP0_30,dB0_30)
-
-fig2e_dbh_closedN_Nlim <- ggplot() + 
-  geom_point(data=DBHp1gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15, shape='0-15%'),col="#0072B2",size=3) + 
-  geom_point(data=DBHp1gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30, shape='0-30%'),col="#0072B2",size=3) + 
-  geom_point(data=DBHp2gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15, shape='0-15%'),col="#D55E00",size=3) + 
-  geom_point(data=DBHp2gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30, shape='0-30%'),col="#D55E00",size=3) + 
-  geom_point(data=DBHp3gl_RelChange_B_NPP_0_15, aes(x=dNPP0_15, y=dB0_15, shape='0-15%'),col="#009E73",size=3) + 
-  geom_point(data=DBHp3gl_RelChange_B_NPP_0_30, aes(x=dNPP0_30, y=dB0_30, shape='0-30%'),col="#009E73",size=3) + 
-  scale_shape_manual("Change in LUE", breaks = c("0-15%","0-30%"), 
-                     values = c(16,17),
-                     guide = guide_legend(override.aes = list(color = "black",size=1.6))) +  
-  labs(x = expression(frac(dG, G)), y = expression(frac(dB, B)),title="Changes in biomass") + 
-  theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                     axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-                     axis.title.y=element_text(angle=0, vjust = 0.5),
-                     legend.text = element_text(size = 9),legend.title = element_text(size = 9),
-                     plot.title = element_text(size = 10),
-                     legend.key = element_rect(fill = NA, color = NA),
-                     legend.position = c(.25, .81),
-                     legend.direction="vertical",
-                     legend.margin = margin(.2, .2, .2, .2),
-                     legend.key.size = unit(.5, 'cm'),
-                     #legend.box.background = element_rect(color="black",size=0.2),
-                     legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) + 
-  scale_y_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) +
-  geom_abline(slope=1, intercept = 0.0, linetype="dashed") 
-fig2e_dbh_closedN_Nlim
-
 # DBH p1
 # Calculate the relative change as (Final value - initial value)/initial value
 NPP30 <- ea3sa1DBHp1gl_Nlim_out_annual_tile %>% dplyr::filter(year>=900) %>% summarise(NPP30=mean(NPP))  
@@ -1089,23 +804,31 @@ fig2e_dbh_Nlim <- ggplot() +
   scale_shape_manual("Change in LUE", breaks = c("0-15%","0-30%"), 
                      values = c(16,17),
                      guide = guide_legend(override.aes = list(color = "black",size=1.6))) +  
-  labs(x = expression(frac(dG, G)), y = expression(frac(dB, B)),title="Changes in biomass") + 
+  labs(x = expression(frac(dG, G)), y = expression(frac(dB, B)),title="N-limited") + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
                      legend.text = element_text(size = 9),legend.title = element_text(size = 9),
                      plot.title = element_text(size = 10),
                      legend.key = element_rect(fill = NA, color = NA),
-                     legend.position = c(.25, .81),
+                     legend.position = "null",
                      legend.direction="vertical",
                      legend.margin = margin(.2, .2, .2, .2),
                      legend.key.size = unit(.5, 'cm'),
                      #legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) + 
-  scale_y_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) +
+  scale_x_continuous(limits = c(0,0.15),breaks=seq(0,0.15,0.05)) + 
+  scale_y_continuous(limits = c(0,0.15),breaks=seq(0,0.15,0.05)) +
   geom_abline(slope=1, intercept = 0.0, linetype="dashed") 
 fig2e_dbh_Nlim
+
+ffs9 <- fig2a_dbh + fig2e_dbh_Nunlim + fig2e_dbh_Nlim + 
+  plot_layout(ncol = 3) + 
+  plot_annotation(tag_levels = 'a', tag_suffix = ")") & 
+  theme(plot.margin = unit(rep(0.13,4), "cm"))#+ 
+#plot_layout(guides = "collect") & theme(legend.position = 'bottom')
+ffs9
+ggsave("~/GFDY/manuscript/figures/fig_S9.png", width = 10, height = 3.5, dpi=300)
 
 # Relative change mortality vs. NPP ####
 

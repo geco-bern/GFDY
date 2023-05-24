@@ -325,8 +325,21 @@ sort(table(aggData_QMDbinsDen$PlotID))
 ggplot(data = aggData_QMDbinsDen, aes(x = logQMD, y = logDensity)) + geom_point(alpha=.5) +
   geom_smooth(data=aggData_QMDbinsDen, method='lm',se=F,fullrange=TRUE) 
 
+# rename dataset
+save(aggData_QMDbinsDen, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
+save(aggData_QMDbinsRest, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsRest75.RData")
+
+save(aggData_QMDbinsDen, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen55.RData")
+save(aggData_QMDbinsRest, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsRest55.RData")
+
+save(aggData_QMDbinsDen, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen90.RData")
+save(aggData_QMDbinsRest, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsRest90.RData")
+
 # Remove outliers ####
 # Filter points that are not in the STL: High and low density and QMD
+load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
+load("~/GFDY/data/inputs_obs/aggData_QMDbinsRest75.RData")
+
 quartiles_density <- quantile(aggData_QMDbinsDen$logDensity, probs=c(.25, .75), na.rm = FALSE)
 IQR_density <- IQR(aggData_QMDbinsDen$logDensity)
 Lower_density <- quartiles_density[1] - 1.5*IQR_density
@@ -345,23 +358,33 @@ ggplot(data = aggData_QMDbinsDen_out, aes(x = logQMD, y = logDensity)) + geom_po
 length(unique(aggData_QMDbinsDen_out$PlotID))
 sort(table(aggData_QMDbinsDen_out$PlotID))
 
+#vec_outliers <- boxplot.stats(aggData_QMDbinsDen$logDensity)$out
+#plot_data <- aggData_QMDbinsDen |> 
+#  mutate(outlier = logDensity %in% vec_outliers)
+#plot_data |> 
+#  ggplot(aes(x = logQMD, y = logDensity, color = outlier)) + 
+#  geom_point()
+#vec_outliers <- boxplot.stats(aggData_QMDbinsDen$logQMD)$out
+#plot_data <- aggData_QMDbinsDen |> 
+#  mutate(outlier = logQMD %in% vec_outliers)
+#plot_data |> 
+#  ggplot(aes(x = logQMD, y = logDensity, color = outlier)) + 
+#  geom_point()
+
 # Extract the outliers points to add them to aggData_QMDbinsRest
 aggData_QMDbinsDen_rest <- aggData_QMDbinsDen %>% 
   filter(!logDensity %in% aggData_QMDbinsDen_out$logDensity)
-aggData_QMDbinsRest <- aggData_QMDbinsRest %>% bind_rows(aggData_QMDbinsDen_rest)
+aggData_QMDbinsRest_out <- aggData_QMDbinsRest %>% bind_rows(aggData_QMDbinsDen_rest)
 
 # rename dataset
-aggData_QMDbinsDen <- aggData_QMDbinsDen_out
-save(aggData_QMDbinsDen, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
-save(aggData_QMDbinsRest, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsRest75.RData")
+save(aggData_QMDbinsDen_out, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen75out.RData")
+save(aggData_QMDbinsRest_out, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsRest75out.RData")
 
-aggData_QMDbinsDen <- aggData_QMDbinsDen_out
-save(aggData_QMDbinsDen, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen55.RData")
-save(aggData_QMDbinsRest, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsRest55.RData")
+save(aggData_QMDbinsDen_out, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen55out.RData")
+save(aggData_QMDbinsRest_out, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsRest55out.RData")
 
-aggData_QMDbinsDen <- aggData_QMDbinsDen_out
-save(aggData_QMDbinsDen, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen90.RData")
-save(aggData_QMDbinsRest, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsRest90.RData")
+save(aggData_QMDbinsDen_out, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen90out.RData")
+save(aggData_QMDbinsRest_out, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsRest90out.RData")
 
 # Table S1 ####
 
@@ -387,7 +410,7 @@ aggStandData %>% group_by(PlotID) %>% arrange(Year) %>%
   summarise(mean=mean(years_since_management,na.rm=T),sd=sd(years_since_management,na.rm=T))
 
 # Subset of plots from the upper quantiles used in this study
-load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
+load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75out.RData")
 summary(aggData_QMDbinsDen)
 aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(count=n_distinct(PlotID))
 aggData_QMDbinsDen %>% summarise(count=n_distinct(PlotID))
