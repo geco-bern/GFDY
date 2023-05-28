@@ -643,10 +643,13 @@ percent_species_alData %>% distinct(Species)
 summary(percent_species_alData)
 
 # Figure S1 ####
+load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75out.RData")
+load("~/GFDY/data/inputs_obs/aggData_QMDbinsRest75out.RData")
+
 library(viridis)
 fig_S1 <- ggplot() + 
-  geom_point(data = aggData_QMDbinsDen, aes(x = logQMD, y = logDensity,col=Year), alpha=0.6, size = 1, shape = 16, inherit.aes = FALSE) + 
-  geom_point(data = aggData_QMDbinsRest, aes(x = logQMD, y = logDensity,col=Year), alpha=0.6, size = 1,shape = 16, inherit.aes = FALSE) + 
+  geom_point(data = aggData_QMDbinsDen_out, aes(x = logQMD, y = logDensity,col=Year), alpha=0.6, size = 1, shape = 16, inherit.aes = FALSE) + 
+  geom_point(data = aggData_QMDbinsRest_out, aes(x = logQMD, y = logDensity,col=Year), alpha=0.6, size = 1,shape = 16, inherit.aes = FALSE) + 
   labs(x = "ln QMD", y = "ln N",color  = "Year") + 
   scale_color_viridis(option="magma",breaks = c(1950, 1975, 2000),trans = 'reverse') +
   theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
@@ -659,9 +662,10 @@ fig_S1 <- ggplot() +
                       legend.box = "horizontal",
                       legend.margin = margin(2, 2, 2, 2),
                       legend.key.size = unit(.4, 'cm'),
-                      legend.box.margin = margin(1, 1, 1, 1))
-#scale_x_continuous(limits = c(2,4.6),breaks = seq(2.5,4.5,1))+
-#scale_y_continuous(limits = c(3.6,9.2))
+                      legend.box.margin = margin(1, 1, 1, 1)) +
+scale_x_continuous(breaks = seq(2,4,1)) +
+scale_y_continuous(breaks = seq(4,8,2))
 fig_S1
-ggsave("~/GFDY/manuscript/figures/fig_S1.png", width = 5, height = 4, dpi=300)
+ggsave(paste0(here::here(), "/manuscript/figures/fig_S1.png"), width = 5, height = 4.5, dpi=300)
+ggsave(paste0(here::here(), "/manuscript/figures/fig_S1.pdf"), width = 5, height = 4.5, dpi=300)
 

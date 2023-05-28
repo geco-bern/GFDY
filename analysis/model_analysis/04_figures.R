@@ -36,28 +36,6 @@ ea3sa1DBHp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp
 ea3sa1DBHp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_out_annual_tile.csv")
 ea3sa1DBHp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_out_annual_cohorts.csv")
 
-# N-closed and N unlimited (Last simulations)
-ea1sa1DBHp1gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_closedN_Nunlim_out_annual_tile.csv")
-ea1sa1DBHp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_closedN_Nunlim_out_annual_cohorts.csv")
-ea1sa1DBHp2gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_closedN_Nunlim_out_annual_tile.csv")
-ea1sa1DBHp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_closedN_Nunlim_out_annual_cohorts.csv")
-ea1sa1DBHp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_closedN_Nunlim_out_annual_tile.csv")
-ea1sa1DBHp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_closedN_Nunlim_out_annual_cohorts.csv")
-
-ea2sa1DBHp1gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_closedN_Nunlim_out_annual_tile.csv")
-ea2sa1DBHp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_closedN_Nunlim_out_annual_cohorts.csv")
-ea2sa1DBHp2gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_closedN_Nunlim_out_annual_tile.csv")
-ea2sa1DBHp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_closedN_Nunlim_out_annual_cohorts.csv")
-ea2sa1DBHp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_closedN_Nunlim_out_annual_tile.csv")
-ea2sa1DBHp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_closedN_Nunlim_out_annual_cohorts.csv")
-
-ea3sa1DBHp1gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_closedN_Nunlim_out_annual_tile.csv")
-ea3sa1DBHp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_closedN_Nunlim_out_annual_cohorts.csv")
-ea3sa1DBHp2gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_closedN_Nunlim_out_annual_tile.csv")
-ea3sa1DBHp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_closedN_Nunlim_out_annual_cohorts.csv")
-ea3sa1DBHp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_closedN_Nunlim_out_annual_tile.csv")
-ea3sa1DBHp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_closedN_Nunlim_out_annual_cohorts.csv")
-
 # Exploring relationships and plotting
 
 # Mortality formulations ####
@@ -71,9 +49,9 @@ fig2a_dbh <- ggplot(data.frame(x = c(0, 1.2)), aes(x)) +
   #scale_color_viridis(discrete=TRUE,option="viridis",breaks = c("r1", "r2", "r3")) +
   scale_color_manual("Parameter", breaks = c("r1", "r2", "r3"), 
                      values = c("#0072B2", "#D55E00", "#009E73"),
-                     labels =c(expression(paste(italic("r")[italic("S1")]~ "= 1.5")),
-                               expression(paste(italic("r")[italic("S2")]~ "= 2.5")),
-                               expression(paste(italic("r")[italic("S3")]~ "= 4.0")))) +
+                     labels =c(expression(paste(italic("r")[italic("1")]~ "= 1.5")),
+                               expression(paste(italic("r")[italic("2")]~ "= 2.5")),
+                               expression(paste(italic("r")[italic("3")]~ "= 4.0")))) +
   labs(x='Diameter (m)', y='m',title=expression(paste("Mortality rate (", yr^-1, ") "))) + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
@@ -232,6 +210,7 @@ fig2d_dbh <- ggplot() +
   scale_y_continuous(limits=c(0,2.5),breaks=seq(0,2.5,1))
 fig2d_dbh
 
+# Mortality values
 ggplot() + 
   geom_line(data=ea1sa1DBHp1gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='Control'), col="#0072B2", alpha=.8,linewidth=.6) + 
   geom_line(data=ea1sa1DBHp2gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='Control'), col="#D55E00",alpha=.8,linewidth=.6) +
@@ -239,6 +218,30 @@ ggplot() +
 ea1sa1DBHp1gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
 ea1sa1DBHp2gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
 ea1sa1DBHp3gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
+
+# Deathrate for canopy
+ea3sa1DBHp1gl_out_annual_cohorts %>% filter(layer==1) %>% filter(cohort==1) %>%
+  filter(year>700) %>%  
+  summarise(mean=mean(deathrate))
+ea3sa1DBHp2gl_out_annual_cohorts %>% filter(layer==1) %>% filter(cohort==1) %>%
+  filter(year>700) %>%  
+  summarise(mean=mean(deathrate))
+ea3sa1DBHp3gl_out_annual_cohorts %>% filter(layer==1) %>% filter(cohort==1) %>%
+  filter(year>700) %>%  
+  summarise(mean=mean(deathrate))
+
+# n_deadtrees for canopy
+ea1sa1DBHp1gl_out_annual_cohorts %>% filter(layer==1) %>% #filter(cohort==1) %>%
+  filter(year>700) %>%  
+  summarise(mean=mean(n_deadtrees))
+formatC(0.0001646162, format = "e") 
+ea1sa1DBHp2gl_out_annual_cohorts %>% filter(layer==1) %>% #filter(cohort==1) %>%
+  filter(year>700) %>%  
+  summarise(mean=mean(n_deadtrees))
+formatC(0.0001114484, format = "e") 
+ea1sa1DBHp3gl_out_annual_cohorts %>% filter(layer==1) %>% #filter(cohort==1) %>%
+  filter(year>700) %>%  
+  summarise(mean=mean(n_deadtrees))
 
 ggplot() +
   geom_line(data=ea2sa1DBHp1gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='+15%'), col="#0072B2", alpha=.8,linewidth=.6) + 
@@ -248,6 +251,19 @@ ea2sa1DBHp1gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_de
 ea2sa1DBHp2gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
 ea2sa1DBHp3gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
 
+# n_deadtrees for canopy
+ea2sa1DBHp1gl_out_annual_cohorts %>% filter(layer==1) %>% #filter(cohort==1) %>%
+  filter(year>700) %>%  
+  summarise(mean=mean(n_deadtrees))
+formatC(0.0001083033, format = "e") 
+ea2sa1DBHp2gl_out_annual_cohorts %>% filter(layer==1) %>% #filter(cohort==1) %>%
+  filter(year>700) %>%  
+  summarise(mean=mean(n_deadtrees))
+ea2sa1DBHp3gl_out_annual_cohorts %>% filter(layer==1) %>% #filter(cohort==1) %>%
+  filter(year>700) %>%  
+  summarise(mean=mean(n_deadtrees)) 
+formatC(0.0001242922, format = "e") 
+
 ggplot() +
   geom_line(data=ea3sa1DBHp1gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='+30%'), col="#0072B2",alpha=.8,linewidth=.6) + 
   geom_line(data=ea3sa1DBHp2gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='+30%'), col="#D55E00",alpha=.8,linewidth=.6) +
@@ -255,6 +271,19 @@ ggplot() +
 ea3sa1DBHp1gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
 ea3sa1DBHp2gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
 ea3sa1DBHp3gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
+
+# n_deadtrees for canopy
+ea3sa1DBHp1gl_out_annual_cohorts %>% filter(layer==1) %>% #filter(cohort==1) %>%
+  filter(year>700) %>%  
+  summarise(mean=mean(n_deadtrees))
+formatC(0.0001133832, format = "e") 
+ea3sa1DBHp2gl_out_annual_cohorts %>% filter(layer==1) %>% #filter(cohort==1) %>%
+  filter(year>700) %>%  
+  summarise(mean=mean(n_deadtrees))
+ea3sa1DBHp3gl_out_annual_cohorts %>% filter(layer==1) %>% #filter(cohort==1) %>%
+  filter(year>700) %>%  
+  summarise(mean=mean(n_deadtrees)) 
+formatC(0.0001265985, format = "e") 
 
 # Relative change biomass (plantC) vs. NPP ####
 
@@ -557,7 +586,7 @@ fig2gg_dbh <- ggplot() +
                      legend.text = element_text(size = 9),legend.title = element_text(size = 9),
                      plot.title = element_text(size = 10),
                      legend.key = element_rect(fill = NA, color = NA),
-                     legend.position = c(.43, .9),
+                     legend.position = c(.47, .9),
                      legend.direction="horizontal",
                      legend.margin = margin(.2, .2, .2, .2),
                      legend.key.size = unit(0.7, 'cm'),
@@ -698,6 +727,19 @@ fig2h_dbh <- ggplot() +
   geom_hline(yintercept =  0.0, linetype="dashed")
 fig2h_dbh
 
+# Sensitivity allometric parameter ####
+# See file 05_sensitivity.R
+# Figure S6 ####
+fig_S6 <- figS6A + figS6B + figS6C +
+  plot_layout(ncol = 3) + 
+  plot_annotation(tag_levels = 'a', tag_suffix = ")") & 
+  theme(plot.margin = unit(rep(0.13,4), "cm")) & 
+  theme(plot.tag = element_text(size = 12))#+ 
+#plot_layout(guides = "collect") & theme(legend.position = 'bottom')
+fig_S6
+ggsave(paste0(here::here(),"/manuscript/figures/fig_S6.png"), width = 9.5, height = 3.3, dpi=300)
+ggsave(paste0(here::here(), "/manuscript/figures/fig_S6.pdf"), width = 9.5, height = 3.3, dpi=300)
+
 # Cohort longevity vs. growth (dbh) ####
 
 # DBH
@@ -807,7 +849,7 @@ figCoho_dbh1 <- ggplot() +
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
   scale_x_continuous(limits = c(3,4.15), breaks = seq(3,4,0.5)) + 
-  scale_y_continuous(limits = c(220,280), breaks = seq(220,280,20))
+  scale_y_continuous(limits = c(220,280), breaks = seq(220,280,30))
 figCoho_dbh1
 
 cor.test(DBHp1gl_out_annual_cohorts_agg$mean_Age,DBHp1gl_out_annual_cohorts_agg$mean_G,method = "pearson")
@@ -833,7 +875,7 @@ figCoho_dbh2 <- ggplot() +
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
   scale_x_continuous(limits = c(3,4.15), breaks = seq(3,4,0.5)) + 
-  scale_y_continuous(limits = c(220,280), breaks = seq(220,280,20))
+  scale_y_continuous(limits = c(220,280), breaks = seq(220,280,30))
 figCoho_dbh2
 
 cor.test(DBHp2gl_out_annual_cohorts_agg$mean_Age,DBHp2gl_out_annual_cohorts_agg$mean_G,method = "pearson")
@@ -859,12 +901,13 @@ figCoho_dbh3 <- ggplot() +
                      legend.margin = margin(2, 2, 2, 2),
                      legend.box.margin = margin(1, 1, 1, 1)) +
   scale_x_continuous(limits = c(3,4.15), breaks = seq(3,4,0.5)) + 
-  scale_y_continuous(limits = c(220,280), breaks = seq(220,280,20))
+  scale_y_continuous(limits = c(220,280), breaks = seq(220,280,30))
 figCoho_dbh3
 
 cor.test(DBHp3gl_out_annual_cohorts_agg$mean_Age,DBHp3gl_out_annual_cohorts_agg$mean_G,method = "pearson")
 
-fig2Coho_dbh <- ggplot() + 
+# Figure S7 ####
+fig_S7 <- ggplot() + 
   geom_point(data=ea1sa1DBHp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r1', shape='Control'),size=3) + 
   geom_point(data=ea2sa1DBHp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r1', shape='+15%'),size=3) + 
   geom_point(data=ea3sa1DBHp1gl_out_annual_cohorts_agg, aes(x=mean_G, y=mean_Age, color='r1', shape='+30%'),size=3) + 
@@ -883,9 +926,9 @@ fig2Coho_dbh <- ggplot() +
   scale_color_manual("Parameter ", breaks = c("r1", "r2", "r3"), 
                      values = c("#0072B2", "#D55E00", "#009E73"),
                      guide = guide_legend(override.aes = list(size=1),order=1),
-                     labels =c(expression(paste(italic("r")[italic("S1")])),
-                               expression(paste(italic("r")[italic("S2")])),
-                               expression(paste(italic("r")[italic("S3")])))) +
+                     labels =c(expression(paste(italic("r")[italic("1")])),
+                               expression(paste(italic("r")[italic("2")])),
+                               expression(paste(italic("r")[italic("3")])))) +
   scale_shape_manual("Level of LUE", breaks = c("Control","+15%","+30%"), 
                      values = c(18,16,17),
                      guide = guide_legend(override.aes = list(color = "black", size=1.4),order=2)) + 
@@ -905,10 +948,10 @@ fig2Coho_dbh <- ggplot() +
                      #legend.box.background = element_rect(color="black",size=0.2),
                      legend.box.margin = margin(1, 1, 1, 1))  +
   scale_x_continuous(limits = c(3,4.15), breaks = seq(3,4,0.5)) + 
-  scale_y_continuous(limits = c(220,280), breaks = seq(220,280,20))
-fig2Coho_dbh
-
-ggsave("~/GFDY/manuscript/figures/fig_S7.png", width = 5, height = 4, dpi=300)
+  scale_y_continuous(limits = c(220,280), breaks = seq(220,280,30))
+fig_S7
+ggsave(paste0(here::here(), "/manuscript/figures/fig_S7.png"), width = 5, height = 4.5, dpi=300)
+ggsave(paste0(here::here(), "/manuscript/figures/fig_S7.pdf"), width = 5, height = 4.5, dpi=300)
 
 # Distribution of tree sizes ####
 
@@ -994,7 +1037,7 @@ fig4aLUE_dbh1 <- ggplot() +
   geom_point(data = data_DBH_p1, aes(x = logQMD, y = logDensity12,col=plantC), alpha=0.7, size = 1, inherit.aes = FALSE) +
   geom_smooth(data= preddataLUE_DBH1, aes(x=x, y=predicted, linetype=group),col="#0072B2",
               method = "lm",fullrange = T,size = .6, se=F) +
-  labs(x = "Ln QMD", y = "Ln N",title = expression(paste("STL changes for ", italic("r")[italic("S1")])),
+  labs(x = "Ln QMD", y = "Ln N",title = expression(paste("STL changes for ", italic("r")[italic("1")])),
        color  = "Biomass", linetype = "Level of LUE") + 
   scale_color_viridis_c(direction = -1,limits=c(27,51),breaks=seq(30,50,5)) +
   #scale_colour_scico(direction = -1,palette = "bamako",limits=c(28,39),breaks=c(30,35)) +
@@ -1019,27 +1062,6 @@ fig4aLUE_dbh1 <- ggplot() +
   scale_x_continuous(limits = c(3.2,4.4),breaks = seq(3.2,4.6,0.6)) + 
   scale_y_continuous(limits = c(4.3,6.8),breaks = seq(4.5,7,1)) 
 fig4aLUE_dbh1
-
-# Checking assumptions for linear models
-# Homoscedasticity (constant variance of residuals)
-# Amount and distance of points scattered above/below line is equal or randomly spread
-plot_model(Fit_QMD, type='diag')[[4]] 
-plot(Fit_QMD)
-plot_homocedasticity1 <- ggplot(data.frame(fitted=fitted(Fit_QMD),residuals=residuals(Fit_QMD,type="pearson")),
-                                aes(x=fitted,y=residuals)) + geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
-  xlab("Fitted (ln N)") + ylab("Residuals") + theme_bw() +  
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        axis.text = element_text(size = 10),axis.title = element_text(size = 10))
-plot_homocedasticity1
-
-# Linearity in each variable: Models are assumed to be linear in each of the independent variables. 
-# This assumption can be checked with plots of the residuals versus each of the variables.
-plot_linearity_var_qmd1 <- ggplot(data.frame(logQMD=data_DBH_p1$logQMD,residuals=residuals(Fit_QMD,type="pearson")),
-                                  aes(x=logQMD,y=residuals)) + geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
-  xlab("ln QMD") + ylab("Residuals") + theme_bw() +  
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        axis.text = element_text(size = 10),axis.title = element_text(size = 10))
-plot_linearity_var_qmd1
 
 # DBH2
 data_DBH_ea1p2 <- ea1sa1DBHp2gl_out_annual_tile %>% 
@@ -1082,7 +1104,7 @@ fig4bLUE_dbh2 <- ggplot() +
   geom_point(data = data_DBH_p2, aes(x = logQMD, y = logDensity12,col=plantC), alpha=0.5, size = 1, inherit.aes = FALSE,show.legend = FALSE) +
   geom_smooth(data= preddataLUE_DBH2, aes(x=x, y=predicted, linetype=group),col="#D55E00",
               method = "lm",fullrange = T,size = .6, se=F,show.legend = FALSE) +
-  labs(x = "Ln QMD", y = "Ln N",title = expression(paste("STL changes for ", italic("r")[italic("S2")])),
+  labs(x = "Ln QMD", y = "Ln N",title = expression(paste("STL changes for ", italic("r")[italic("2")])),
        color  = "B", linetype = "Level of LUE") + 
   scale_color_viridis_c(direction = -1,limits=c(27,51),breaks=seq(30,50,5)) +
   scale_linetype_manual("Level of LUE", breaks = c("Control","+15%", "+30%"), 
@@ -1100,27 +1122,6 @@ fig4bLUE_dbh2 <- ggplot() +
   scale_x_continuous(limits = c(3.2,4.4),breaks = seq(3.2,4.6,0.6)) + 
   scale_y_continuous(limits = c(4.3,6.8),breaks = seq(4.5,7,1))
 fig4bLUE_dbh2
-
-# Checking assumptions for linear models
-# Homoscedasticity (constant variance of residuals)
-# Amount and distance of points scattered above/below line is equal or randomly spread
-plot_model(Fit_QMD, type='diag')[[4]] 
-plot(Fit_QMD)
-plot_homocedasticity1 <- ggplot(data.frame(fitted=fitted(Fit_QMD),residuals=residuals(Fit_QMD,type="pearson")),
-                                aes(x=fitted,y=residuals)) + geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
-  xlab("Fitted (ln N)") + ylab("Residuals") + theme_bw() +  
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        axis.text = element_text(size = 10),axis.title = element_text(size = 10))
-plot_homocedasticity1
-
-# Linearity in each variable: Models are assumed to be linear in each of the independent variables. 
-# This assumption can be checked with plots of the residuals versus each of the variables.
-plot_linearity_var_qmd1 <- ggplot(data.frame(logQMD=data_DBH_p2$logQMD,residuals=residuals(Fit_QMD,type="pearson")),
-                                  aes(x=logQMD,y=residuals)) + geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
-  xlab("ln QMD") + ylab("Residuals") + theme_bw() +  
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        axis.text = element_text(size = 10),axis.title = element_text(size = 10))
-plot_linearity_var_qmd1
 
 # DBH3
 data_DBH_ea1p3 <- ea1sa1DBHp3gl_out_annual_tile %>% 
@@ -1163,7 +1164,7 @@ fig4cLUE_dbh3 <- ggplot() +
   geom_point(data = data_DBH_p3, aes(x = logQMD, y = logDensity12,col=plantC), alpha=0.5, size = 1, inherit.aes = FALSE,show.legend = F) +
   geom_smooth(data= preddataLUE_DBH3, aes(x=x, y=predicted, linetype=group),col="#009E73",
               method = "lm",fullrange = T,size = .6, se=F,show.legend = F) +
-  labs(x = "Ln QMD", y = "Ln N",title = expression(paste("STL changes for ", italic("r")[italic("S3")])),
+  labs(x = "Ln QMD", y = "Ln N",title = expression(paste("STL changes for ", italic("r")[italic("3")])),
        color  = "B", linetype = "Level of LUE") + 
   scale_color_viridis_c(direction = -1,limits=c(27,51),breaks=seq(30,50,5)) +
   scale_linetype_manual("Level of LUE", breaks = c("Control","+15%", "+30%"), 
@@ -1182,174 +1183,38 @@ fig4cLUE_dbh3 <- ggplot() +
   scale_y_continuous(limits = c(4.3,6.8),breaks = seq(4.5,7,1))
 fig4cLUE_dbh3
 
-# Link model and observations ####
-# Upward shift of the STL in the model
-
-# DBH
-# DBH1
-preddataLUE_DBH1
-preddataLUE_DBH1_agg <- preddataLUE_DBH1 %>% group_by(x) %>% 
-  mutate(STL_15=predicted-lag(predicted)) %>%
-  mutate(STL_30=predicted-lag(lag(predicted))) %>%
-  #mutate(increment_15=predicted/lag(predicted)) %>%
-  #mutate(increment_30=predicted/lag(lag(predicted))) %>%
-  mutate(percent_15=STL_15*100/lag(predicted)) %>%
-  mutate(percent_30=STL_30*100/lag(lag(predicted)))
-
-N30 <- preddataLUE_DBH1_agg %>%
-  filter(group=="+30%") %>%
-  ungroup(x) %>%
-  summarise(mean=mean(percent_30),sd=sd(percent_30)) 
-N30
-
-N15 <- preddataLUE_DBH1_agg %>%
-  filter(group=="+15%") %>%
-  ungroup(x) %>%
-  summarise(mean=mean(percent_15),sd=sd(percent_15)) 
-N15
-
-# DBH2
-preddataLUE_DBH2
-preddataLUE_DBH2_agg <- preddataLUE_DBH2 %>% group_by(x) %>% 
-  mutate(STL_15=predicted-lag(predicted)) %>%
-  mutate(STL_30=predicted-lag(lag(predicted))) %>%
-  #mutate(increment_15=predicted/lag(predicted)) %>%
-  #mutate(increment_30=predicted/lag(lag(predicted))) %>%
-  mutate(percent_15=STL_15*100/lag(predicted)) %>%
-  mutate(percent_30=STL_30*100/lag(lag(predicted)))
-
-N30 <- preddataLUE_DBH2_agg %>%
-  filter(group=="+30%") %>%
-  ungroup(x) %>%
-  summarise(mean=mean(percent_30),sd=sd(percent_30)) 
-N30
-
-N15 <- preddataLUE_DBH2_agg %>%
-  filter(group=="+15%") %>%
-  ungroup(x) %>%
-  summarise(mean=mean(percent_15),sd=sd(percent_15)) 
-N15
-
-# DBH3
-preddataLUE_DBH3
-preddataLUE_DBH3_agg <- preddataLUE_DBH3 %>% group_by(x) %>%  
-  mutate(STL_15=predicted-lag(predicted)) %>%
-  mutate(STL_30=predicted-lag(lag(predicted))) %>%
-  #mutate(increment_15=predicted/lag(predicted)) %>%
-  #mutate(increment_30=predicted/lag(lag(predicted))) %>%
-  mutate(percent_15=STL_15*100/lag(predicted)) %>%
-  mutate(percent_30=STL_30*100/lag(lag(predicted)))
-
-N30 <- preddataLUE_DBH3_agg %>%
-  filter(group=="+30%") %>%
-  ungroup(x) %>%
-  summarise(mean=mean(percent_30),sd=sd(percent_30)) 
-N30
-
-N15 <- preddataLUE_DBH3_agg %>%
-  filter(group=="+15%") %>%
-  ungroup(x) %>%
-  summarise(mean=mean(percent_15),sd=sd(percent_15)) 
-N15
-
-# Relative change biomass (plantC) vs. NPP
-DBHp3gl_RelChange_B_NPP_0_30 <- DBHp3gl_RelChange_0_30 %>%
-  mutate(dlnB_dlnG = dB0_30/dNPP0_30) %>%
-  mutate(N30=N30)
-DBHp3gl_RelChange_B_NPP_0_15 <- DBHp3gl_RelChange_0_15 %>%
-  mutate(dlnB_dlnG = dB0_15/dNPP0_15) %>%
-  mutate(N15=N15)
-
-# Upward shift of the STL from observations when increasing Growth 15 and 30%
-load("~/GFDY/data/outputs_obs/aggData_preds.RData")
-aggData_preds
-
-N30 <- aggData_preds %>%
-  summarise(STL_30=mean(STL_30,na.rm=T)) %>% pull()
-
-N15 <- aggData_preds %>%
-  summarise(STL_15=mean(STL_15,na.rm=T)) %>% pull()
-
-fig5_dbh <- ggplot() + 
-  geom_point(data=DBHp1gl_RelChange_B_NPP_0_15, aes(x=dlnB_dlnG, y=N15, color='r1', shape='+15%'),size=3) + 
-  geom_point(data=DBHp1gl_RelChange_B_NPP_0_30, aes(x=dlnB_dlnG, y=N30, color='r1', shape='+30%'),size=3) + 
-  geom_point(data=DBHp2gl_RelChange_B_NPP_0_15, aes(x=dlnB_dlnG, y=N15, color='r2', shape='+15%'),size=3) + 
-  geom_point(data=DBHp2gl_RelChange_B_NPP_0_30, aes(x=dlnB_dlnG, y=N30, color='r2', shape='+30%'),size=3) + 
-  geom_point(data=DBHp3gl_RelChange_B_NPP_0_15, aes(x=dlnB_dlnG, y=N15, color='r3', shape='+15%'),size=3) + 
-  geom_point(data=DBHp3gl_RelChange_B_NPP_0_30, aes(x=dlnB_dlnG, y=N30, color='r3', shape='+30%'),size=3) + 
-  scale_color_manual("Parameter", breaks = c("r1", "r2", "r3"), 
-                     values = c("#009E73", "#0072B2", "#D55E00"),
-                     labels =c(expression(paste(italic("r")[italic("S1")])),expression(paste(italic("r")[italic("S2")])),
-                               expression(paste(italic("r")[italic("S3")]))),
-                    guide = guide_legend(override.aes = list(size=1.6),order = 1)) +
-  scale_shape_manual("Level of LUE", breaks = c("+15%","+30%"), 
-                     values = c(16,17),
-                     guide = guide_legend(override.aes = list(color ="black",size=1.6))) +
-  labs(x = expression(frac(dlnB, dlnG)), y = expression(frac(dN, N)),title = "Relative shifts in the STL for size-dependent mortality") + 
-  theme_bw() + #guides(color = guide_legend(order = 1)) +
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                     axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-                     axis.title.y=element_text(angle=0, vjust = 0.5),
-                     legend.text = element_text(size = 9),legend.title = element_text(size = 9),
-                     plot.title = element_text(size = 10),
-                     legend.key = element_rect(fill = NA, color = NA),
-                     legend.position = c(.28, .9),
-                     legend.direction="horizontal",
-                     legend.margin = margin(.2, .2, .2, .2),
-                     legend.key.size = unit(.01, 'cm'),
-                     #legend.box.background = element_rect(color="black",size=0.2),
-                     legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(0.49,0.8),breaks=seq(0.5,0.8,0.1)) + 
-  scale_y_continuous(limits = c(-0.001,0.2),breaks=seq(0,0.2,0.05)) +
-  geom_hline(yintercept = N15, linetype="dashed") +
-  geom_hline(yintercept = N30, linetype="dashed") +
-  geom_rect(aes(xmin=-Inf,xmax=Inf,ymin=N15,ymax=N30),fill="grey", alpha=0.2)
-fig5_dbh
-
 # Figure 2 ####
-ff2 <- fig2a_dbh + fig2b_dbh + fig2c_dbh + fig2d_dbh + fig2e_dbh + fig2f_dbh + fig2g_dbh + fig2h_dbh + 
+fig_2 <- fig2a_dbh + fig2b_dbh + fig2c_dbh + fig2d_dbh + fig2e_dbh + fig2f_dbh + fig2g_dbh + fig2h_dbh + 
   plot_layout(ncol = 4) + 
-  plot_annotation(tag_levels = 'A', tag_suffix = ")") & 
-  theme(plot.margin = unit(rep(0.13,4), "cm"))#+
+  plot_annotation(tag_levels = 'a', tag_suffix = ")") & 
+  theme(plot.margin = unit(rep(0.13,4), "cm")) & 
+  theme(plot.tag = element_text(size = 12)) #+
   #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
-ff2
-ggsave("~/GFDY/manuscript/figures/fig_2.png", width = 10.5, height = 5.5, dpi=300)
+fig_2
+ggsave(paste0(here::here(), "/manuscript/figures/fig_2.png"), width = 10.5, height = 5.5, dpi=300)
+ggsave(paste0(here::here(), "/manuscript/figures/fig_2.pdf"), width = 10.5, height = 5.5, dpi=300)
 
 # Figure 3 ####
-ff3 <- fig4aLUE_dbh1 + fig4bLUE_dbh2 + fig4cLUE_dbh3 + 
+fig_3 <- fig4aLUE_dbh1 + fig4bLUE_dbh2 + fig4cLUE_dbh3 + 
   plot_layout(ncol = 3) + 
-  plot_annotation(tag_levels = 'A', tag_suffix = ")") & 
-  theme(plot.margin = unit(rep(0.13,4), "cm"))#+
+  plot_annotation(tag_levels = 'a', tag_suffix = ")") & 
+  theme(plot.margin = unit(rep(0.13,4), "cm")) & 
+  theme(plot.tag = element_text(size = 12))#+
   #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
-ff3
-ggsave("~/GFDY/manuscript/figures/fig_3.png", width = 9.5, height = 3.3, dpi=300)
+fig_3
+ggsave(paste0(here::here(), "/manuscript/figures/fig_3.png"), width = 9.5, height = 3.3, dpi=300)
+ggsave(paste0(here::here(), "/manuscript/figures/fig_3.pdf"), width = 9.5, height = 3.3, dpi=300)
 
-# Figure S5 ####
-ffs5 <- fig2gg_dbh + figdistr_dbh + 
+# Figure S8 ####
+fig_S8 <- fig2gg_dbh + figdistr_dbh + 
   plot_layout(ncol = 2) + 
-  plot_annotation(tag_levels = 'A', tag_suffix = ")") & 
-  theme(plot.margin = unit(rep(0.13,4), "cm"))#+
+  plot_annotation(tag_levels = 'a', tag_suffix = ")") & 
+  theme(plot.margin = unit(rep(0.13,4), "cm")) & 
+  theme(plot.tag = element_text(size = 12))#+
 #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
-ffs5
-ggsave("~/GFDY/manuscript/figures/fig_S5X.png",width = 8.5, height = 4.2, dpi=300)
-
-# Figure S6 ####
-ffs6 <- figS6A + figS4B + figS4C +
-  plot_layout(ncol = 3) + 
-  plot_annotation(tag_levels = 'A', tag_suffix = ")") & 
-  theme(plot.margin = unit(rep(0.13,4), "cm"))#+ 
-#plot_layout(guides = "collect") & theme(legend.position = 'bottom')
-ffs6
-ggsave("~/GFDY/manuscript/figures/fig_S6.png", width = 9.5, height = 3.5, dpi=300)
-
-# Figure S5 ####
-ffs5 <- fig2Coho_dbh + fig2Coho_gr + 
-  plot_layout(ncol = 2) + 
-  plot_annotation(tag_levels = 'A', tag_suffix = ")") & 
-  theme(plot.margin = unit(rep(0.13,4), "cm"))#+
-#plot_layout(guides = "collect") & theme(legend.position = 'bottom')
-ffs5
-ggsave("~/GFDY/manuscript/figures/fig_S5.png",width = 8.5, height = 4.2, dpi=300)
+fig_S8
+ggsave(paste0(here::here(), "/manuscript/figures/fig_S8.png"), width = 8, height = 4, dpi=300)
+ggsave(paste0(here::here(), "/manuscript/figures/fig_S8.pdf"), width = 8, height = 4, dpi=300)
 
 # Box 1 ####
 xx <- rep(0.5,3)
@@ -1415,7 +1280,10 @@ fig00b <- ggplot() +
                      panel.border = element_rect(colour = "black", fill=NA,size=.9)) 
 fig00b
 
-ff_box <- fig00a + fig00b +
-  plot_layout(ncol = 2)  +  plot_annotation(tag_levels = 'A') 
-ff_box
-ggsave("~/GFDY/manuscript/figures/fig_0_box.png", width = 8, height = 4, dpi=300)
+fig_box <- fig00a + fig00b +
+  plot_layout(ncol = 2)  + 
+  plot_annotation(tag_levels = 'a', tag_suffix = ")") & 
+  theme(plot.tag = element_text(size = 12))
+fig_box
+ggsave(paste0(here::here(), "/manuscript/figures/fig_0_box.png"), width = 8, height = 4, dpi=300)
+ggsave(paste0(here::here(), "/manuscript/figures/fig_0_box.pdf"), width = 8, height = 4, dpi=300)

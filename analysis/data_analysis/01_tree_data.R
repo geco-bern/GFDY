@@ -462,17 +462,19 @@ fig_fit_treebiomass_change <- ggplot() +
 fig_fit_treebiomass_change
 
 # Figure S2 ####
-ffS2 <- fig_fit_qmd + fig_fit_stden + 
+fig_S2 <- fig_fit_qmd + fig_fit_stden + 
   fig_fit_biomass + fig_fit_biomass_change + 
   fig_fit_aggtreebiomass + fig_fit_aggtreebiomass_change +
   #fig_fit_treebiomass + fig_fit_treebiomass_change +
   plot_layout(ncol = 2) + 
   #plot_annotation(tag_levels = list(c('a)', 'b)')))
-  plot_annotation(tag_levels = 'a', tag_suffix = ")") #& 
+  plot_annotation(tag_levels = 'a', tag_suffix = ")") & 
+  theme(plot.tag = element_text(size = 12)) #& 
 #theme(plot.margin = unit(rep(0.13,4), "cm"))#+
 #plot_layout(guides = "collect") & theme(legend.position = 'bottom')
-ffS2
-ggsave("~/GFDY/manuscript/figures/fig_S2.png", width = 8, height = 10, dpi=300)
+fig_S2
+ggsave(paste0(here::here(), "/manuscript/figures/fig_S2.png"), width = 7.5, height = 10, dpi=300)
+ggsave(paste0(here::here(), "/manuscript/figures/fig_S2.pdf"), width = 7.5, height = 10, dpi=300)
 
 # Table S3 - tree ####
 load("~/GFDY/data/inputs_obs/aggTreeData75.RData")
