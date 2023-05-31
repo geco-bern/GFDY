@@ -14,16 +14,23 @@ library(ggeffects)
 library(patchwork)
 library(lattice)
 
-# load data
-load("~/GFDY/data/inputs_obs/aggData_analysis75.RData")
-#load("~/GFDY/data/inputs_obs/aggData_analysis55.RData")
-#load("~/GFDY/data/inputs_obs/aggData_analysis90.RData")
-length(unique(aggData_analysis$PlotID))
+# Load data ####
+# read data at stand level
+load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen75out.RData"))
+#load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen55out.RData"))
+#load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen90out.RData"))
+length(unique(aggData_QMDbinsDen_out$PlotID))
+
+# read data at tree level
+load(paste0(here::here(), "/data/inputs_obs/aggTreeData75.RData"))
+#load(paste0(here::here(), "/data/inputs_obs/aggTreeData55.RData"))
+#load(paste0(here::here(), "/data/inputs_obs/aggTreeData90.RData"))
+length(unique(aggTreeData$PlotID))
 
 # Run the model ####
 # LMM model N ~ QMD and Res_Growth0 with 75th percentile
 Fit_ResBio = lmer(logDensity ~ scale(logQMD) + scale(Res_Growth0) + (1|PlotID) + (1|Species) + (1|years_since_management_bins), 
-                  data = aggData_analysis, na.action = "na.exclude")
+                  data = aggData_QMDbinsDen_out, na.action = "na.exclude")
 summary(Fit_ResBio)
 r.squaredGLMM(Fit_ResBio)
 out <- summary(Fit_ResBio)
@@ -31,7 +38,7 @@ out$coefficients
 plot(allEffects(Fit_ResBio))
 plot_model(Fit_ResBio, type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logQMD","Res_Growth0"))
 plot_model(Fit_ResBio, type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logQMD","Res_Growth0[-1,0,1]"))
-summary(aggData_analysis$Res_Growth0)
+summary(aggData_QMDbinsDen_out$Res_Growth0)
 
 # Figure 1b ####
 pred <- ggpredict(Fit_ResBio, terms = c("logQMD","Res_Growth0[-1,0,1]"), full.data = TRUE)
@@ -39,8 +46,7 @@ plot(pred, add.data = F)
 preddata <- as.data.frame(pred)
 
 plot75Res <- ggplot() + 
-  geom_point(data = aggData_analysis, aes(x = logQMD, y = logDensity), alpha=0.5, size = 1,col="black", shape = 16, inherit.aes = FALSE) + 
-  #geom_point(data = aggData_QMDbinsRest, aes(x = logQMD, y = logDensity), alpha=0.2, size = .8,col="grey",shape = 16, inherit.aes = FALSE) + 
+  geom_point(data = aggData_QMDbinsDen_out, aes(x = logQMD, y = logDensity), alpha=0.5, size = 1,col="black", shape = 16, inherit.aes = FALSE) + 
   geom_ribbon(data = preddata, aes(x = x, y = predicted,ymin=conf.low,ymax=conf.high,fill=group),alpha=.2,show.legend=T) + 
   geom_smooth(data= preddata, aes(x=x, y=predicted, color=group), method = "lm",fullrange = F,size = .6, se=F) +
   labs(x = "ln QMD", y = "ln N",title = "STL changes as a function of growth",color  = "Growth anomalies") + 
@@ -67,8 +73,8 @@ plot75Res <- ggplot() +
   scale_y_continuous(limits = c(4.5,9.2),breaks = seq(5,9,2))
 plot75Res
 
-hist(aggData_analysis$Res_Growth0)
-hist_Res <- ggplot(aggData_analysis, aes(x=Res_Growth0)) + geom_histogram(color="#FFDB6D", fill="#FFDB6D") + theme_bw() + 
+hist(aggData_QMDbinsDen_out$Res_Growth0)
+hist_Res <- ggplot(aggData_QMDbinsDen_out, aes(x=Res_Growth0)) + geom_histogram(color="#FFDB6D", fill="#FFDB6D") + theme_bw() + 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.text = element_text(size = 8),axis.title = element_text(size = 8),
         plot.margin = unit(c(-.5,.1,.1,.1), "cm")) + ggtitle("") +
@@ -151,7 +157,7 @@ plot_homocedasticity2
 
 # Linearity in each variable: Models are assumed to be linear in each of the independent variables. 
 # This assumption can be checked with plots of the residuals versus each of the variables.
-plot_linearity2_var_qmd <- ggplot(data.frame(logQMD=aggData_analysis$logQMD,residuals=residuals(Fit_ResBio,type="pearson")),
+plot_linearity2_var_qmd <- ggplot(data.frame(logQMD=aggData_QMDbinsDen_out$logQMD,residuals=residuals(Fit_ResBio,type="pearson")),
                                   aes(x=logQMD,y=residuals)) + geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
   xlab("ln QMD") + ylab("Residuals") + theme_bw() +  
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
@@ -160,7 +166,7 @@ plot_linearity2_var_qmd <- ggplot(data.frame(logQMD=aggData_analysis$logQMD,resi
   scale_y_continuous(limits = c(-0.53,0.53), breaks = seq(-0.5,0.5,0.5))
 plot_linearity2_var_qmd
 
-plot_linearity2_var_bio <- ggplot(data.frame(Res_Growth0=aggData_analysis$Res_Growth0,residuals=residuals(Fit_ResBio,type="pearson")),
+plot_linearity2_var_bio <- ggplot(data.frame(Res_Growth0=aggData_QMDbinsDen_out$Res_Growth0,residuals=residuals(Fit_ResBio,type="pearson")),
                                   aes(x=Res_Growth0,y=residuals)) + geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
   xlab("Growth anomalies") + ylab("Residuals") + theme_bw() +  
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
@@ -186,17 +192,17 @@ ggsave(paste0(here::here(), "/manuscript/figures/fig_S5.pdf"), width = 8, height
 # 1. Exclude residuals from model fit
 Res_Fit_bio <- residuals(Fit_ResBio, type = "pearson")
 rowindex_outliers <- as.integer(names(boxplot.stats(Res_Fit_bio, coef = 1.5)$out))
-aggData_analysis <- aggData_analysis |> 
+aggData_QMDbinsDen_out <- aggData_QMDbinsDen_out |> 
   mutate(rowindex = dplyr::row_number()) |>
   mutate(outlier = rowindex %in% rowindex_outliers) 
-aggData_analysis_out <- aggData_analysis |>
+aggData_analysis_out <- aggData_QMDbinsDen_out |>
   filter(outlier==FALSE)
 Fit_ResBio_out = lmer(logDensity ~ scale(logQMD) + scale(Res_Growth0) + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
                     data = aggData_analysis_out, na.action = "na.exclude")
 summary(Fit_ResBio_out)
 plot_model(Fit_ResBio_out, type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logQMD","Res_Growth0[-1,0,1]"))
 
-aggData_analysis |> 
+aggData_QMDbinsDen_out |> 
   ggplot(aes(x = logQMD, y = logDensity, color = outlier)) + 
   geom_point() + 
   scale_color_manual("Outlier?",                    # Set title of legend
@@ -207,20 +213,20 @@ aggData_analysis |>
 # 2. Weighted model with PlotArea_ha
 Fit_ResBio_PlotArea = lmer(logDensity ~ scale(logQMD) + scale(Res_Growth0) + scale(PlotArea_ha) +
                              (1|PlotID) + (1|Species) + (1|years_since_management_bins), 
-                  data = aggData_analysis, na.action = "na.exclude")
+                  data = aggData_QMDbinsDen_out, na.action = "na.exclude")
 summary(Fit_ResBio_PlotArea)
 #anova(Fit_ResBio,Fit_ResBio_PlotArea)
 AICc(Fit_ResBio,Fit_ResBio_PlotArea)
 
 # 3. Interactions
 Fit_ResBioInter = lmer(logDensity ~ scale(logQMD) * scale(Res_Growth0) + (1|PlotID) + (1|Species) + (1|years_since_management_bins), 
-                  data = aggData_analysis, na.action = "na.exclude")
+                  data = aggData_QMDbinsDen_out, na.action = "na.exclude")
 summary(Fit_ResBioInter)
 #anova(Fit_ResBio,Fit_ResBioInter)
 AICc(Fit_ResBio,Fit_ResBioInter)
 
 # 4. Exclude 10% (25%) smallest and largest stands (by their QMD).
-aggData_analysis_sub <- aggData_analysis %>% filter(between(logQMD, quantile(logQMD, .10), quantile(logQMD, .90)))
+aggData_analysis_sub <- aggData_QMDbinsDen_out %>% filter(between(logQMD, quantile(logQMD, .10), quantile(logQMD, .90)))
 Fit_ResBio_sub = lmer(logDensity ~ scale(logQMD) + scale(Res_Growth0) + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
                     data = aggData_analysis_sub, na.action = "na.exclude")
 summary(Fit_ResBio_sub)
@@ -314,15 +320,13 @@ fig_S10
 ggsave(paste0(here::here(), "/manuscript/figures/fig_S10.png"), width = 8.5, height = 8, dpi=300)
 ggsave(paste0(here::here(), "/manuscript/figures/fig_S10.pdf"), width = 8.5, height = 8, dpi=300)
 
-
-
-
-
-
-# Model at tree level ####
+# Model STL growth at tree level ####
 # LMM model N ~ QMD and Res_Growth0 with 75th percentile
+
+aggTreeData <- aggTreeData %>% left_join(aggData_QMDbinsDen_out[,c(1,2,5,8,10,22)])
+
 Fit_ResBioTree = lmer(logDensity ~ scale(logQMD) + scale(Res_GrowthTree0) + (1|PlotID) + (1|Species) + (1|years_since_management_bins), 
-                  data = aggData_analysis, na.action = "na.exclude")
+                  data = aggTreeData, na.action = "na.exclude")
 summary(Fit_ResBioTree)
 out <- summary(Fit_ResBioTree)
 out$coefficients
@@ -330,25 +334,24 @@ r.squaredGLMM(Fit_ResBioTree)
 plot(allEffects(Fit_ResBioTree))
 plot_model(Fit_ResBioTree, type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logQMD","Res_GrowthTree0"))
 plot_model(Fit_ResBioTree, type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logQMD","Res_GrowthTree0[-0.04,0,0.04]"))
-summary(aggData_analysis$Res_Growth0)
+summary(aggTreeData$Res_GrowthTree0)
 
 pred <- ggpredict(Fit_ResBioTree, terms = c("logQMD","Res_GrowthTree0[-0.04,0,0.04]"), full.data = TRUE)
 plot(pred, add.data = F) 
 preddata <- as.data.frame(pred)
 
 plotTreeRes <- ggplot() + 
-  geom_point(data = aggData_analysis, aes(x = logQMD, y = logDensity), alpha=0.3, size = .8,col="black", shape = 16, inherit.aes = FALSE) + 
-  #geom_point(data = aggData_QMDbinsRest, aes(x = logQMD, y = logDensity), alpha=0.2, size = .8,col="grey",shape = 16, inherit.aes = FALSE) + 
+  geom_point(data = aggTreeData, aes(x = logQMD, y = logDensity), alpha=0.3, size = .8,col="black", shape = 16, inherit.aes = FALSE) + 
   geom_ribbon(data = preddata, aes(x = x, y = predicted,ymin=conf.low,ymax=conf.high,fill=group),alpha=.2,show.legend=T) + 
   geom_smooth(data= preddata, aes(x=x, y=predicted, color=group), method = "lm",fullrange = F,size = .6, se=F) +
   labs(x = "ln QMD", y = "ln N",title = "STL changes as a function of growth",color  = "Growth anomalies") + 
   scale_color_manual("Mean tree growth \nanomalies", 
-                     breaks = c("-0.05","0", "0.05"), 
-                     labels = c("-0.05","0.0", "0.05"),
+                     breaks = c("-0.04","0", "0.04"), 
+                     labels = c("-0.04","0.0", "0.04"),
                      values = c("#E41A1C", "#377EB8", "#4DAF4A")) +
   scale_fill_manual("Mean tree growth \nanomalies", 
-                     breaks = c("-0.05","0", "0.05"), 
-                     labels = c("-0.05","0.0", "0.05"),
+                     breaks = c("-0.04","0", "0.04"), 
+                     labels = c("-0.04","0.0", "0.04"),
                      values = c("#E41A1C", "#377EB8", "#4DAF4A")) +
   theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                       axis.text = element_text(size = 10),axis.title = element_text(size = 10),
@@ -365,15 +368,11 @@ plotTreeRes <- ggplot() +
   scale_y_continuous(limits = c(3.6,9.2))
 plotTreeRes
 
-hist(aggData_analysis$Res_GrowthTree0)
-hist_TreeRes <- ggplot(aggData_analysis, aes(x=Res_GrowthTree0)) + geom_histogram(color="#FFDB6D", fill="#FFDB6D") + theme_bw() + 
+hist_TreeRes <- ggplot(aggTreeData, aes(x=Res_GrowthTree0)) + geom_histogram(color="#FFDB6D", fill="#FFDB6D") + theme_bw() + 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.text = element_text(size = 8),axis.title = element_text(size = 8),
         plot.margin = unit(c(-.5,.1,.1,.1), "cm")) + ggtitle("") +
   scale_x_continuous("Growth anomalies") +
-  scale_y_continuous("Frequency", limits = c(0,150), breaks = seq(0,150,50))
+  scale_y_continuous("Frequency", breaks = seq(0,150,50))
 hist_TreeRes
-
-gg3 <- plotTreeRes + inset_element(hist_TreeRes, left = 0.65, bottom = 0.5, right = 0.99, top = 0.99)
-gg3
 

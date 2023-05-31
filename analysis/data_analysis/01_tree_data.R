@@ -10,27 +10,29 @@ library(lmerTest)
 library(lme4) 
 library(effects) 
 library(MuMIn)
+library(robustlmm)
 
-# read selected data at stand level
-load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75out.RData")
-load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen55out.RData")
-load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen90out.RData")
+# load data ####
+# read data at stand level
+load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen75out.RData"))
+#load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen55out.RData"))
+#load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen90out.RData"))
 length(unique(aggData_QMDbinsDen_out$PlotID))
+
 # Filter selected plots for EFM
 EFM_sel_plots <- aggData_QMDbinsDen_out %>% filter(dataset=="EFM")
 NFI_sel_plots <- aggData_QMDbinsDen_out %>% filter(dataset=="NFI")
 NFR_sel_plots <- aggData_QMDbinsDen_out %>% filter(dataset=="NFR")
-length(unique(NFR_sel_plots$PlotID))
 
 # EFM - Experimental Forest Management ####
 
 # Plot area
-EFM_plot_area <- read.csv("~/GFDY/data/raw_obs/efm/EFM_plot_area.csv")
+EFM_plot_area <- read.csv(paste0(here::here(), "/data/raw_obs/efm/EFM_plot_area.csv"))
 str(EFM_plot_area)
 
 ## Tree-level data from EFM ####
-EFM_tree_pre <- readRDS("~/GFDY/data/raw_obs/efm/EFM_tree_data.RDS") # 18 plots
-EFM_tree_6003 <- readRDS("~/GFDY/data/raw_obs/efm/EFM_tree_data6003.RDS") # 44 plots
+EFM_tree_pre <- readRDS(paste0(here::here(), "/data/raw_obs/efm/EFM_tree_data.RDS"))
+EFM_tree_6003 <- readRDS(paste0(here::here(), "/data/raw_obs/efm/EFM_tree_data6003.RDS"))
 EFM_tree <- EFM_tree_pre %>% bind_rows(EFM_tree_6003) %>% filter(FNUM!=6003000) %>% 
   rename(TreeID=BNR,TreeStatus=AHC) %>% left_join(EFM_plot_area)
 str(EFM_tree)
@@ -68,15 +70,15 @@ EFM_tree <- EFM_tree %>% select(FNUM, AJ, TreeID, Biomass_kg, DBH,
 # NFI - Swiss National Forest Inventories ####
 
 # Species names
-NFI_species_constant <- read.csv("~/GFDY/data/raw_obs/nfi/Species_names.csv")
+NFI_species_constant <- read.csv(paste0(here::here(), "/data/raw_obs/nfi/Species_names.csv"))
 str(NFI_species_constant)
 
 # Stand data to get plot size
-NFI_plot_census <- read.csv("~/GFDY/data/raw_obs/nfi/MIND_plot_census_20210121.csv")
+NFI_plot_census <- read.csv(paste0(here::here(), "/data/raw_obs/nfi/MIND_plot_census_20210121.csv"))
 str(NFI_plot_census)
 
 ## Tree-level data from NFI ####
-NFI_tree <- read.csv("~/GFDY/data/raw_obs/nfi/NFI_tree_census.csv")
+NFI_tree <- read.csv(paste0(here::here(), "/data/raw_obs/nfi/NFI_tree_census.csv"))
 str(NFI_tree)
 length(unique(NFI_tree$PLOTID)) 
 length(unique(NFI_tree$TREEID)) 
@@ -118,14 +120,14 @@ NFI_tree <- NFI_tree %>% select(PLOTID, Year, TREEID,BIOMASS, DBH,
 # NFR - Natural Forests Reserves NFR ####
 
 # Plot area
-NFR_plot_area <- read.csv("~/GFDY/data/raw_obs/nfr/NFR_plot_area.csv",sep=",")
+NFR_plot_area <- read.csv(paste0(here::here(), "/data/raw_obs/nfr/NFR_plot_area.csv"),sep=",")
 str(NFR_plot_area)
 # Join reserve (fg) and plot (tf) id in a new variable called PlotID as character
 NFR_plot_area <- NFR_plot_area %>% mutate(fg = as.character(fg),FNUM = as.character(FNUM)) 
 length(unique(NFR_plot_area$FNUM)) 
 
 ## Tree-level data from NFR ####
-NFR_tree <- readRDS("~/GFDY/data/raw_obs/nfr/NFR_tree_data.RDS")
+NFR_tree <- readRDS(paste0(here::here(), "/data/raw_obs/nfr/NFR_tree_data.RDS"))
 NFR_tree <- NFR_tree %>% rename(TreeID=BNR,TreeStatus=AHC,fg=FG) %>% mutate(FNUM = as.character(FNUM)) %>%
   left_join(NFR_plot_area[,c(1,6)])
 str(NFR_tree)
@@ -163,31 +165,40 @@ NFR_tree <- NFR_tree %>% select(FNUM, AJ, TreeID, Biomass_kg, DBH,
 
 # Aggregated tree level data from EFM, NFI and NFR ####
 aggTreeData <- bind_rows(EFM_tree_agg,NFI_tree_agg,NFR_tree_agg)
+aggTreeData <- aggTreeData %>% group_by(PlotID) %>%
+  mutate(mean_dbh_firstcensus = first(mean_dbh)) %>% 
+  relocate(mean_dbh_firstcensus, .after=mean_dbh) %>% ungroup() 
 length(unique(aggTreeData$PlotID))
+
 # save aggTreeData
-save(aggTreeData, file = "~/GFDY/data/inputs_obs/aggTreeData75.RData")
-save(aggTreeData, file = "~/GFDY/data/inputs_obs/aggTreeData55.RData")
-save(aggTreeData, file = "~/GFDY/data/inputs_obs/aggTreeData90.RData")
+save(aggTreeData, file = paste0(here::here(), "/data/inputs_obs/aggTreeData75.RData"))
+#save(aggTreeData, file = paste0(here::here(), "/data/inputs_obs/aggTreeData55.RData"))
+#save(aggTreeData, file = paste0(here::here(), "/data/inputs_obs/aggTreeData90.RData"))
 
 # Tree level data from EFM, NFI and NFR ####
 TreeData <- bind_rows(EFM_tree,NFI_tree,NFR_tree)
+TreeData <- TreeData %>% group_by(PlotID, TreeID) %>%
+  mutate(DBH_firstcensus = first(DBH)) %>% relocate(DBH_firstcensus, .after=DBH) %>% ungroup()
 length(unique(TreeData$PlotID))
+
 # save TreeData
-save(TreeData, file = "~/GFDY/data/inputs_obs/TreeData75.RData")
-save(TreeData, file = "~/GFDY/data/inputs_obs/TreeData55.RData")
-save(TreeData, file = "~/GFDY/data/inputs_obs/TreeData90.RData")
+save(TreeData, file = paste0(here::here(), "/data/inputs_obs/TreeData75.RData"))
+#save(TreeData, file = paste0(here::here(), "/data/inputs_obs/TreeData55.RData"))
+#save(TreeData, file = paste0(here::here(), "/data/inputs_obs/TreeData90.RData"))
 
 # Trends in forest attributes ####
-library(robustlmm)
-load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75out.RData")
-load("~/GFDY/data/inputs_obs/aggTreeData75.RData")
-load("~/GFDY/data/inputs_obs/TreeData75.RData")
+load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen75out.RData"))
+length(unique(aggData_QMDbinsDen_out$PlotID))
+load(paste0(here::here(), "/data/inputs_obs/aggTreeData75.RData"))
+length(unique(aggTreeData$PlotID))
+load(paste0(here::here(), "/data/inputs_obs/TreeData75.RData"))
+length(unique(TreeData$PlotID))
 
 aggData_QMDbinsDen_out <- aggData_QMDbinsDen_out %>% group_by(PlotID) %>%
   mutate(DBH_firstcensus = first(DBH)) %>% relocate(DBH_firstcensus, .after=DBH) %>% ungroup()
 
 # QMD
-fit_qmd = lmer(QMD ~ Year + DBH_firstcensus + (1|PlotID) + (1|Species),
+fit_qmd = lmer(QMD ~ Year + DBH_firstcensus + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
                 data = aggData_QMDbinsDen_out, na.action = "na.exclude")
 summary(fit_qmd)
 out <- summary(fit_qmd)
@@ -210,7 +221,7 @@ fig_fit_qmd <- ggplot() +
 fig_fit_qmd
 
 # Robust regression
-fit_qmd_robust = rlmer(QMD ~ Year + (1|PlotID) + (1|Species),
+fit_qmd_robust = rlmer(QMD ~ Year + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
                        data = aggData_QMDbinsDen_out, na.action = "na.exclude")
 summary(fit_qmd_robust)
 plot_model(fit_qmd_robust,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("Year"))
@@ -223,7 +234,7 @@ p.values <- 2*pt(abs(coefs.robust[,3]), coefs$df, lower=FALSE)
 p.values
 
 # Stand density
-fit_stden = lmer(Density ~ Year + DBH_firstcensus + (1|PlotID) + (1|Species),
+fit_stden = lmer(Density ~ Year + DBH_firstcensus + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
                  data = aggData_QMDbinsDen_out, na.action = "na.exclude")
 summary(fit_stden)
 out <- summary(fit_stden)
@@ -249,7 +260,7 @@ fig_fit_stden <- ggplot() +
 fig_fit_stden
 
 # Robust regression
-fit_stden_robust = rlmer(Density ~ Year + DBH_firstcensus + (1|PlotID) + (1|Species),
+fit_stden_robust = rlmer(Density ~ Year + DBH_firstcensus + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
                          data = aggData_QMDbinsDen_out, na.action = "na.exclude")
 summary(fit_stden_robust)
 plot_model(fit_stden_robust,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("Year"))
@@ -262,7 +273,7 @@ p.values <- 2*pt(abs(coefs.robust[,3]), coefs$df, lower=FALSE)
 p.values
 
 # Stand biomass
-fit_biomass = lmer(Biomass_Kg_m2 ~ Year + DBH_firstcensus + (1|PlotID) + (1|Species),
+fit_biomass = lmer(Biomass_Kg_m2 ~ Year + DBH_firstcensus + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
                    data = aggData_QMDbinsDen_out, na.action = "na.exclude")
 summary(fit_biomass)
 out <- summary(fit_biomass)
@@ -288,7 +299,7 @@ fig_fit_biomass <- ggplot() +
 fig_fit_biomass
 
 # Robust regression
-fit_biomass_robust = rlmer(Biomass_Kg_m2 ~ Year + DBH_firstcensus + (1|PlotID) + (1|Species),
+fit_biomass_robust = rlmer(Biomass_Kg_m2 ~ Year + DBH_firstcensus + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
                            data = aggData_QMDbinsDen_out, na.action = "na.omit")
 summary(fit_biomass_robust)
 # get coefficients from non-robust model to extract Satterthwaite approximated DFs
@@ -299,8 +310,9 @@ coefs.robust <- coef(summary(fit_biomass_robust))
 p.values <- 2*pt(abs(coefs.robust[,3]), coefs$df, lower=FALSE)
 p.values
 
-# Stand net biomass change
-fit_biomass_change = lmer(BiomassIncrement_Kg_m2_year ~ Year + DBH_firstcensus + (1|PlotID) + (1|Species),
+# Net stand biomass change
+fit_biomass_change = lmer(BiomassIncrement_Kg_m2_year ~ Year + DBH_firstcensus + (1|PlotID) + (1|Species)
+                          + (1|years_since_management_bins),
                           data = aggData_QMDbinsDen_out, na.action = "na.exclude")
 summary(fit_biomass_change)
 out <- summary(fit_biomass_change)
@@ -325,7 +337,7 @@ fig_fit_biomass_change <- ggplot() +
 fig_fit_biomass_change
 
 # Robust regression ...
-fit_biomass_change_robust = rlmer(BiomassIncrement_Kg_m2_year ~ Year + DBH_firstcensus + (1|PlotID) + (1|Species),
+fit_biomass_change_robust = rlmer(BiomassIncrement_Kg_m2_year ~ Year + DBH_firstcensus + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
                            data = aggData_QMDbinsDen_out, na.action = "na.omit")
 summary(fit_biomass_change_robust)
 # get coefficients from non-robust model to extract Satterthwaite approximated DFs
@@ -347,17 +359,11 @@ aggData_QMDbinsDen_out_out <- aggData_QMDbinsDen_out |> filter(outlier==FALSE)
 aggData_QMDbinsDen_out |> 
   ggplot(aes(x = Year, y = BiomassIncrement_Kg_m2_year, color = outlier)) + 
   geom_point()
-fit_biomass_change_out = lmer(BiomassIncrement_Kg_m2_year ~ Year + DBH_firstcensus + (1|PlotID) + (1|Species),
-                          data = aggData_QMDbinsDen_out_out, na.action = "na.exclude")
+fit_biomass_change_out = lmer(BiomassIncrement_Kg_m2_year ~ Year + DBH_firstcensus + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
+                          data = aggData_QMDbinsDen_out, na.action = "na.exclude")
 summary(fit_biomass_change_out)
 
 # Mean tree biomass
-aggTreeData <- aggTreeData %>% group_by(PlotID) %>%
-  mutate(mean_dbh_firstcensus = first(mean_dbh)) %>% 
-  relocate(mean_dbh_firstcensus, .after=mean_dbh) %>% ungroup()
-
-TreeData <- TreeData %>% group_by(PlotID, TreeID) %>%
-  mutate(DBH_firstcensus = first(DBH)) %>% relocate(DBH_firstcensus, .after=DBH) %>% ungroup()
 
 # Agg tree
 fit_aggtreebiomass = lmer(mean_tree_biomass_kg ~ Year + mean_dbh_firstcensus + (1|PlotID),
@@ -410,9 +416,11 @@ fig_fit_treebiomass <- ggplot() +
 fig_fit_treebiomass
 
 # Mean tree biomass change
+#aggTreeData00 <- aggTreeData %>% left_join(aggData_QMDbinsDen_out[,c(1,2,11,13)])
 
 # Agg tree
-fit_aggtreebiomass_change = lmer(mean_tree_biomass_growth_kgperyear ~ Year + mean_dbh_firstcensus + (1|PlotID),
+fit_aggtreebiomass_change = lmer(mean_tree_biomass_growth_kgperyear ~ Year + mean_dbh_firstcensus + 
+                                   (1|PlotID),
                               data = aggTreeData, na.action = "na.exclude")
 summary(fit_aggtreebiomass_change)
 out <- summary(fit_aggtreebiomass_change)
@@ -475,24 +483,3 @@ fig_S2 <- fig_fit_qmd + fig_fit_stden +
 fig_S2
 ggsave(paste0(here::here(), "/manuscript/figures/fig_S2.png"), width = 7.5, height = 10, dpi=300)
 ggsave(paste0(here::here(), "/manuscript/figures/fig_S2.pdf"), width = 7.5, height = 10, dpi=300)
-
-# Table S3 - tree ####
-load("~/GFDY/data/inputs_obs/aggTreeData75.RData")
-
-aggTreeData %>% group_by(PlotID) %>% arrange(Year) %>% 
-  filter(row_number()==1 | row_number()==n()) %>% arrange(PlotID) %>%
-  mutate(change_mean_tree_biomass_kg = (mean_tree_biomass_kg - lag(mean_tree_biomass_kg))/lag(mean_tree_biomass_kg)*100) %>% 
-  ungroup() %>% #group_by(dataset) %>%
-  summarise(change_mean_tree_biomass_kg=mean(change_mean_tree_biomass_kg,na.rm=T))
-
-aggTreeData %>% group_by(PlotID) %>% arrange(Year) %>% 
-  filter(row_number()==2 | row_number()==n()) %>% arrange(PlotID) %>%
-  mutate(change_mean_tree_biomass_growth_kgperyear = 
-           (mean_tree_biomass_growth_kgperyear - lag(mean_tree_biomass_growth_kgperyear))/
-           lag(mean_tree_biomass_growth_kgperyear)*100) %>% 
-  mutate(change_mean_tree_biomass_growth_kgperm2peryear = 
-           (mean_tree_biomass_growth_kgperm2peryear - lag(mean_tree_biomass_growth_kgperm2peryear))/
-           lag(mean_tree_biomass_growth_kgperm2peryear)*100) %>% 
-  ungroup() %>% #group_by(dataset) %>%
-  summarise(change_mean_tree_biomass_growth_kgperyear=mean(change_mean_tree_biomass_growth_kgperyear,na.rm=T),
-            change_mean_tree_biomass_growth_kgperm2peryear=mean(change_mean_tree_biomass_growth_kgperm2peryear,na.rm=T))

@@ -14,16 +14,17 @@ library(ggeffects)
 library(patchwork)
 library(lattice)
 
-# load data
-load("~/GFDY/data/inputs_obs/aggData_analysis75.RData")
-#load("~/GFDY/data/inputs_obs/aggData_analysis55.RData")
-#load("~/GFDY/data/inputs_obs/aggData_analysis90.RData")
-length(unique(aggData_analysis$PlotID))
+# load data ####
+# read data at stand level
+load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen75out.RData"))
+#load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen55out.RData"))
+#load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen90out.RData"))
+length(unique(aggData_QMDbinsDen_out$PlotID))
 
 # Run the model ####
 # LMM model N ~ QMD and Year with 75th percentile
 Fit_Year = lmer(logDensity ~ scale(logQMD) + scale(Year) + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
-                data = aggData_analysis, na.action = "na.exclude")
+                data = aggData_QMDbinsDen_out, na.action = "na.exclude")
 summary(Fit_Year)
 r.squaredGLMM(Fit_Year)
 out <- summary(Fit_Year)
@@ -31,10 +32,10 @@ out$coefficients
 confint(Fit_Year)
 upperCI <-  out$coefficients["scale(Year)","Estimate"] + out$coefficient["scale(Year)","Std. Error"]*1.96
 lowerCI <-  out$coefficients["scale(Year)","Estimate"] - out$coefficient["scale(Year)","Std. Error"]*1.96
-upperCI_unscaled <- out$coefficients["scale(Year)","Estimate"]/ sd(aggData_analysis$Year) +
-  out$coefficient["scale(Year)","Std. Error"]/ sd(aggData_analysis$Year)*1.96
-lowerCI_unscaled <- out$coefficients["scale(Year)","Estimate"]/ sd(aggData_analysis$Year) -
-  out$coefficient["scale(Year)","Std. Error"]/ sd(aggData_analysis$Year)*1.96
+upperCI_unscaled <- out$coefficients["scale(Year)","Estimate"]/ sd(aggData_QMDbinsDen_out$Year) +
+  out$coefficient["scale(Year)","Std. Error"]/ sd(aggData_QMDbinsDen_out$Year)*1.96
+lowerCI_unscaled <- out$coefficients["scale(Year)","Estimate"]/ sd(aggData_QMDbinsDen_out$Year) -
+  out$coefficient["scale(Year)","Std. Error"]/ sd(aggData_QMDbinsDen_out$Year)*1.96
 plot(allEffects(Fit_Year))
 plot_model(Fit_Year,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logQMD","Year"))
 plot_model(Fit_Year,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logQMD","Year[1950,1985,2019]"))
@@ -45,8 +46,7 @@ plot(pred, add.data = F)
 preddata <- as.data.frame(pred)
 
 plot75Year <- ggplot() + 
-  geom_point(data = aggData_analysis, aes(x = logQMD, y = logDensity), alpha=0.5, size = 1,col="black", shape = 16, inherit.aes = FALSE) + 
-  #geom_point(data = aggData_QMDbinsRest, aes(x = logQMD, y = logDensity), alpha=0.2, size = .8,col="grey",shape = 16, inherit.aes = FALSE) + 
+  geom_point(data = aggData_QMDbinsDen_out, aes(x = logQMD, y = logDensity), alpha=0.5, size = 1,col="black", shape = 16, inherit.aes = FALSE) + 
   geom_ribbon(data = preddata, aes(x = x, y = predicted,ymin=conf.low,ymax=conf.high,fill=group),alpha=.2,show.legend=T) + 
   geom_smooth(data= preddata, aes(x=x, y=predicted, color=group), method = "lm",fullrange = F,size = .6, se=F) +
   labs(x = "ln QMD", y = "ln N",title = "STL changes as a function of time",color  = "Year") + 
@@ -71,7 +71,7 @@ plot75Year <- ggplot() +
   scale_y_continuous(limits = c(4.5,9.2),breaks = seq(5,9,2))
 plot75Year
 
-hist_Year <- ggplot(aggData_analysis, aes(x=Year)) + geom_histogram(color="#FFDB6D", fill="#FFDB6D") + theme_bw() + 
+hist_Year <- ggplot(aggData_QMDbinsDen_out, aes(x=Year)) + geom_histogram(color="#FFDB6D", fill="#FFDB6D") + theme_bw() + 
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.text = element_text(size = 8),axis.title = element_text(size = 8),
         plot.margin = unit(c(-.5,.1,.1,.1), "cm")) + ggtitle("") +
@@ -140,7 +140,7 @@ plot_homocedasticity1
 
 # Linearity in each variable: Models are assumed to be linear in each of the independent variables. 
 # This assumption can be checked with plots of the residuals versus each of the variables.
-plot_linearity1_var_qmd <- ggplot(data.frame(logQMD=aggData_analysis$logQMD,residuals=residuals(Fit_Year,type="pearson")),
+plot_linearity1_var_qmd <- ggplot(data.frame(logQMD=aggData_QMDbinsDen_out$logQMD,residuals=residuals(Fit_Year,type="pearson")),
                                   aes(x=logQMD,y=residuals)) + geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
   xlab("ln QMD") + ylab("Residuals") + theme_bw() +  
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
@@ -149,7 +149,7 @@ plot_linearity1_var_qmd <- ggplot(data.frame(logQMD=aggData_analysis$logQMD,resi
   scale_y_continuous(limits = c(-0.53,0.53), breaks = seq(-0.5,0.5,0.5))
 plot_linearity1_var_qmd
 
-plot_linearity1_var_yr <- ggplot(data.frame(Year=aggData_analysis$Year,residuals=residuals(Fit_Year,type="pearson")),
+plot_linearity1_var_yr <- ggplot(data.frame(Year=aggData_QMDbinsDen_out$Year,residuals=residuals(Fit_Year,type="pearson")),
                                  aes(x=Year,y=residuals)) + geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
   xlab("Year") + ylab("Residuals") + theme_bw() +  
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
@@ -162,10 +162,10 @@ plot_linearity1_var_yr
 # 1. Exclude residuals from model fit
 Res_Fit_Year <- residuals(Fit_Year, type = "pearson")
 rowindex_outliers <- as.integer(names(boxplot.stats(Res_Fit_Year, coef = 1.5)$out))
-aggData_analysis <- aggData_analysis |> 
+aggData_QMDbinsDen_out <- aggData_QMDbinsDen_out |> 
   mutate(rowindex = dplyr::row_number()) |>
   mutate(outlier = rowindex %in% rowindex_outliers) 
-aggData_analysis_out <- aggData_analysis |>
+aggData_analysis_out <- aggData_QMDbinsDen_out |>
   filter(outlier==FALSE)
 
 Fit_Year_out = lmer(logDensity ~ scale(logQMD) + scale(Year) + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
@@ -173,7 +173,7 @@ Fit_Year_out = lmer(logDensity ~ scale(logQMD) + scale(Year) + (1|PlotID) + (1|S
 summary(Fit_Year_out)
 plot_model(Fit_Year_out,type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logQMD","Year[1950,1985,2019]"))
 
-aggData_analysis |> 
+aggData_QMDbinsDen_out |> 
   ggplot(aes(x = logQMD, y = logDensity, color = outlier)) + 
   geom_point() + 
   scale_color_manual("Outlier?",                    # Set title of legend
@@ -184,18 +184,18 @@ aggData_analysis |>
 # 2. Weighted model with PlotArea_ha
 Fit_Year_PlotArea = lmer(logDensity ~ scale(logQMD) + scale(Year) + scale(PlotArea_ha) + 
                       (1|PlotID) + (1|Species) + (1|years_since_management_bins),
-                    data = aggData_analysis, na.action = "na.exclude")
+                    data = aggData_QMDbinsDen_out, na.action = "na.exclude")
 summary(Fit_Year_PlotArea)
 AICc(Fit_Year,Fit_Year_PlotArea)
 
 # 3. Interactions
 Fit_YearInter = lmer(logDensity ~ scale(logQMD) * scale(Year) + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
-                data = aggData_analysis, na.action = "na.exclude")
+                data = aggData_QMDbinsDen_out, na.action = "na.exclude")
 summary(Fit_YearInter)
 AICc(Fit_Year,Fit_YearInter)
 
 # 4. Exclude 10% (25%) smallest and largest stands (by their QMD).
-aggData_analysis_sub <- aggData_analysis %>% filter(between(logQMD, quantile(logQMD, .10), quantile(logQMD, .90)))
+aggData_analysis_sub <- aggData_QMDbinsDen_out %>% filter(between(logQMD, quantile(logQMD, .10), quantile(logQMD, .90)))
 Fit_Year_sub = lmer(logDensity ~ scale(logQMD) + scale(Year) + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
                 data = aggData_analysis_sub, na.action = "na.exclude")
 summary(Fit_Year_sub)
@@ -272,3 +272,4 @@ plot_linearity1_var_yr_sub <- ggplot(data.frame(Year=aggData_analysis_sub$Year,r
   scale_x_continuous(breaks = c(1940,1980,2020)) +
   scale_y_continuous(limits = c(-0.33,0.33), breaks = seq(-0.3,0.3,0.3))
 plot_linearity1_var_yr_sub
+

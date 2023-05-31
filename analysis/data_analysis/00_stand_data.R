@@ -7,37 +7,39 @@ library(ggplot2)
 library(ggridges)
 library(tidyr)
 library(stringr)
+library(vegan)
+library(viridis)
 
 # EFM - Experimental Forest Management ####
 
 ## Stand-level data from EFM ####
 
 # Plot characteristics
-EFM_plots_metadata <- read.csv("~/GFDY/data/raw_obs/efm/VFL_LISTmanual.csv")
+EFM_plots_metadata <- read.csv(paste0(here::here(), "/data/raw_obs/efm/VFL_LISTmanual.csv"))
 str(EFM_plots_metadata)
 
 # Plot area
-EFM_plot_area <- read.csv("~/GFDY/data/raw_obs/efm/EFM_plot_area.csv")
+EFM_plot_area <- read.csv(paste0(here::here(), "/data/raw_obs/efm/EFM_plot_area.csv"))
 str(EFM_plot_area)
 
 # Plot area
-EFM_plot_locations <- read.csv("~/GFDY/data/raw_obs/efm/efm_plot_locations.csv")
+EFM_plot_locations <- read.csv(paste0(here::here(), "/data/raw_obs/efm/efm_plot_locations.csv"))
 str(EFM_plot_locations)
 
 # Last management intervention
-EFM_last_intervention <- read.csv("~/GFDY/data/raw_obs/efm/EFM_last_intervention.csv")
+EFM_last_intervention <- read.csv(paste0(here::here(), "/data/raw_obs/efm/EFM_last_intervention.csv"))
 str(EFM_last_intervention)
 
 # Climate
-EFM_climate <- readRDS("~/GFDY/data/raw_obs/efm/ClimateData_EFM_Monthly.RDS") # original prep in cm!
+EFM_climate <- readRDS(paste0(here::here(), "/data/raw_obs/efm/ClimateData_EFM_Monthly.RDS")) # original prep in cm!
 EFM_climate_plot <- EFM_climate %>% mutate(Prcp=Prcp*10) %>% group_by(FNUM,year) %>% 
   summarise(temp=mean(Tave, na.rm=T),prec=sum(Prcp)) %>% ungroup() %>%
   group_by(FNUM) %>% summarise(temp=mean(temp, na.rm=T),prec=mean(prec))
 
 # Stand level data (per plot, year and species)
 # All the plots in this dataset are unmanaged.
-EFM_stand_pre <- readRDS("~/GFDY/data/raw_obs/efm/EFM_stand_data.RDS") 
-EFM_stand_6003 <- readRDS("~/GFDY/data/raw_obs/efm/EFM_stand_data6003.RDS") 
+EFM_stand_pre <- readRDS(paste0(here::here(), "/data/raw_obs/efm/EFM_stand_data.RDS")) 
+EFM_stand_6003 <- readRDS(paste0(here::here(), "/data/raw_obs/efm/EFM_stand_data6003.RDS")) 
 EFM_stand <- EFM_stand_pre %>% bind_rows(EFM_stand_6003) %>% filter(FNUM!=6003000)
 str(EFM_stand)
 length(unique(EFM_stand$FNUM))
@@ -88,15 +90,15 @@ str(EFM_stand_Allsps)
 ## Stand-level data from NFI ####
 
 # Plot characteristics
-NFI_plot_constant <- read.csv("~/GFDY/data/raw_obs/nfi/NFI_plot_constant.csv")
+NFI_plot_constant <- read.csv(paste0(here::here(), "/data/raw_obs/nfi/NFI_plot_constant.csv"))
 str(NFI_plot_constant)
 
 # Species names
-NFI_species_constant <- read.csv("~/GFDY/data/raw_obs/nfi/Species_names.csv")
+NFI_species_constant <- read.csv(paste0(here::here(), "/data/raw_obs/nfi/Species_names.csv"))
 str(NFI_species_constant)
 
 # Species names
-NFI_climate <- read.csv("~/GFDY/data/raw_obs/nfi/MIND_plot_annual_temp_precip.csv",sep=";")
+NFI_climate <- read.csv(paste0(here::here(), "/data/raw_obs/nfi/MIND_plot_annual_temp_precip.csv"),sep=";")
 str(NFI_climate)
 NFI_climate_plot <- NFI_climate %>% 
   group_by(PLOTID) %>% summarise(temp=mean(TTAVG, na.rm=T),prec=mean(PRSUM,na.rm=T))
@@ -107,7 +109,7 @@ NFI_climate_plot <- NFI_climate %>%
 #LETZTENU variable establishes the number of years since the last management intervention. f it is known that no intervention has been carried out on this sample area for a very long time or that it is almost certain that no intervention has ever been carried out, LETZTENU is given the value=999.
 #MANAGEMENT_INDICATOR variable establishes No treatment (kein Eingriff) as ID 1. 
 #The variable 'Management_indicator' covers treatments since the last inventory (for example, a plot with 'census_id' == 250 and 'management_indicator' == 1 has not been managed between NFI1 (census_id == 150) and NFI2 (census_id == 250)).
-NFI_plot_census <- read.csv("~/GFDY/data/raw_obs/nfi/MIND_plot_census_20210121.csv")
+NFI_plot_census <- read.csv(paste0(here::here(), "/data/raw_obs/nfi/MIND_plot_census_20210121.csv"))
 str(NFI_plot_census)
 length(unique(NFI_plot_census$PLOTID))
 # Join with NFI_plot_constant for elevation and coordinates
@@ -143,7 +145,7 @@ NFI_plot_census <- NFI_plot_census %>% #filter(MANAGEMENT_INDICATOR==1|MANAGEMEN
 length(unique(NFI_plot_census$PLOTID))
 sort(table(NFI_plot_census$PLOTID))
 ## calculate stand-level for each species from tree-level data
-NFI_tree_census <- read.csv("~/GFDY/data/raw_obs/nfi/NFI_tree_census.csv")
+NFI_tree_census <- read.csv(paste0(here::here(), "/data/raw_obs/nfi/NFI_tree_census.csv"))
 # Select same plots selected at stand level
 NFI_tree_census <- NFI_tree_census %>% filter(PLOTID %in% NFI_plot_census$PLOTID)
 # Create Year variable from CENSUS_DATE
@@ -177,13 +179,13 @@ str(NFI_plot_census)
 ## Stand-level data from NFR ####
 
 # Metadata
-NFR_Metadata <- read.csv("~/GFDY/data/raw_obs/nfr/NFR_metadata.csv")
+NFR_Metadata <- read.csv(paste0(here::here(), "/data/raw_obs/nfr/NFR_metadata.csv"))
 NFR_Metadata <- NFR_Metadata %>% mutate(fg = as.character(fg)) %>%
   select(fg,lat,long,ele,temp,precip) %>% distinct(fg, .keep_all = TRUE)
 str(NFR_Metadata)
 
 # Plot area
-NFR_plot_area <- read.csv("~/GFDY/data/raw_obs/nfr/NFR_plot_area.csv",sep=",")
+NFR_plot_area <- read.csv(paste0(here::here(), "/data/raw_obs/nfr/NFR_plot_area.csv"),sep=",")
 str(NFR_plot_area)
 NFR_plot_area <- NFR_plot_area %>% mutate(fg = as.character(fg),FNUM = as.character(FNUM)) %>%
   left_join(NFR_Metadata)
@@ -191,14 +193,14 @@ length(unique(NFR_plot_area$FNUM)) # Plot
 length(unique(NFR_plot_area$fg)) # Plot
 
 # Last management intervention
-NFR_last_intervention <- read.csv("~/GFDY/data/raw_obs/nfr/NFR_last_intervention.csv")
+NFR_last_intervention <- read.csv(paste0(here::here(), "/data/raw_obs/nfr/NFR_last_intervention.csv"))
 NFR_last_intervention <- NFR_last_intervention %>% mutate(fg=as.character(fg))
 str(NFR_last_intervention)
 length(unique(NFR_last_intervention$fg))
 
 # Stand level data (per plot, year and species)
 # All the plots in this dataset are unmanaged.
-NFR_stand <- readRDS("~/GFDY/data/raw_obs/nfr/NFR_stand_data.RDS") # 291 plots From David Forrester data
+NFR_stand <- readRDS(paste0(here::here(), "/data/raw_obs/nfr/NFR_stand_data.RDS")) # 291 plots From David Forrester data
 str(NFR_stand)
 length(unique(NFR_stand$FNUM))
 NFR_stand <- NFR_stand %>% mutate(FNUM=as.character(FNUM)) %>% select(-FNUM2)
@@ -276,14 +278,14 @@ aggStandData <- aggStandData %>%
   mutate(years_since_management_bins = cut(years_since_management, 
         breaks = c(0,25,50,75,100,125,1000),include.lowest = T, right = F)) 
 # save
-save(aggStandData, file = "~/GFDY/data/inputs_obs/aggStandData.RData")
+save(aggStandData, file = paste0(here::here(), "/data/inputs_obs/aggStandData.RData"))
 length(unique(aggStandData$PlotID))
 sort(table(aggStandData$PlotID))
 str(aggStandData)
 
 # Select upper quantile by QMD bins ####
 # calculate the QMD bins to select those plots with higher density 
-load("~/GFDY/data/inputs_obs/aggStandData.RData")
+load(paste0(here::here(), "/data/inputs_obs/aggStandData.RData"))
 aggData_QMDbins <- aggStandData %>% mutate(QMD_bins = cut(QMD, breaks = 30)) 
 sort(unique(aggData_QMDbins$QMD_bins))
 length(unique(aggData_QMDbins$PlotID))
@@ -296,7 +298,7 @@ ggplot(aggData_QMDbins, aes(x = Density, y = QMD_bins, fill = factor(stat(quanti
 
 # Select from each QMD bins the number of plots with higher density
 # Includes a sensitivity analysis using quantiles 0.55, 0.75 and 0.90
-valueQuantile = 0.75
+valueQuantile = 0.90
 
 quantileX <- aggData_QMDbins %>% group_by(QMD_bins) %>% summarise(quantile(Density, c(valueQuantile))) 
 max(quantileX$`quantile(Density, c(valueQuantile))`)
@@ -326,19 +328,25 @@ ggplot(data = aggData_QMDbinsDen, aes(x = logQMD, y = logDensity)) + geom_point(
   geom_smooth(data=aggData_QMDbinsDen, method='lm',se=F,fullrange=TRUE) 
 
 # rename dataset
-save(aggData_QMDbinsDen, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
-save(aggData_QMDbinsRest, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsRest75.RData")
+save(aggData_QMDbinsDen, file = paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen75.RData"))
+save(aggData_QMDbinsRest, file = paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsRest75.RData"))
 
-save(aggData_QMDbinsDen, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen55.RData")
-save(aggData_QMDbinsRest, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsRest55.RData")
+#save(aggData_QMDbinsDen, file = paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen55.RData"))
+#save(aggData_QMDbinsRest, file = paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsRest55.RData"))
 
-save(aggData_QMDbinsDen, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen90.RData")
-save(aggData_QMDbinsRest, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsRest90.RData")
+#save(aggData_QMDbinsDen, file = paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen90.RData"))
+#save(aggData_QMDbinsRest, file = paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsRest90.RData"))
 
 # Remove outliers ####
 # Filter points that are not in the STL: High and low density and QMD
-load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75.RData")
-load("~/GFDY/data/inputs_obs/aggData_QMDbinsRest75.RData")
+load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen75.RData"))
+load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsRest75.RData"))
+
+#load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen55.RData"))
+#load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsRest55.RData"))
+
+#load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen90.RData"))
+#load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsRest90.RData"))
 
 quartiles_density <- quantile(aggData_QMDbinsDen$logDensity, probs=c(.25, .75), na.rm = FALSE)
 IQR_density <- IQR(aggData_QMDbinsDen$logDensity)
@@ -377,19 +385,19 @@ aggData_QMDbinsDen_rest <- aggData_QMDbinsDen %>%
 aggData_QMDbinsRest_out <- aggData_QMDbinsRest %>% bind_rows(aggData_QMDbinsDen_rest)
 
 # rename dataset
-save(aggData_QMDbinsDen_out, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen75out.RData")
-save(aggData_QMDbinsRest_out, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsRest75out.RData")
+save(aggData_QMDbinsDen_out, file = paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen75out.RData"))
+save(aggData_QMDbinsRest_out, file = paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsRest75out.RData"))
 
-save(aggData_QMDbinsDen_out, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen55out.RData")
-save(aggData_QMDbinsRest_out, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsRest55out.RData")
+#save(aggData_QMDbinsDen_out, file = paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen55out.RData"))
+#save(aggData_QMDbinsRest_out, file = paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsRest55out.RData"))
 
-save(aggData_QMDbinsDen_out, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsDen90out.RData")
-save(aggData_QMDbinsRest_out, file = "~/GFDY/data/inputs_obs/aggData_QMDbinsRest90out.RData")
+#save(aggData_QMDbinsDen_out, file = paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen90out.RData"))
+#save(aggData_QMDbinsRest_out, file = paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsRest90out.RData"))
 
 # Table S1 ####
 
 # Unmanaged plots from different sources
-load("~/GFDY/data/inputs_obs/aggStandData.RData")
+load(paste0(here::here(), "/data/inputs_obs/aggStandData.RData"))
 summary(aggStandData)
 aggStandData %>% group_by(dataset) %>% summarise(count=n_distinct(PlotID))
 aggStandData %>% summarise(count=n_distinct(PlotID))
@@ -410,41 +418,42 @@ aggStandData %>% group_by(PlotID) %>% arrange(Year) %>%
   summarise(mean=mean(years_since_management,na.rm=T),sd=sd(years_since_management,na.rm=T))
 
 # Subset of plots from the upper quantiles used in this study
-load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75out.RData")
-summary(aggData_QMDbinsDen)
-aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(count=n_distinct(PlotID))
-aggData_QMDbinsDen %>% summarise(count=n_distinct(PlotID))
-aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(PlotArea_ha,na.rm=T),sd=sd(PlotArea_ha,na.rm=T))
-aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(min=min(Year),max=max(Year))
-aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(PeriodLength_years,na.rm=T),sd=sd(PeriodLength_years,na.rm=T))
-aggData_QMDbinsDen %>% count(dataset,PlotID) %>% group_by(dataset) %>%
-  summarise(mean=mean(n,na.rm=T),sd=sd(n,na.rm=T),min=min(n,na.rm=T),max=max(n,na.rm=T))
-aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(elevation,na.rm=T),sd=sd(elevation,na.rm=T),max=max(elevation,na.rm=T),min=min(elevation,na.rm=T))
-aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(latitude,na.rm=T),sd=sd(latitude,na.rm=T),max=max(latitude,na.rm=T),min=min(latitude,na.rm=T))
-aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(longitude,na.rm=T),sd=sd(longitude,na.rm=T),max=max(longitude,na.rm=T),min=min(longitude,na.rm=T))
-aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(temp,na.rm=T),sd=sd(temp,na.rm=T),max=max(temp,na.rm=T),min=min(temp,na.rm=T))
-aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(prec,na.rm=T),sd=sd(prec,na.rm=T),max=max(prec,na.rm=T),min=min(prec,na.rm=T))
-aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(DBH,na.rm=T),sd=sd(DBH,na.rm=T))
-aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(Density,na.rm=T),sd=sd(Density,na.rm=T))
-aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(Biomass_Kg_m2,na.rm=T),sd=sd(Biomass_Kg_m2,na.rm=T))
-aggData_QMDbinsDen %>% group_by(dataset) %>% summarise(mean=mean(BiomassIncrement_Kg_m2_year,na.rm=T),sd=sd(BiomassIncrement_Kg_m2_year,na.rm=T))
-aggData_QMDbinsDen %>% group_by(PlotID) %>% arrange(Year) %>% 
+load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen75out.RData"))
+summary(aggData_QMDbinsDen_out)
+aggData_QMDbinsDen_out %>% group_by(dataset) %>% summarise(count=n_distinct(PlotID))
+aggData_QMDbinsDen_out %>% summarise(count=n_distinct(PlotID))
+aggData_QMDbinsDen_out %>% group_by(dataset) %>% summarise(mean=mean(PlotArea_ha,na.rm=T),sd=sd(PlotArea_ha,na.rm=T))
+aggData_QMDbinsDen_out %>% summarise(mean=mean(PlotArea_ha,na.rm=T),sd=sd(PlotArea_ha,na.rm=T))
+aggData_QMDbinsDen_out %>% group_by(dataset) %>% summarise(mean=mean(elevation,na.rm=T),sd=sd(elevation,na.rm=T),max=max(elevation,na.rm=T),min=min(elevation,na.rm=T))
+aggData_QMDbinsDen_out %>% summarise(mean=mean(elevation,na.rm=T),sd=sd(elevation,na.rm=T),max=max(elevation,na.rm=T),min=min(elevation,na.rm=T))
+aggData_QMDbinsDen_out %>% group_by(dataset) %>% summarise(mean=mean(latitude,na.rm=T),sd=sd(latitude,na.rm=T),max=max(latitude,na.rm=T),min=min(latitude,na.rm=T))
+aggData_QMDbinsDen_out %>% summarise(mean=mean(latitude,na.rm=T),sd=sd(latitude,na.rm=T),max=max(latitude,na.rm=T),min=min(latitude,na.rm=T))
+aggData_QMDbinsDen_out %>% group_by(dataset) %>% summarise(mean=mean(longitude,na.rm=T),sd=sd(longitude,na.rm=T),max=max(longitude,na.rm=T),min=min(longitude,na.rm=T))
+aggData_QMDbinsDen_out %>% summarise(mean=mean(longitude,na.rm=T),sd=sd(longitude,na.rm=T),max=max(longitude,na.rm=T),min=min(longitude,na.rm=T))
+aggData_QMDbinsDen_out %>% group_by(dataset) %>% summarise(mean=mean(temp,na.rm=T),sd=sd(temp,na.rm=T),max=max(temp,na.rm=T),min=min(temp,na.rm=T))
+aggData_QMDbinsDen_out %>% summarise(mean=mean(temp,na.rm=T),sd=sd(temp,na.rm=T),max=max(temp,na.rm=T),min=min(temp,na.rm=T))
+aggData_QMDbinsDen_out %>% group_by(dataset) %>% summarise(mean=mean(prec,na.rm=T),sd=sd(prec,na.rm=T),max=max(prec,na.rm=T),min=min(prec,na.rm=T))
+aggData_QMDbinsDen_out %>% summarise(mean=mean(prec,na.rm=T),sd=sd(prec,na.rm=T),max=max(prec,na.rm=T),min=min(prec,na.rm=T))
+aggData_QMDbinsDen_out %>% group_by(dataset) %>% summarise(min=min(Year),max=max(Year))
+aggData_QMDbinsDen_out %>% summarise(min=min(Year),max=max(Year))
+aggData_QMDbinsDen_out %>% group_by(dataset) %>% summarise(mean=mean(PeriodLength_years,na.rm=T),sd=sd(PeriodLength_years,na.rm=T))
+aggData_QMDbinsDen_out %>% summarise(mean=mean(PeriodLength_years,na.rm=T),sd=sd(PeriodLength_years,na.rm=T))
+aggData_QMDbinsDen_out %>% group_by(dataset) %>% summarise(mean=mean(QMD,na.rm=T),sd=sd(QMD,na.rm=T))
+aggData_QMDbinsDen_out %>% summarise(mean=mean(QMD,na.rm=T),sd=sd(QMD,na.rm=T))
+aggData_QMDbinsDen_out %>% group_by(dataset) %>% summarise(mean=mean(Density,na.rm=T),sd=sd(Density,na.rm=T))
+aggData_QMDbinsDen_out %>% summarise(mean=mean(Density,na.rm=T),sd=sd(Density,na.rm=T))
+aggData_QMDbinsDen_out %>% group_by(dataset) %>% summarise(mean=mean(Biomass_Kg_m2,na.rm=T),sd=sd(Biomass_Kg_m2,na.rm=T))
+aggData_QMDbinsDen_out %>% summarise(mean=mean(Biomass_Kg_m2,na.rm=T),sd=sd(Biomass_Kg_m2,na.rm=T))
+aggData_QMDbinsDen_out %>% group_by(dataset) %>% summarise(mean=mean(BiomassIncrement_Kg_m2_year,na.rm=T),sd=sd(BiomassIncrement_Kg_m2_year,na.rm=T))
+aggData_QMDbinsDen_out %>% summarise(mean=mean(BiomassIncrement_Kg_m2_year,na.rm=T),sd=sd(BiomassIncrement_Kg_m2_year,na.rm=T))
+
+aggData_QMDbinsDen_out %>% group_by(PlotID) %>% arrange(Year) %>% 
   filter(row_number()==n()) %>% ungroup() %>% filter(years_since_management!=999) %>%
   filter(!grepl('6003', PlotID)) %>% 
   group_by(dataset) %>%
   summarise(mean=mean(years_since_management,na.rm=T),sd=sd(years_since_management,na.rm=T))
-
-# Table S3 - stand ####
-aggData_QMDbinsDen %>% group_by(PlotID) %>% arrange(Year) %>% 
-  filter(row_number()==1 | row_number()==n()) %>% arrange(PlotID) %>%
-  mutate(changeQMD = (QMD - lag(QMD))/lag(QMD)*100) %>% relocate(changeQMD, .after = QMD) %>%
-  mutate(changeDensity = (Density - lag(Density))/lag(Density)*100) %>% 
-  mutate(changeBiomass_Kg_m2 = (Biomass_Kg_m2 - lag(Biomass_Kg_m2))/lag(Biomass_Kg_m2)*100) %>% 
-  mutate(changeBiomassIncrement_Kg_m2_year = 
-           (BiomassIncrement_Kg_m2_year - lag(BiomassIncrement_Kg_m2_year))/lag(BiomassIncrement_Kg_m2_year)*100) %>% 
-  ungroup() %>% group_by(dataset) %>%
-  summarise(changeQMD=mean(changeQMD,na.rm=T),changeDensity=mean(changeDensity,na.rm=T),
-            changeBiomass_Kg_m2=mean(changeBiomass_Kg_m2,na.rm=T),changeBiomassIncrement_Kg_m2_year=mean(changeBiomassIncrement_Kg_m2_year,na.rm=T))
+aggData_QMDbinsDen_out %>% count(dataset,PlotID) %>% group_by(dataset) %>%
+  summarise(mean=mean(n,na.rm=T),sd=sd(n,na.rm=T),min=min(n,na.rm=T),max=max(n,na.rm=T))
 
 # Bray-Curtis dissimilarity index
 # Need to use the by species data!
@@ -477,8 +486,7 @@ EFM_bray_curtis_pre_index %>% summarise_all(list(~sum(!is.na(.))))
 # Summarise to get index
 EFM_bray_curtis_index <- EFM_bray_curtis_pre_index %>% summarise_all(list(~ mean(., na.rm=T)))
 EFM_bray_curtis_index_long <- EFM_bray_curtis_index %>% pivot_longer(cols = everything())
-  EFM_bray_curtis_index_long %>% summarise(mean=mean(value, na.rm=T),sd=sd(value, na.rm=T))
-summary(EFM_bray_curtis_index_long)
+EFM_bray_curtis_index_long %>% summarise(mean=mean(value, na.rm=T),sd=sd(value, na.rm=T))
 
 # Change in percentage of dominant species per plot
 percent_speciesEFM <-  EFM_stand_Bysps %>% 
@@ -584,7 +592,6 @@ percent_speciesNFR %>% distinct(Latin)
 summary(percent_speciesNFR)
 
 # Full data
-
 df_EFM_stand_Bysps <- EFM_stand_Bysps %>% select(FNUM,Latin,AJ,
   TreesPerHectareAHC1_2,BasalAreaAHC1_2_m2perha) %>%
   mutate(FNUM=as.character(FNUM)) %>%
@@ -643,10 +650,9 @@ percent_species_alData %>% distinct(Species)
 summary(percent_species_alData)
 
 # Figure S1 ####
-load("~/GFDY/data/inputs_obs/aggData_QMDbinsDen75out.RData")
-load("~/GFDY/data/inputs_obs/aggData_QMDbinsRest75out.RData")
+load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen75out.RData"))
+load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsRest75out.RData"))
 
-library(viridis)
 fig_S1 <- ggplot() + 
   geom_point(data = aggData_QMDbinsDen_out, aes(x = logQMD, y = logDensity,col=Year), alpha=0.6, size = 1, shape = 16, inherit.aes = FALSE) + 
   geom_point(data = aggData_QMDbinsRest_out, aes(x = logQMD, y = logDensity,col=Year), alpha=0.6, size = 1,shape = 16, inherit.aes = FALSE) + 
@@ -668,4 +674,3 @@ scale_y_continuous(breaks = seq(4,8,2))
 fig_S1
 ggsave(paste0(here::here(), "/manuscript/figures/fig_S1.png"), width = 5, height = 4.5, dpi=300)
 ggsave(paste0(here::here(), "/manuscript/figures/fig_S1.pdf"), width = 5, height = 4.5, dpi=300)
-
