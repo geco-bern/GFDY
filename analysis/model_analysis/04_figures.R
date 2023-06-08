@@ -85,7 +85,7 @@ fig2b_dbh <- ggplot() +
   scale_linetype_manual("Level of LUE", breaks = c('Control',"+15%", "+30%"), 
                         values = c("dotted","dashed","solid"),
                         guide = guide_legend(override.aes = list(color = "black"))) +
-  labs(x = "t", y = "B",title=expression(paste("Biomass (kg C ", m^-2, ") "))) + 
+  labs(x = "Simulation year", y = "B",title=expression(paste("Biomass (kg C ", m^-2, ") "))) + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -142,7 +142,7 @@ fig2c_dbh <- ggplot() +
   scale_linetype_manual("Level of LUE", breaks = c('Control',"+15%", "+30%"), 
                         values = c("dotted","dashed","solid"),
                         guide = guide_legend(override.aes = list(color = "black"))) +
-  labs(x = "t", y = "G",title=expression(paste("Growth (kg C ", m^-2, " ", yr^-1, ") "))) + 
+  labs(x = "Simulation year", y = "G",title=expression(paste("Growth (kg C ", m^-2, " ", yr^-1, ") "))) + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -194,7 +194,7 @@ fig2d_dbh <- ggplot() +
   scale_linetype_manual("Level of LUE", breaks = c('Control',"+15%", "+30%"), 
                         values = c("dotted","dashed","solid"),
                         guide = guide_legend(override.aes = list(color = "black"))) +
-  labs(x = "t", y = "M",title=expression(paste("Mortality (kg C ", m^-2, " ", yr^-1, ") "))) + 
+  labs(x = "Simulation year", y = "M",title=expression(paste("Mortality (kg C ", m^-2, " ", yr^-1, ") "))) + 
   theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
                      axis.title.y=element_text(angle=0, vjust = 0.5),
@@ -596,46 +596,6 @@ fig2gg_dbh <- ggplot() +
   scale_x_continuous(limits = c(500,1500), breaks = seq(500,1500,500)) + 
   scale_y_continuous(limits = c(10,35), breaks = seq(10,35,10))
 fig2gg_dbh
-
-# Longevity vs. time ####
-
-# DBH
-fig2hh_dbh <- ggplot() +  
-  geom_line(data=ea1sa1DBHp1gl_out_annual_tile, aes(x=year, y=MaxAge, color='r1', linetype='Control'),alpha=.7) + 
-  geom_line(data=ea1sa1DBHp2gl_out_annual_tile, aes(x=year, y=MaxAge, color='r2', linetype='Control'),alpha=.7) +
-  geom_line(data=ea1sa1DBHp3gl_out_annual_tile, aes(x=year, y=MaxAge, color='r3', linetype='Control'),alpha=.7) +
-  geom_line(data=ea2sa1DBHp1gl_out_annual_tile, aes(x=year, y=MaxAge, color='r1', linetype='+15%'),alpha=.7) + 
-  geom_line(data=ea2sa1DBHp2gl_out_annual_tile, aes(x=year, y=MaxAge, color='r2', linetype='+15%'),alpha=.7) +
-  geom_line(data=ea2sa1DBHp3gl_out_annual_tile, aes(x=year, y=MaxAge, color='r3', linetype='+15%'),alpha=.7) +
-  geom_line(data=ea3sa1DBHp1gl_out_annual_tile, aes(x=year, y=MaxAge, color='r1', linetype='+30%'),alpha=.7) + 
-  geom_line(data=ea3sa1DBHp2gl_out_annual_tile, aes(x=year, y=MaxAge, color='r2', linetype='+30%'),alpha=.7) +
-  geom_line(data=ea3sa1DBHp3gl_out_annual_tile, aes(x=year, y=MaxAge, color='r3', linetype='+30%'),alpha=.7) +
-  scale_color_manual("Parameter", breaks = c("r1", "r2", "r3"), 
-                     values = c("#009E73", "#0072B2", "#D55E00"),
-                     guide = guide_legend(override.aes = list(size=.5),order = 1),
-                     labels =c(expression(paste(italic("r")[italic("1")])),expression(paste(italic("r")[italic("2")])),
-                               expression(paste(italic("r")[italic("3")])))) +
-  scale_linetype_manual("Level of LUE", breaks = c("Control","+15%", "+30%"), 
-                        values = c("dotted","longdash","solid"),
-                        guide = guide_legend(override.aes = list(color = "black", size=.5))) +
-  labs(x = "Year", y = expression(paste(tau)), 
-       title = "Longevity for size-dependent mortality") + 
-  theme_bw() + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                     axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-                     axis.title.y=element_text(angle=0, vjust = 0.5),
-                     legend.text = element_text(size = 9),legend.title = element_text(size = 9),
-                     plot.title = element_text(size = 10),
-                     legend.key = element_rect(fill = NA, color = NA),
-                     legend.position = c(.43, .1),
-                     legend.direction="horizontal",
-                     legend.margin = margin(.2, .2, .2, .2),
-                     legend.key.size = unit(0.7, 'cm'),
-                     legend.spacing = unit(.1,"cm"),
-                     #legend.box.background = element_rect(color="black",size=0.2),
-                     legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(0,1200), breaks = seq(500,1500,500)) #+ 
-  #scale_y_continuous(limits = c(10,35), breaks = seq(10,35,10))
-fig2hh_dbh
 
 # Relative longevity vs. growth rates ####
 # longevity is maximum age at tile-level, plot mean across multiple years after spinup
