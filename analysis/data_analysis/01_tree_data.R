@@ -1,36 +1,42 @@
+# This script reads the tree-level data from the Swiss EFM, NFI and NFR plots
+# selects only unmanaged plots and calculates the needed variables for the analysis to create the aggregated dataset
+# This script generates the aggreagated tre-level dataset (summarizing) and the tree-level dataset
+# This script calculates trends in forest attributes and creates Figure S2
+
 # load packages
 library(dplyr)
-library(ggplot2)
-#library(tidyr)
 library(stringr)
-library(sjPlot)
-library(ggeffects)
-library(patchwork)
-library(lmerTest) 
 library(lme4) 
-library(effects) 
+library(lmerTest) 
 library(MuMIn)
+library(effects) 
+library(ggeffects)
+library(sjPlot)
+library(ggplot2)
 library(robustlmm)
+library(patchwork)
 
-# load data ####
+# Read data ####
+
 # read data at stand level
 load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen75out.RData"))
 #load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen55out.RData"))
 #load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen90out.RData"))
 length(unique(aggData_QMDbinsDen_out$PlotID))
 
+## EFM ####
+## EFM - Experimental Forest Management 
+
 # Filter selected plots for EFM
 EFM_sel_plots <- aggData_QMDbinsDen_out %>% filter(dataset=="EFM")
 NFI_sel_plots <- aggData_QMDbinsDen_out %>% filter(dataset=="NFI")
 NFR_sel_plots <- aggData_QMDbinsDen_out %>% filter(dataset=="NFR")
 
-# EFM - Experimental Forest Management ####
-
 # Plot area
 EFM_plot_area <- read.csv(paste0(here::here(), "/data/raw_obs/efm/EFM_plot_area.csv"))
 str(EFM_plot_area)
 
-## Tree-level data from EFM ####
+# Tree-level data from EFM
 EFM_tree_pre <- readRDS(paste0(here::here(), "/data/raw_obs/efm/EFM_tree_data.RDS"))
 EFM_tree_6003 <- readRDS(paste0(here::here(), "/data/raw_obs/efm/EFM_tree_data6003.RDS"))
 EFM_tree <- EFM_tree_pre %>% bind_rows(EFM_tree_6003) %>% filter(FNUM!=6003000) %>% 
@@ -67,7 +73,8 @@ EFM_tree <- EFM_tree %>% select(FNUM, AJ, TreeID, Biomass_kg, DBH,
                                 Biomass_growth_kgperyear, Biomass_growth_kgperm2peryear,nTrees) %>% 
   rename(PlotID=FNUM, Year=AJ) %>% mutate(PlotID=as.character(PlotID),dataset="EFM")
 
-# NFI - Swiss National Forest Inventories ####
+## NFI ####
+## NFI - Swiss National Forest Inventories
 
 # Species names
 NFI_species_constant <- read.csv(paste0(here::here(), "/data/raw_obs/nfi/Species_names.csv"))
@@ -77,7 +84,7 @@ str(NFI_species_constant)
 NFI_plot_census <- read.csv(paste0(here::here(), "/data/raw_obs/nfi/MIND_plot_census_20210121.csv"))
 str(NFI_plot_census)
 
-## Tree-level data from NFI ####
+## Tree-level data from NFI
 NFI_tree <- read.csv(paste0(here::here(), "/data/raw_obs/nfi/NFI_tree_census.csv"))
 str(NFI_tree)
 length(unique(NFI_tree$PLOTID)) 
@@ -117,7 +124,8 @@ NFI_tree <- NFI_tree %>% select(PLOTID, Year, TREEID,BIOMASS, DBH,
                                 Biomass_growth_kgperyear, Biomass_growth_kgperm2peryear) %>% 
   rename(PlotID=PLOTID, Biomass_kg=BIOMASS, TreeID=TREEID) %>% mutate(PlotID=as.character(PlotID),dataset="NFI")
 
-# NFR - Natural Forests Reserves NFR ####
+## NFR ####
+## NFR - Natural Forests Reserves
 
 # Plot area
 NFR_plot_area <- read.csv(paste0(here::here(), "/data/raw_obs/nfr/NFR_plot_area.csv"),sep=",")
@@ -126,7 +134,7 @@ str(NFR_plot_area)
 NFR_plot_area <- NFR_plot_area %>% mutate(fg = as.character(fg),FNUM = as.character(FNUM)) 
 length(unique(NFR_plot_area$FNUM)) 
 
-## Tree-level data from NFR ####
+## Tree-level data from NFR
 NFR_tree <- readRDS(paste0(here::here(), "/data/raw_obs/nfr/NFR_tree_data.RDS"))
 NFR_tree <- NFR_tree %>% rename(TreeID=BNR,TreeStatus=AHC,fg=FG) %>% mutate(FNUM = as.character(FNUM)) %>%
   left_join(NFR_plot_area[,c(1,6)])
@@ -163,7 +171,10 @@ NFR_tree <- NFR_tree %>% select(FNUM, AJ, TreeID, Biomass_kg, DBH,
                                 Biomass_growth_kgperyear, Biomass_growth_kgperm2peryear) %>% 
   rename(PlotID=FNUM, Year=AJ) %>% mutate(PlotID=as.character(PlotID),dataset="NFR") 
 
-# Aggregated tree level data from EFM, NFI and NFR ####
+# Create datasets ####
+
+## Aggregated ####
+# 1) Aggregated tree level data from EFM, NFI and NFR
 aggTreeData <- bind_rows(EFM_tree_agg,NFI_tree_agg,NFR_tree_agg)
 aggTreeData <- aggTreeData %>% group_by(PlotID) %>%
   mutate(mean_dbh_firstcensus = first(mean_dbh)) %>% 
@@ -175,7 +186,8 @@ save(aggTreeData, file = paste0(here::here(), "/data/inputs_obs/aggTreeData75.RD
 #save(aggTreeData, file = paste0(here::here(), "/data/inputs_obs/aggTreeData55.RData"))
 #save(aggTreeData, file = paste0(here::here(), "/data/inputs_obs/aggTreeData90.RData"))
 
-# Tree level data from EFM, NFI and NFR ####
+## Tree-level ####
+# 2) Tree-level data from EFM, NFI and NFR
 TreeData <- bind_rows(EFM_tree,NFI_tree,NFR_tree)
 TreeData <- TreeData %>% group_by(PlotID, TreeID) %>%
   mutate(DBH_firstcensus = first(DBH)) %>% relocate(DBH_firstcensus, .after=DBH) %>% ungroup()
@@ -186,7 +198,8 @@ save(TreeData, file = paste0(here::here(), "/data/inputs_obs/TreeData75.RData"))
 #save(TreeData, file = paste0(here::here(), "/data/inputs_obs/TreeData55.RData"))
 #save(TreeData, file = paste0(here::here(), "/data/inputs_obs/TreeData90.RData"))
 
-# Trends in forest attributes ####
+# Calculate trends ####
+# Trends in forest attributes
 load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen75out.RData"))
 length(unique(aggData_QMDbinsDen_out$PlotID))
 load(paste0(here::here(), "/data/inputs_obs/aggTreeData75.RData"))

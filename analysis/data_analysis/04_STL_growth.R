@@ -1,20 +1,20 @@
 # This script analyses the changes in the STLs w.r.t growth (growth anomalies, i.e., residuals).
-# Results generate Figure 1 B.
+# This script creates Figure 1b, Figure S5d,e,f and Figure S10b,d
 
 # load packages
-library(dplyr)
-library(ggplot2)
-library(tidyr)
+# load packages
 library(lme4) 
 library(lmerTest) 
-library(effects) 
 library(MuMIn)
+library(effects) 
 library(sjPlot)
 library(ggeffects)
-library(patchwork)
+library(ggplot2)
 library(lattice)
+library(dplyr)
+library(patchwork)
 
-# Load data ####
+# Read data ####
 # read data at stand level
 load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen75out.RData"))
 #load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen55out.RData"))
@@ -27,7 +27,7 @@ load(paste0(here::here(), "/data/inputs_obs/aggTreeData75.RData"))
 #load(paste0(here::here(), "/data/inputs_obs/aggTreeData90.RData"))
 length(unique(aggTreeData$PlotID))
 
-# Run the model ####
+# Run model ####
 # LMM model N ~ QMD and Res_Growth0 with 75th percentile
 Fit_ResBio = lmer(logDensity ~ scale(logQMD) + scale(Res_Growth0) + (1|PlotID) + (1|Species) + (1|years_since_management_bins), 
                   data = aggData_QMDbinsDen_out, na.action = "na.exclude")
@@ -152,7 +152,20 @@ plot_homocedasticity2 <- ggplot(data.frame(fitted=fitted(Fit_ResBio),residuals=r
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.text = element_text(size = 10),axis.title = element_text(size = 10)) +
   scale_x_continuous(limits = c(5,9), breaks = seq(5,9,2)) +
-  scale_y_continuous(limits = c(-0.53,0.53), breaks = seq(-0.5,0.5,0.5))
+  scale_y_continuous(limits = c(-0.54,0.54), breaks = seq(-0.5,0.5,0.5))
+plot_homocedasticity2
+
+plot_homocedasticity2 <- ggplot(data.frame(fitted=fitted(Fit_ResBio),residuals=residuals(Fit_ResBio,type="pearson")),
+                                aes(x=fitted,y=residuals)) + 
+  geom_hex(bins = 29) +
+  scale_fill_continuous("",type = "viridis",limits=c(0, 18), breaks=seq(5,15,by=5)) + 
+  geom_hline(color="red",alpha=0.5,yintercept = 0, linetype = 1) + 
+  xlab("Fitted (ln N)") + ylab("Residuals") + theme_bw() +  
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 10),axis.title = element_text(size = 10),
+        legend.position = "none") +
+  scale_x_continuous(limits = c(5,9), breaks = seq(5,9,2)) +
+  scale_y_continuous(limits = c(-0.54,0.54), breaks = seq(-0.5,0.5,0.5))
 plot_homocedasticity2
 
 # Linearity in each variable: Models are assumed to be linear in each of the independent variables. 
@@ -162,8 +175,21 @@ plot_linearity2_var_qmd <- ggplot(data.frame(logQMD=aggData_QMDbinsDen_out$logQM
   xlab("ln QMD") + ylab("Residuals") + theme_bw() +  
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.text = element_text(size = 10),axis.title = element_text(size = 10))  +
-  scale_x_continuous(limits = c(2,4), breaks = seq(2,4,1)) +
-  scale_y_continuous(limits = c(-0.53,0.53), breaks = seq(-0.5,0.5,0.5))
+  scale_x_continuous(limits = c(2,4.3), breaks = seq(2,4,1)) +
+  scale_y_continuous(limits = c(-0.54,0.54), breaks = seq(-0.5,0.5,0.5))
+plot_linearity2_var_qmd
+
+plot_linearity2_var_qmd <- ggplot(data.frame(logQMD=aggData_QMDbinsDen_out$logQMD,residuals=residuals(Fit_ResBio,type="pearson")),
+                                  aes(x=logQMD,y=residuals)) + 
+  geom_hex(bins = 29) +
+  scale_fill_continuous("",type = "viridis",limits=c(0, 18), breaks=seq(5,15,by=5)) + 
+  geom_hline(color="red",alpha=0.5,yintercept = 0, linetype = 1) + 
+  xlab("ln QMD") + ylab("Residuals") + theme_bw() +  
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 10),axis.title = element_text(size = 10),
+        legend.position = "none") +
+  scale_x_continuous(limits = c(2,4.3), breaks = seq(2,4,1)) +
+  scale_y_continuous(limits = c(-0.54,0.54), breaks = seq(-0.5,0.5,0.5))
 plot_linearity2_var_qmd
 
 plot_linearity2_var_bio <- ggplot(data.frame(Res_Growth0=aggData_QMDbinsDen_out$Res_Growth0,residuals=residuals(Fit_ResBio,type="pearson")),
@@ -172,21 +198,34 @@ plot_linearity2_var_bio <- ggplot(data.frame(Res_Growth0=aggData_QMDbinsDen_out$
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.text = element_text(size = 10),axis.title = element_text(size = 10))  +
   scale_x_continuous(breaks = c(-1,0,1)) +
-  scale_y_continuous(limits = c(-0.53,0.53), breaks = seq(-0.5,0.5,0.5))
+  scale_y_continuous(limits = c(-0.54,0.54), breaks = seq(-0.5,0.5,0.5))
+plot_linearity2_var_bio
+
+plot_linearity2_var_bio <- ggplot(data.frame(Res_Growth0=aggData_QMDbinsDen_out$Res_Growth0,residuals=residuals(Fit_ResBio,type="pearson")),
+                                  aes(x=Res_Growth0,y=residuals)) + 
+  geom_hex(bins = 42) +
+  scale_fill_continuous("",type = "viridis",limits=c(0, 18), breaks=seq(5,15,by=5)) + 
+  geom_hline(color="red",alpha=0.5,yintercept = 0, linetype = 1) + 
+  xlab("Growth anomalies") + ylab("Residuals") + theme_bw() +  
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 10),axis.title = element_text(size = 10),
+        legend.position = "none") +
+  scale_x_continuous(breaks = c(-1,0,1)) +
+  scale_y_continuous(limits = c(-0.54,0.54), breaks = seq(-0.5,0.5,0.5))
 plot_linearity2_var_bio
 
 # Figure S5 ####
 fig_S5 <- plot_homocedasticity1 + plot_linearity1_var_qmd + plot_linearity1_var_yr +
   plot_homocedasticity2 + plot_linearity2_var_qmd + plot_linearity2_var_bio +
   plot_layout(ncol = 3) + 
+  #plot_layout(guides = "collect") & theme(legend.position = 'bottom') &
   #plot_annotation(tag_levels = list(c('a)', 'b)')))
   plot_annotation(tag_levels = 'a', tag_suffix = ")") & 
-  theme(plot.tag = element_text(size = 12)) #& 
-#theme(plot.margin = unit(rep(0.13,4), "cm"))#+
-#plot_layout(guides = "collect") & theme(legend.position = 'bottom')
+  theme(plot.tag = element_text(size = 12)) 
+#theme(plot.margin = unit(rep(0.13,4), "cm"))#
 fig_S5
-ggsave(paste0(here::here(), "/manuscript/figures/fig_S5.png"), width = 8, height = 5, dpi=300)
-ggsave(paste0(here::here(), "/manuscript/figures/fig_S5.pdf"), width = 8, height = 5, dpi=300)
+ggsave(paste0(here::here(), "/manuscript/figures/fig_S5.png"), width = 9, height = 6, dpi=300)
+ggsave(paste0(here::here(), "/manuscript/figures/fig_S5.pdf"), width = 9, height = 6, dpi=300)
 
 # More tests ####
 # 1. Exclude residuals from model fit
@@ -225,7 +264,7 @@ summary(Fit_ResBioInter)
 #anova(Fit_ResBio,Fit_ResBioInter)
 AICc(Fit_ResBio,Fit_ResBioInter)
 
-# 4. Exclude 10% (25%) smallest and largest stands (by their QMD).
+# 4. Exclude 10% smallest and largest stands (by their QMD).
 aggData_analysis_sub <- aggData_QMDbinsDen_out %>% filter(between(logQMD, quantile(logQMD, .10), quantile(logQMD, .90)))
 Fit_ResBio_sub = lmer(logDensity ~ scale(logQMD) + scale(Res_Growth0) + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
                     data = aggData_analysis_sub, na.action = "na.exclude")
@@ -285,6 +324,19 @@ plot_homocedasticity2_sub <- ggplot(data.frame(fitted=fitted(Fit_ResBio_sub),res
   scale_y_continuous(limits = c(-0.33,0.33), breaks = seq(-0.3,0.3,0.3))
 plot_homocedasticity2_sub
 
+plot_homocedasticity2_sub <- ggplot(data.frame(fitted=fitted(Fit_ResBio_sub),residuals=residuals(Fit_ResBio_sub,type="pearson")),
+                                    aes(x=fitted,y=residuals)) + 
+  geom_hex(bins = 35) +
+  scale_fill_continuous("",type = "viridis",limits=c(0, 10), breaks=seq(0,10,by=5)) + 
+  geom_hline(color="red",alpha=0.5,yintercept = 0, linetype = 1) +
+  xlab("Fitted (ln N)") + ylab("Residuals") + theme_bw() +  
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 10),axis.title = element_text(size = 10),
+        legend.position = "none") +
+  scale_x_continuous(limits = c(5.5,8), breaks = seq(6,8,1)) +
+  scale_y_continuous(limits = c(-0.33,0.33), breaks = seq(-0.3,0.3,0.3))
+plot_homocedasticity2_sub
+
 # Linearity in each variable: Models are assumed to be linear in each of the independent variables. 
 # This assumption can be checked with plots of the residuals versus each of the variables.
 plot_linearity2_var_qmd_sub <- ggplot(data.frame(logQMD=aggData_analysis_sub$logQMD,residuals=residuals(Fit_ResBio_sub,type="pearson")),
@@ -309,9 +361,8 @@ plot_linearity2_var_bio_sub
 fig_S10 <- plot75Year_sub + inset_element(hist_Year_sub, left = 0.6, bottom = 0.6, right = 0.99, top = 0.99, ignore_tag = TRUE) +
   plot75Res_sub + inset_element(hist_Res_sub, left = 0.6, bottom = 0.6, right = 0.99, top = 0.99, ignore_tag = TRUE) + 
   plot_homocedasticity1_sub +
-  plot_homocedasticity2_sub +
+  plot_homocedasticity2_sub + 
   #plot_layout(ncol = 2) + 
-  #plot_annotation(tag_levels = list(c('a)', 'b)')))
   plot_annotation(tag_levels = 'a', tag_suffix = ")") & 
   theme(plot.tag = element_text(size = 12))#& 
 #theme(plot.margin = unit(rep(0.13,4), "cm"))#+
@@ -319,60 +370,3 @@ fig_S10 <- plot75Year_sub + inset_element(hist_Year_sub, left = 0.6, bottom = 0.
 fig_S10
 ggsave(paste0(here::here(), "/manuscript/figures/fig_S10.png"), width = 8.5, height = 8, dpi=300)
 ggsave(paste0(here::here(), "/manuscript/figures/fig_S10.pdf"), width = 8.5, height = 8, dpi=300)
-
-# Model STL growth at tree level ####
-# LMM model N ~ QMD and Res_Growth0 with 75th percentile
-
-aggTreeData <- aggTreeData %>% left_join(aggData_QMDbinsDen_out[,c(1,2,5,8,10,22)])
-
-Fit_ResBioTree = lmer(logDensity ~ scale(logQMD) + scale(Res_GrowthTree0) + (1|PlotID) + (1|Species) + (1|years_since_management_bins), 
-                  data = aggTreeData, na.action = "na.exclude")
-summary(Fit_ResBioTree)
-out <- summary(Fit_ResBioTree)
-out$coefficients
-r.squaredGLMM(Fit_ResBioTree)
-plot(allEffects(Fit_ResBioTree))
-plot_model(Fit_ResBioTree, type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logQMD","Res_GrowthTree0"))
-plot_model(Fit_ResBioTree, type = "pred",show.data=TRUE, dot.size=1.5, terms = c("logQMD","Res_GrowthTree0[-0.04,0,0.04]"))
-summary(aggTreeData$Res_GrowthTree0)
-
-pred <- ggpredict(Fit_ResBioTree, terms = c("logQMD","Res_GrowthTree0[-0.04,0,0.04]"), full.data = TRUE)
-plot(pred, add.data = F) 
-preddata <- as.data.frame(pred)
-
-plotTreeRes <- ggplot() + 
-  geom_point(data = aggTreeData, aes(x = logQMD, y = logDensity), alpha=0.3, size = .8,col="black", shape = 16, inherit.aes = FALSE) + 
-  geom_ribbon(data = preddata, aes(x = x, y = predicted,ymin=conf.low,ymax=conf.high,fill=group),alpha=.2,show.legend=T) + 
-  geom_smooth(data= preddata, aes(x=x, y=predicted, color=group), method = "lm",fullrange = F,size = .6, se=F) +
-  labs(x = "ln QMD", y = "ln N",title = "STL changes as a function of growth",color  = "Growth anomalies") + 
-  scale_color_manual("Mean tree growth \nanomalies", 
-                     breaks = c("-0.04","0", "0.04"), 
-                     labels = c("-0.04","0.0", "0.04"),
-                     values = c("#E41A1C", "#377EB8", "#4DAF4A")) +
-  scale_fill_manual("Mean tree growth \nanomalies", 
-                     breaks = c("-0.04","0", "0.04"), 
-                     labels = c("-0.04","0.0", "0.04"),
-                     values = c("#E41A1C", "#377EB8", "#4DAF4A")) +
-  theme_bw() +  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-                      axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-                      legend.text = element_text(size = 8),legend.title = element_text(size = 8),
-                      plot.title = element_text(size = 10),
-                      legend.key = element_rect(fill = NA, color = NA),
-                      legend.position = c(.13, .20),
-                      legend.direction="vertical",
-                      legend.box = "horizontal",
-                      legend.margin = margin(2, 2, 2, 2),
-                      legend.key.size = unit(.6, 'cm'),
-                      legend.box.margin = margin(1, 1, 1, 1)) +
-  scale_x_continuous(limits = c(2,4.6),breaks = seq(2.5,4.5,1))+
-  scale_y_continuous(limits = c(3.6,9.2))
-plotTreeRes
-
-hist_TreeRes <- ggplot(aggTreeData, aes(x=Res_GrowthTree0)) + geom_histogram(color="#FFDB6D", fill="#FFDB6D") + theme_bw() + 
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-        axis.text = element_text(size = 8),axis.title = element_text(size = 8),
-        plot.margin = unit(c(-.5,.1,.1,.1), "cm")) + ggtitle("") +
-  scale_x_continuous("Growth anomalies") +
-  scale_y_continuous("Frequency", breaks = seq(0,150,50))
-hist_TreeRes
-

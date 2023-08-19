@@ -1,15 +1,15 @@
-# This script calculates growth anomalies from stand and tree level data
+# This script calculates growth anomalies for stand and tree level growth data
+# This script creates Figure S4
 
 # load packages
-library(dplyr)
-library(ggplot2)
-library(tidyr)
-library(stringr)
-library(ggridges)
 library(gamm4)
 library(sjPlot)
+library(dplyr)
+library(ggeffects)
+library(ggplot2)
 
-# load data ####
+# Read data ####
+
 # read data at stand level
 load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen75out.RData"))
 #load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen55out.RData"))
@@ -22,7 +22,9 @@ load(paste0(here::here(), "/data/inputs_obs/aggTreeData75.RData"))
 #load(paste0(here::here(), "/data/inputs_obs/aggTreeData90.RData"))
 length(unique(aggTreeData$PlotID))
 
-# Residuals Stand Growth ~ QMD or growth anomalies ####
+# Growth anomalies ####
+
+## Stand growth  ####
 # To analyse the effect of growth enhancement (growth anomalies, i.e., residuals) in STL relationships.
 FitResStand=gamm4(BiomassIncrement_Kg_m2_year~s(QMD),random=~(1|PlotID),# + (1|Year),
                   data=aggData_QMDbinsDen_out,na.action = "na.omit")
@@ -36,7 +38,7 @@ plot(aggData_QMDbinsDen_out$BiomassIncrement_Kg_m2_year ~ predict0, xlab="Predic
 aggData_QMDbinsDen_out <- aggData_QMDbinsDen_out %>% mutate(Res_Growth0=Res_Growth0) 
 summary(aggData_QMDbinsDen_out$Res_Growth0)
 
-# Figure S4 ####
+### Figure S4 ####
 plot_model(FitResStand$gam,type = "pred",terms = c("QMD"),show.data=T)
 pred <- ggpredict(FitResStand$gam, terms = c("QMD"), full.data = TRUE)
 plot(pred, add.data = F) 
@@ -54,7 +56,7 @@ fig_S4
 ggsave(paste0(here::here(), "/manuscript/figures/fig_S4.png"), width = 5, height = 4.5, dpi=300)
 ggsave(paste0(here::here(), "/manuscript/figures/fig_S4.pdf"), width = 5, height = 4.5, dpi=300)
 
-# Compare model simulations and observations  ####
+# Compare model simulations and observations
 # Increase Growth (BiomassIncrement_Kg_m2_year) +15% and +30% to mimic model simulations
 aggData_QMDbinsDen_out <- aggData_QMDbinsDen_out %>% 
   mutate(GrowthPlus15 = BiomassIncrement_Kg_m2_year*1.15) %>% 
@@ -68,7 +70,7 @@ save(aggData_QMDbinsDen_out, file = paste0(here::here(), "/data/inputs_obs/aggDa
 #save(aggData_QMDbinsDen_out, file = paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen55out.RData"))
 #save(aggData_QMDbinsDen_out, file = paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen90out.RData"))
 
-# Residuals Tree Growth ~ QMD or growth anomalies ####
+## Tree growth  ####
 # To analyse the effect of growth enhancement (growth anomalies, i.e., residuals) in STL relationships.
 FitResTree=gamm4(mean_tree_biomass_growth_kgperm2peryear~s(mean_qmd),random=~(1|PlotID),# + (1|Year),
                  data=aggTreeData,na.action = "na.omit")
@@ -82,7 +84,7 @@ plot(aggTreeData$mean_tree_biomass_growth_kgperm2peryear ~ predictTree0, xlab="P
 aggTreeData <- aggTreeData %>% mutate(Res_GrowthTree0=Res_GrowthTree0) 
 summary(aggTreeData$Res_GrowthTree0)
 
-# Figure tree growth ####
+### Figure tree growth
 plot_model(FitResTree$gam,type = "pred",terms = c("mean_qmd"),show.data=T)
 pred <- ggpredict(FitResTree$gam, terms = c("mean_qmd"), full.data = TRUE)
 plot(pred, add.data = F) 

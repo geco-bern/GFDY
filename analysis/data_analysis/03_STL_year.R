@@ -1,27 +1,25 @@
 # This script analyses the changes in the STLs over time (calendar year).
-# Results generate Figure 1 A.
+# This script creates Figure 1a, Figure S5a,b,c and Figure S10a,c
 
 # load packages
-library(dplyr)
-library(ggplot2)
-library(tidyr)
 library(lme4) 
 library(lmerTest) 
-library(effects) 
 library(MuMIn)
+library(effects) 
 library(sjPlot)
 library(ggeffects)
-library(patchwork)
+library(ggplot2)
 library(lattice)
+library(dplyr)
 
-# load data ####
+# Read data ####
 # read data at stand level
 load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen75out.RData"))
 #load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen55out.RData"))
 #load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen90out.RData"))
 length(unique(aggData_QMDbinsDen_out$PlotID))
 
-# Run the model ####
+# Run model ####
 # LMM model N ~ QMD and Year with 75th percentile
 Fit_Year = lmer(logDensity ~ scale(logQMD) + scale(Year) + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
                 data = aggData_QMDbinsDen_out, na.action = "na.exclude")
@@ -129,24 +127,65 @@ shapiro.test(residuals(Fit_Year)) # no normality (P<0.05!)
 # Amount and distance of points scattered above/below line is equal or randomly spread
 plot_model(Fit_Year, type='diag')[[4]] 
 plot(Fit_Year)
-plot_homocedasticity1 <- ggplot(data.frame(fitted=fitted(Fit_Year),residuals=residuals(Fit_Year,type="pearson")),
-                                aes(x=fitted,y=residuals)) + geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
+plot_homocedasticity1 <- ggplot(data.frame(fitted=fitted(Fit_Year),
+                                           residuals=residuals(Fit_Year,type="pearson")),
+                                aes(x=fitted,y=residuals)) +
+  geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
   xlab("Fitted (ln N)") + ylab("Residuals") + theme_bw() +  
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.text = element_text(size = 10),axis.title = element_text(size = 10)) +
   scale_x_continuous(limits = c(5,9), breaks = seq(5,9,2)) +
-  scale_y_continuous(limits = c(-0.53,0.53), breaks = seq(-0.5,0.5,0.5))
+  scale_y_continuous(limits = c(-0.54,0.54), breaks = seq(-0.5,0.5,0.5))
+plot_homocedasticity1
+
+plot_homocedasticity1 <- ggplot(data.frame(fitted=fitted(Fit_Year),
+                  residuals=residuals(Fit_Year,type="pearson")),
+       aes(x=fitted,y=residuals)) +
+  geom_hex(bins = 35) +
+  scale_fill_continuous(type = "viridis",limits=c(0, 18), breaks=seq(5,15,by=5)) + 
+  geom_hline(color="red",alpha=0.5,yintercept = 0, linetype = 1) +
+  xlab("Fitted (ln N)") + ylab("Residuals") + theme_bw() +  
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+           axis.text = element_text(size = 10),axis.title = element_text(size = 10),
+           legend.text = element_text(size = 8),legend.title = element_blank(),
+           plot.title = element_text(size = 10),
+           legend.key = element_rect(fill = NA, color = NA),
+           legend.position = c(.87, .80),
+           legend.direction="vertical",
+           legend.box = "horizontal",
+           legend.margin = margin(0.5, 0.5, 0.5, 0.5),
+           legend.key.size = unit(.40, 'cm'),
+           legend.box.margin = margin(0.5, 0.5, 0.5, 0.5)) +
+  scale_x_continuous(limits = c(5,9), breaks = seq(5,9,2)) +
+  scale_y_continuous(limits = c(-0.54,0.54), breaks = seq(-0.5,0.5,0.5)) 
 plot_homocedasticity1
 
 # Linearity in each variable: Models are assumed to be linear in each of the independent variables. 
 # This assumption can be checked with plots of the residuals versus each of the variables.
-plot_linearity1_var_qmd <- ggplot(data.frame(logQMD=aggData_QMDbinsDen_out$logQMD,residuals=residuals(Fit_Year,type="pearson")),
-                                  aes(x=logQMD,y=residuals)) + geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
+plot_linearity1_var_qmd <- ggplot(data.frame(logQMD=aggData_QMDbinsDen_out$logQMD,
+                                             residuals=residuals(Fit_Year,type="pearson")),
+                                  aes(x=logQMD,y=residuals)) + 
+  geom_point(alpha=.5,stroke=0,size=1.5,shape=16) + 
+  geom_hline(color="#377EB8",yintercept = 0, linetype = 1) +
   xlab("ln QMD") + ylab("Residuals") + theme_bw() +  
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.text = element_text(size = 10),axis.title = element_text(size = 10)) +
-  scale_x_continuous(limits = c(2,4), breaks = seq(2,4,1)) +
-  scale_y_continuous(limits = c(-0.53,0.53), breaks = seq(-0.5,0.5,0.5))
+  scale_x_continuous(limits = c(2,4.3), breaks = seq(2,4,1)) +
+  scale_y_continuous(limits = c(-0.54,0.54), breaks = seq(-0.5,0.5,0.5))
+plot_linearity1_var_qmd
+
+plot_linearity1_var_qmd <- ggplot(data.frame(logQMD=aggData_QMDbinsDen_out$logQMD,
+                                             residuals=residuals(Fit_Year,type="pearson")),
+                                  aes(x=logQMD,y=residuals)) +
+  geom_hex(bins = 35) +
+  scale_fill_continuous("",type = "viridis",limits=c(0, 18), breaks=seq(5,15,by=5)) + 
+  geom_hline(color="red",alpha=0.5,yintercept = 0, linetype = 1) +
+  xlab("ln QMD") + ylab("Residuals") + theme_bw() +  
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 10),axis.title = element_text(size = 10),
+        legend.position = "none") +
+  scale_x_continuous(limits = c(2,4.3), breaks = seq(2,4,1)) +
+  scale_y_continuous(limits = c(-0.54,0.54), breaks = seq(-0.5,0.5,0.5))
 plot_linearity1_var_qmd
 
 plot_linearity1_var_yr <- ggplot(data.frame(Year=aggData_QMDbinsDen_out$Year,residuals=residuals(Fit_Year,type="pearson")),
@@ -155,7 +194,20 @@ plot_linearity1_var_yr <- ggplot(data.frame(Year=aggData_QMDbinsDen_out$Year,res
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.text = element_text(size = 10),axis.title = element_text(size = 10)) +
   scale_x_continuous(breaks = c(1940,1980,2020)) +
-  scale_y_continuous(limits = c(-0.53,0.53), breaks = seq(-0.5,0.5,0.5))
+  scale_y_continuous(limits = c(-0.54,0.54), breaks = seq(-0.5,0.5,0.5))
+plot_linearity1_var_yr
+
+plot_linearity1_var_yr <- ggplot(data.frame(Year=aggData_QMDbinsDen_out$Year,residuals=residuals(Fit_Year,type="pearson")),
+                                 aes(x=Year,y=residuals)) + 
+  geom_hex(bins = 40) +
+  scale_fill_continuous("",type = "viridis",limits=c(0, 18), breaks=seq(5,15,by=5)) + 
+  geom_hline(color="red",alpha=0.5,yintercept = 0, linetype = 1) +
+  xlab("Year") + ylab("Residuals") + theme_bw() +  
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 10),axis.title = element_text(size = 10),
+        legend.position = "none") +
+  scale_x_continuous(breaks = c(1940,1980,2020)) +
+  scale_y_continuous(limits = c(-0.54,0.54), breaks = seq(-0.5,0.5,0.5))
 plot_linearity1_var_yr
 
 # More tests ####
@@ -194,7 +246,7 @@ Fit_YearInter = lmer(logDensity ~ scale(logQMD) * scale(Year) + (1|PlotID) + (1|
 summary(Fit_YearInter)
 AICc(Fit_Year,Fit_YearInter)
 
-# 4. Exclude 10% (25%) smallest and largest stands (by their QMD).
+# 4. Exclude 10% smallest and largest stands (by their QMD).
 aggData_analysis_sub <- aggData_QMDbinsDen_out %>% filter(between(logQMD, quantile(logQMD, .10), quantile(logQMD, .90)))
 Fit_Year_sub = lmer(logDensity ~ scale(logQMD) + scale(Year) + (1|PlotID) + (1|Species) + (1|years_since_management_bins),
                 data = aggData_analysis_sub, na.action = "na.exclude")
@@ -253,6 +305,27 @@ plot_homocedasticity1_sub <- ggplot(data.frame(fitted=fitted(Fit_Year_sub),resid
   scale_y_continuous(limits = c(-0.33,0.33), breaks = seq(-0.3,0.3,0.3))
 plot_homocedasticity1_sub
 
+plot_homocedasticity1_sub <- ggplot(data.frame(fitted=fitted(Fit_Year_sub),residuals=residuals(Fit_Year_sub,type="pearson")),
+                                    aes(x=fitted,y=residuals)) + 
+  geom_hex(bins = 35) +
+  scale_fill_continuous("",type = "viridis",limits=c(0, 10), breaks=seq(0,10,by=5)) + 
+  geom_hline(color="red",alpha=0.5,yintercept = 0, linetype = 1) +
+  xlab("Fitted (ln N)") + ylab("Residuals") + theme_bw() +  
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.text = element_text(size = 10),axis.title = element_text(size = 10),
+        legend.text = element_text(size = 8),legend.title = element_blank(),
+        plot.title = element_text(size = 10),
+        legend.key = element_rect(fill = NA, color = NA),
+        legend.position = c(.11, .18),
+        legend.direction="vertical",
+        legend.box = "horizontal",
+        legend.margin = margin(0.5, 0.5, 0.5, 0.5),
+        legend.key.size = unit(.40, 'cm'),
+        legend.box.margin = margin(0.5, 0.5, 0.5, 0.5)) +
+  scale_x_continuous(limits = c(5.5,8), breaks = seq(6,8,1)) +
+  scale_y_continuous(limits = c(-0.33,0.33), breaks = seq(-0.3,0.3,0.3))
+plot_homocedasticity1_sub
+
 # Linearity in each variable: Models are assumed to be linear in each of the independent variables. 
 # This assumption can be checked with plots of the residuals versus each of the variables.
 plot_linearity1_var_qmd_sub <- ggplot(data.frame(logQMD=aggData_analysis_sub$logQMD,residuals=residuals(Fit_Year_sub,type="pearson")),
@@ -272,4 +345,3 @@ plot_linearity1_var_yr_sub <- ggplot(data.frame(Year=aggData_analysis_sub$Year,r
   scale_x_continuous(breaks = c(1940,1980,2020)) +
   scale_y_continuous(limits = c(-0.33,0.33), breaks = seq(-0.3,0.3,0.3))
 plot_linearity1_var_yr_sub
-

@@ -1,18 +1,21 @@
-# This script reads the data from the Swiss EFM, NFI and NFR plots, selects only unmanaged plots and calculates the needed variables for the analysis
-# This script also calculates the QMD bins to select those plots with higher density, considered subjected to self-thinning.
+# This script reads the stand-level data from the Swiss EFM, NFI and NFR plots, 
+# selects only unmanaged plots and calculates the needed variables for the analysis to create the aggregated dataset
+# This script calculates the QMD bins to select those plots with higher density, considered subjected to self-thinning.
+# This scripts creates Table S1, Figure S1 and calculates Bray-Curtis dissimilarity index
 
 # load packages
 library(dplyr)
+library(stringr)
 library(ggplot2)
 library(ggridges)
 library(tidyr)
-library(stringr)
 library(vegan)
 library(viridis)
 
-# EFM - Experimental Forest Management ####
+# Read data ####
 
-## Stand-level data from EFM ####
+## EFM ####
+## EFM - Experimental Forest Management 
 
 # Plot characteristics
 EFM_plots_metadata <- read.csv(paste0(here::here(), "/data/raw_obs/efm/VFL_LISTmanual.csv"))
@@ -85,9 +88,8 @@ EFM_stand_Allsps %>% group_by(FNUM) %>% arrange(AJ) %>%
   summarise(mean=mean(years_since_management,na.rm=T),sd=sd(years_since_management,na.rm=T))
 str(EFM_stand_Allsps)
 
-# NFI - Swiss National Forest Inventories ####
-
-## Stand-level data from NFI ####
+## NFI ####
+## NFI - Swiss National Forest Inventories
 
 # Plot characteristics
 NFI_plot_constant <- read.csv(paste0(here::here(), "/data/raw_obs/nfi/NFI_plot_constant.csv"))
@@ -174,9 +176,8 @@ length(unique(NFI_plot_census$PLOTID))
 sort(table(NFI_plot_census$PLOTID))
 str(NFI_plot_census)
 
-# NFR - Natural Forests Reserves NFR ####
-
-## Stand-level data from NFR ####
+## NFR ####
+## NFR - Natural Forests Reserves
 
 # Metadata
 NFR_Metadata <- read.csv(paste0(here::here(), "/data/raw_obs/nfr/NFR_metadata.csv"))
@@ -246,7 +247,8 @@ length(unique(NFR_stand_Allsps$FNUM))
 sort(table(NFR_stand_Allsps$FNUM))
 str(NFR_stand_Allsps)
 
-# Aggregated stand level data from EFM, NFI and NFR ####
+# Create dataset ####
+# Aggregated stand level data from EFM, NFI and NFR
 EFM_stand_agg <- EFM_stand_Allsps %>% dplyr::select(c(FNUM,AJ,DBHqAHC1_2_cm,QMD,logQMD,BiomassKgperha,TreesPerHectareAHC1_2,
                                                logTreesPerHectareAHC1_2,BiomassIncrement_KgperhaperYear,Species,
                                                PlotArea_ha,years_since_management,elevation,longitude,latitude,temp,prec,PeriodLength_years)) %>% 
@@ -269,7 +271,7 @@ NFR_stand_agg <- NFR_stand_Allsps %>% dplyr::select(c(FNUM,AJ,DBHqAHC1_2_cm,QMD,
 length(unique(NFR_stand_agg$PlotID))
 sort(table(NFR_stand_agg$PlotID))
 
-# Join datasets
+# Join dataset
 aggStandData <- rbind(EFM_stand_agg,NFI_stand_agg,NFR_stand_agg)
 # Convert NPP from BiomassIncrement_Kg_ha_year to BiomassIncrement_Kg_m2_year
 aggStandData <- aggStandData %>% 
@@ -283,8 +285,8 @@ length(unique(aggStandData$PlotID))
 sort(table(aggStandData$PlotID))
 str(aggStandData)
 
-# Select upper quantile by QMD bins ####
-# calculate the QMD bins to select those plots with higher density 
+# QMD bins ####
+# Select upper quantile by QMD bins, i.e., those plots with higher density 
 load(paste0(here::here(), "/data/inputs_obs/aggStandData.RData"))
 aggData_QMDbins <- aggStandData %>% mutate(QMD_bins = cut(QMD, breaks = 30)) 
 sort(unique(aggData_QMDbins$QMD_bins))
@@ -298,7 +300,7 @@ ggplot(aggData_QMDbins, aes(x = Density, y = QMD_bins, fill = factor(stat(quanti
 
 # Select from each QMD bins the number of plots with higher density
 # Includes a sensitivity analysis using quantiles 0.55, 0.75 and 0.90
-valueQuantile = 0.90
+valueQuantile = 0.75
 
 quantileX <- aggData_QMDbins %>% group_by(QMD_bins) %>% summarise(quantile(Density, c(valueQuantile))) 
 max(quantileX$`quantile(Density, c(valueQuantile))`)
@@ -337,7 +339,7 @@ save(aggData_QMDbinsRest, file = paste0(here::here(), "/data/inputs_obs/aggData_
 #save(aggData_QMDbinsDen, file = paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen90.RData"))
 #save(aggData_QMDbinsRest, file = paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsRest90.RData"))
 
-# Remove outliers ####
+# Remove outliers
 # Filter points that are not in the STL: High and low density and QMD
 load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen75.RData"))
 load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsRest75.RData"))
@@ -446,7 +448,6 @@ aggData_QMDbinsDen_out %>% group_by(dataset) %>% summarise(mean=mean(Biomass_Kg_
 aggData_QMDbinsDen_out %>% summarise(mean=mean(Biomass_Kg_m2,na.rm=T),sd=sd(Biomass_Kg_m2,na.rm=T))
 aggData_QMDbinsDen_out %>% group_by(dataset) %>% summarise(mean=mean(BiomassIncrement_Kg_m2_year,na.rm=T),sd=sd(BiomassIncrement_Kg_m2_year,na.rm=T))
 aggData_QMDbinsDen_out %>% summarise(mean=mean(BiomassIncrement_Kg_m2_year,na.rm=T),sd=sd(BiomassIncrement_Kg_m2_year,na.rm=T))
-
 aggData_QMDbinsDen_out %>% group_by(PlotID) %>% arrange(Year) %>% 
   filter(row_number()==n()) %>% ungroup() %>% filter(years_since_management!=999) %>%
   filter(!grepl('6003', PlotID)) %>% 
@@ -455,7 +456,7 @@ aggData_QMDbinsDen_out %>% group_by(PlotID) %>% arrange(Year) %>%
 aggData_QMDbinsDen_out %>% count(dataset,PlotID) %>% group_by(dataset) %>%
   summarise(mean=mean(n,na.rm=T),sd=sd(n,na.rm=T),min=min(n,na.rm=T),max=max(n,na.rm=T))
 
-# Bray-Curtis dissimilarity index
+# Bray-Curtis dissimilarity index ####
 # Need to use the by species data!
 # BCij = 1 – (2*Cij) / (Si + Sj)
 # Cij: The sum of the lesser values for the species found in each site.
