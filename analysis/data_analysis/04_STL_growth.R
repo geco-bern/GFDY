@@ -157,9 +157,11 @@ plot_homocedasticity2
 
 plot_homocedasticity2 <- ggplot(data.frame(fitted=fitted(Fit_ResBio),residuals=residuals(Fit_ResBio,type="pearson")),
                                 aes(x=fitted,y=residuals)) + 
-  geom_hex(bins = 29) +
-  scale_fill_continuous("",type = "viridis",limits=c(0, 18), breaks=seq(5,15,by=5)) + 
-  geom_hline(color="red",alpha=0.5,yintercept = 0, linetype = 1) + 
+  geom_hex(bins = 26) +
+  #scale_fill_continuous("",type = "viridis",limits=c(0, 18), breaks=seq(5,15,by=5)) + 
+  scale_fill_gradientn(colours = colorRampPalette( c("lavenderblush3", "navy", "red", "yellow"))(5),
+                       limits=c(1, 18), breaks=seq(5,15,by=5)) +
+  geom_hline(color="black",alpha=0.6,yintercept = 0, linetype = 1) +
   xlab("Fitted (ln N)") + ylab("Residuals") + theme_bw() +  
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.text = element_text(size = 10),axis.title = element_text(size = 10),
@@ -181,9 +183,11 @@ plot_linearity2_var_qmd
 
 plot_linearity2_var_qmd <- ggplot(data.frame(logQMD=aggData_QMDbinsDen_out$logQMD,residuals=residuals(Fit_ResBio,type="pearson")),
                                   aes(x=logQMD,y=residuals)) + 
-  geom_hex(bins = 29) +
-  scale_fill_continuous("",type = "viridis",limits=c(0, 18), breaks=seq(5,15,by=5)) + 
-  geom_hline(color="red",alpha=0.5,yintercept = 0, linetype = 1) + 
+  geom_hex(bins = 26) +
+  #scale_fill_continuous("",type = "viridis",limits=c(0, 18), breaks=seq(5,15,by=5)) + 
+  scale_fill_gradientn(colours = colorRampPalette( c("lavenderblush3", "navy", "red", "yellow"))(5),
+                       limits=c(1, 18), breaks=seq(5,15,by=5)) +
+  geom_hline(color="black",alpha=0.6,yintercept = 0, linetype = 1) +
   xlab("ln QMD") + ylab("Residuals") + theme_bw() +  
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.text = element_text(size = 10),axis.title = element_text(size = 10),
@@ -203,9 +207,11 @@ plot_linearity2_var_bio
 
 plot_linearity2_var_bio <- ggplot(data.frame(Res_Growth0=aggData_QMDbinsDen_out$Res_Growth0,residuals=residuals(Fit_ResBio,type="pearson")),
                                   aes(x=Res_Growth0,y=residuals)) + 
-  geom_hex(bins = 42) +
-  scale_fill_continuous("",type = "viridis",limits=c(0, 18), breaks=seq(5,15,by=5)) + 
-  geom_hline(color="red",alpha=0.5,yintercept = 0, linetype = 1) + 
+  geom_hex(bins = 40) +
+  #scale_fill_continuous("",type = "viridis",limits=c(0, 18), breaks=seq(5,15,by=5)) + 
+  scale_fill_gradientn(colours = colorRampPalette( c("lavenderblush3", "navy", "red", "yellow"))(5),
+                       limits=c(1, 18), breaks=seq(5,15,by=5)) +
+  geom_hline(color="black",alpha=0.6,yintercept = 0, linetype = 1) +
   xlab("Growth anomalies") + ylab("Residuals") + theme_bw() +  
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.text = element_text(size = 10),axis.title = element_text(size = 10),
@@ -326,9 +332,11 @@ plot_homocedasticity2_sub
 
 plot_homocedasticity2_sub <- ggplot(data.frame(fitted=fitted(Fit_ResBio_sub),residuals=residuals(Fit_ResBio_sub,type="pearson")),
                                     aes(x=fitted,y=residuals)) + 
-  geom_hex(bins = 35) +
-  scale_fill_continuous("",type = "viridis",limits=c(0, 10), breaks=seq(0,10,by=5)) + 
-  geom_hline(color="red",alpha=0.5,yintercept = 0, linetype = 1) +
+  geom_hex(bins = 30) +
+  #scale_fill_continuous("",type = "viridis",limits=c(0, 10), breaks=seq(0,10,by=5)) + 
+  scale_fill_gradientn(colours = colorRampPalette( c("lavenderblush3", "navy", "red", "yellow"))(5),
+                       limits=c(1, 8), breaks=seq(2.5,7.5,by=2.5)) +
+  geom_hline(color="black",alpha=0.6,yintercept = 0, linetype = 1) +
   xlab("Fitted (ln N)") + ylab("Residuals") + theme_bw() +  
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.text = element_text(size = 10),axis.title = element_text(size = 10),

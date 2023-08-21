@@ -1,18 +1,23 @@
+# This script runs a quantitative comparison of the G-B relationships 
+# from a compilation of studies from the literature (Walker et al. 2021) and creates Figure S9.
+# This script calculates the relative changes in biomass (dB/B) per unit 
+# of relative change in growth (dG/G) from the Swiss forest data and creates Figure S3.
 
 # load packages
 library(dplyr)
+library(lme4) 
+library(lmerTest) 
 library(ggplot2)
 library(viridis)
 
 # Relative change biomass (plantC) vs. NPP ####
 
 # From Walker et al. 2021 ####
-table2_walker <- readr::read_csv("~/GFDY/data/raw_obs/table2_walker.csv") |> 
+table2_walker <- readr::read_csv(paste0(here::here(), "/data/raw_obs/table2_walker.csv")) |> 
   rename(X95CI_beta = `95CI_beta`)
 
 # Need to convert 95% CI to SD by dividing by 1.96
 # Replace the NAs values in 95% CI for the coefficient of variation (SD/mean)
-
 table2_walker_B <- table2_walker %>% 
   filter(biomeE_var=="plantC") %>%
   mutate(SD_beta = X95CI_beta/1.96,
@@ -24,7 +29,7 @@ table2_walker_G <- table2_walker %>%
          CV=SD_beta/beta, CV = ifelse(CV>=0, CV, NA),
          SD_beta = ifelse(is.na(SD_beta), mean(CV,na.rm=T), SD_beta))
 
-# With loop ...
+# Bootstrap with loop ...
 out <- data.frame()
 
 for (n in 1:1e5){
@@ -58,14 +63,14 @@ out <- purrr::map_dfr(
   ~sample_walker(., table2_walker_G, table2_walker_B)
 )
 
-write.csv(out, "~/GFDY/data/raw_obs/out_bootstrap.csv")
+write.csv(out, paste0(here::here(), "/data/raw_obs/out_bootstrap.csv"))
 
-out <- read.csv("~/GFDY/data/raw_obs/out_bootstrap.csv")
+out <- read.csv(paste0(here::here(), "/data/raw_obs/out_bootstrap.csv"))
 gg1 <- out |> 
   ggplot(aes(growth, biomass)) +
   geom_hex() +
   scale_fill_gradientn(
-    colours = colorRampPalette( c("gray65", "navy", "red", "yellow"))(5)) +
+    colours = colorRampPalette( c("lavenderblush3", "navy", "red", "yellow"))(5)) +
   geom_abline(intercept=0, slope=1, linetype="dotted") +
   geom_hline(yintercept = 0, linetype="dotted") +
   geom_vline(xintercept = 0, linetype="dotted") +
@@ -120,6 +125,8 @@ ggsave(paste0(here::here(), "/manuscript/figures/fig_S9.pdf"), width = 8, height
 # From forest data ####
 
 ## Stand biomass (B) ####
+load(paste0(here::here(), "/data/inputs_obs/aggData_QMDbinsDen75out.RData"))
+
 fit_biomass = lmer(Biomass_Kg_m2 ~ Year + (1|PlotID) + (1|Species),
                    data = aggData_QMDbinsDen_out, na.action = "na.exclude")
 summary(fit_biomass)
@@ -133,6 +140,8 @@ dB_B <- coef_B/mean(aggData_QMDbinsDen_out$Biomass_Kg_m2,na.rm=T)
 dB_B_se <- coef_B_se/mean(aggData_QMDbinsDen_out$Biomass_Kg_m2,na.rm=T)
 
 ## Mean tree biomass change ####
+load(paste0(here::here(), "/data/inputs_obs/aggTreeData75.RData"))
+
 fit_aggtreebiomass_change = lmer(mean_tree_biomass_growth_kgperyear ~ Year + (1|PlotID),
                               data = aggTreeData, na.action = "na.exclude")
 summary(fit_aggtreebiomass_change)

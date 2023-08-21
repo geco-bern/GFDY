@@ -142,15 +142,17 @@ plot_homocedasticity1 <- ggplot(data.frame(fitted=fitted(Fit_Year),
                   residuals=residuals(Fit_Year,type="pearson")),
        aes(x=fitted,y=residuals)) +
   geom_hex(bins = 35) +
-  scale_fill_continuous(type = "viridis",limits=c(0, 18), breaks=seq(5,15,by=5)) + 
-  geom_hline(color="red",alpha=0.5,yintercept = 0, linetype = 1) +
+  #scale_fill_continuous(type = "viridis",limits=c(0, 18), breaks=seq(5,15,by=5)) + 
+  scale_fill_gradientn(colours = colorRampPalette( c("lavenderblush3", "navy", "red", "yellow"))(5),
+                       limits=c(1, 18), breaks=seq(5,15,by=5)) +
+  geom_hline(color="black",alpha=0.6,yintercept = 0, linetype = 1) +
   xlab("Fitted (ln N)") + ylab("Residuals") + theme_bw() +  
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
            axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-           legend.text = element_text(size = 8),legend.title = element_blank(),
+           legend.text = element_text(size = 8),legend.title = element_text(size = 10),
            plot.title = element_text(size = 10),
            legend.key = element_rect(fill = NA, color = NA),
-           legend.position = c(.87, .80),
+           legend.position = c(.89, .77),
            legend.direction="vertical",
            legend.box = "horizontal",
            legend.margin = margin(0.5, 0.5, 0.5, 0.5),
@@ -178,8 +180,10 @@ plot_linearity1_var_qmd <- ggplot(data.frame(logQMD=aggData_QMDbinsDen_out$logQM
                                              residuals=residuals(Fit_Year,type="pearson")),
                                   aes(x=logQMD,y=residuals)) +
   geom_hex(bins = 35) +
-  scale_fill_continuous("",type = "viridis",limits=c(0, 18), breaks=seq(5,15,by=5)) + 
-  geom_hline(color="red",alpha=0.5,yintercept = 0, linetype = 1) +
+  #scale_fill_continuous("",type = "viridis",limits=c(0, 18), breaks=seq(5,15,by=5)) + 
+  scale_fill_gradientn(colours = colorRampPalette( c("lavenderblush3", "navy", "red", "yellow"))(5),
+                       limits=c(1, 18), breaks=seq(5,15,by=5)) +
+  geom_hline(color="black",alpha=0.6,yintercept = 0, linetype = 1) +
   xlab("ln QMD") + ylab("Residuals") + theme_bw() +  
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.text = element_text(size = 10),axis.title = element_text(size = 10),
@@ -200,8 +204,10 @@ plot_linearity1_var_yr
 plot_linearity1_var_yr <- ggplot(data.frame(Year=aggData_QMDbinsDen_out$Year,residuals=residuals(Fit_Year,type="pearson")),
                                  aes(x=Year,y=residuals)) + 
   geom_hex(bins = 40) +
-  scale_fill_continuous("",type = "viridis",limits=c(0, 18), breaks=seq(5,15,by=5)) + 
-  geom_hline(color="red",alpha=0.5,yintercept = 0, linetype = 1) +
+  #scale_fill_continuous("",type = "viridis",limits=c(0, 18), breaks=seq(5,15,by=5)) + 
+  scale_fill_gradientn(colours = colorRampPalette( c("lavenderblush3", "navy", "red", "yellow"))(5),
+                       limits=c(1, 18), breaks=seq(5,15,by=5)) +
+  geom_hline(color="black",alpha=0.6,yintercept = 0, linetype = 1) +
   xlab("Year") + ylab("Residuals") + theme_bw() +  
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.text = element_text(size = 10),axis.title = element_text(size = 10),
@@ -308,12 +314,14 @@ plot_homocedasticity1_sub
 plot_homocedasticity1_sub <- ggplot(data.frame(fitted=fitted(Fit_Year_sub),residuals=residuals(Fit_Year_sub,type="pearson")),
                                     aes(x=fitted,y=residuals)) + 
   geom_hex(bins = 35) +
-  scale_fill_continuous("",type = "viridis",limits=c(0, 10), breaks=seq(0,10,by=5)) + 
-  geom_hline(color="red",alpha=0.5,yintercept = 0, linetype = 1) +
+  #scale_fill_continuous("",type = "viridis",limits=c(0, 10), breaks=seq(0,10,by=5)) + 
+  scale_fill_gradientn(colours = colorRampPalette( c("lavenderblush3", "navy", "red", "yellow"))(5),
+                       limits=c(1, 8), breaks=seq(2.5,7.5,by=2.5)) +
+  geom_hline(color="black",alpha=0.6,yintercept = 0, linetype = 1) +
   xlab("Fitted (ln N)") + ylab("Residuals") + theme_bw() +  
   theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.text = element_text(size = 10),axis.title = element_text(size = 10),
-        legend.text = element_text(size = 8),legend.title = element_blank(),
+        legend.text = element_text(size = 8),legend.title = element_text(size = 10),
         plot.title = element_text(size = 10),
         legend.key = element_rect(fill = NA, color = NA),
         legend.position = c(.11, .18),
