@@ -1,40 +1,36 @@
 # This script plots the outputs from the model simulations
 
 # load packages
-library(dplyr)
 library(ggplot2)
-library(tidyr)
-library(lme4) 
-library(lmerTest) 
+library(dplyr)
 library(effects) 
-library(MuMIn)
-library(sjPlot)
 library(ggeffects)
+library(sjPlot)
 library(patchwork)
 
 # Read model outputs ####
 
 # DBH Mortality gs-leuning 
-ea1sa1DBHp1gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/simulations/ea1sa1DBHp1gl_out_annual_tile.csv")
-ea1sa1DBHp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/simulations/ea1sa1DBHp1gl_out_annual_cohorts.csv")
-ea1sa1DBHp2gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/simulations/ea1sa1DBHp2gl_out_annual_tile.csv")
-ea1sa1DBHp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/simulations/ea1sa1DBHp2gl_out_annual_cohorts.csv")
-ea1sa1DBHp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/simulations/ea1sa1DBHp3gl_out_annual_tile.csv")
-ea1sa1DBHp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/simulations/ea1sa1DBHp3gl_out_annual_cohorts.csv")
+ea1sa1DBHp1gl_out_annual_tile    <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea1sa1DBHp1gl_out_annual_tile.csv"))
+ea1sa1DBHp1gl_out_annual_cohorts <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea1sa1DBHp1gl_out_annual_cohorts.csv"))
+ea1sa1DBHp2gl_out_annual_tile    <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea1sa1DBHp2gl_out_annual_tile.csv"))
+ea1sa1DBHp2gl_out_annual_cohorts <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea1sa1DBHp2gl_out_annual_cohorts.csv"))
+ea1sa1DBHp3gl_out_annual_tile    <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea1sa1DBHp3gl_out_annual_tile.csv"))
+ea1sa1DBHp3gl_out_annual_cohorts <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea1sa1DBHp3gl_out_annual_cohorts.csv"))
 
-ea2sa1DBHp1gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/simulations/ea2sa1DBHp1gl_out_annual_tile.csv")
-ea2sa1DBHp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/simulations/ea2sa1DBHp1gl_out_annual_cohorts.csv")
-ea2sa1DBHp2gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/simulations/ea2sa1DBHp2gl_out_annual_tile.csv")
-ea2sa1DBHp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/simulations/ea2sa1DBHp2gl_out_annual_cohorts.csv")
-ea2sa1DBHp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/simulations/ea2sa1DBHp3gl_out_annual_tile.csv")
-ea2sa1DBHp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/simulations/ea2sa1DBHp3gl_out_annual_cohorts.csv")
+ea2sa1DBHp1gl_out_annual_tile    <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea2sa1DBHp1gl_out_annual_tile.csv"))
+ea2sa1DBHp1gl_out_annual_cohorts <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea2sa1DBHp1gl_out_annual_cohorts.csv"))
+ea2sa1DBHp2gl_out_annual_tile    <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea2sa1DBHp2gl_out_annual_tile.csv"))
+ea2sa1DBHp2gl_out_annual_cohorts <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea2sa1DBHp2gl_out_annual_cohorts.csv"))
+ea2sa1DBHp3gl_out_annual_tile    <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea2sa1DBHp3gl_out_annual_tile.csv"))
+ea2sa1DBHp3gl_out_annual_cohorts <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea2sa1DBHp3gl_out_annual_cohorts.csv"))
 
-ea3sa1DBHp1gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/simulations/ea3sa1DBHp1gl_out_annual_tile.csv")
-ea3sa1DBHp1gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/simulations/ea3sa1DBHp1gl_out_annual_cohorts.csv")
-ea3sa1DBHp2gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/simulations/ea3sa1DBHp2gl_out_annual_tile.csv")
-ea3sa1DBHp2gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/simulations/ea3sa1DBHp2gl_out_annual_cohorts.csv")
-ea3sa1DBHp3gl_out_annual_tile    <- read.csv("~/GFDY/data/outputs_mod/simulations/ea3sa1DBHp3gl_out_annual_tile.csv")
-ea3sa1DBHp3gl_out_annual_cohorts <- read.csv("~/GFDY/data/outputs_mod/simulations/ea3sa1DBHp3gl_out_annual_cohorts.csv")
+ea3sa1DBHp1gl_out_annual_tile    <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea3sa1DBHp1gl_out_annual_tile.csv"))
+ea3sa1DBHp1gl_out_annual_cohorts <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea3sa1DBHp1gl_out_annual_cohorts.csv"))
+ea3sa1DBHp2gl_out_annual_tile    <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea3sa1DBHp2gl_out_annual_tile.csv"))
+ea3sa1DBHp2gl_out_annual_cohorts <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea3sa1DBHp2gl_out_annual_cohorts.csv"))
+ea3sa1DBHp3gl_out_annual_tile    <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea3sa1DBHp3gl_out_annual_tile.csv"))
+ea3sa1DBHp3gl_out_annual_cohorts <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea3sa1DBHp3gl_out_annual_cohorts.csv"))
 
 # Exploring relationships and plotting
 
@@ -210,80 +206,27 @@ fig2d_dbh <- ggplot() +
   scale_y_continuous(limits=c(0,2.5),breaks=seq(0,2.5,1))
 fig2d_dbh
 
-# Mortality values
-ggplot() + 
-  geom_line(data=ea1sa1DBHp1gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='Control'), col="#0072B2", alpha=.8,linewidth=.6) + 
-  geom_line(data=ea1sa1DBHp2gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='Control'), col="#D55E00",alpha=.8,linewidth=.6) +
-  geom_line(data=ea1sa1DBHp3gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='Control'), col="#009E73",alpha=.8,linewidth=.6)
-ea1sa1DBHp1gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
-ea1sa1DBHp2gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
-ea1sa1DBHp3gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
-
 # Deathrate for canopy
+ea1sa1DBHp1gl_out_annual_cohorts %>% filter(layer==1) %>% filter(cohort==1) %>%
+  filter(year>700) %>%  summarise(mean=mean(deathrate))
+ea1sa1DBHp2gl_out_annual_cohorts %>% filter(layer==1) %>% filter(cohort==1) %>%
+  filter(year>700) %>% summarise(mean=mean(deathrate))
+ea1sa1DBHp3gl_out_annual_cohorts %>% filter(layer==1) %>% filter(cohort==1) %>%
+  filter(year>700) %>%  summarise(mean=mean(deathrate))
+
+ea2sa1DBHp1gl_out_annual_cohorts %>% filter(layer==1) %>% filter(cohort==1) %>%
+  filter(year>700) %>%  summarise(mean=mean(deathrate))
+ea2sa1DBHp2gl_out_annual_cohorts %>% filter(layer==1) %>% filter(cohort==1) %>%
+  filter(year>700) %>% summarise(mean=mean(deathrate))
+ea2sa1DBHp3gl_out_annual_cohorts %>% filter(layer==1) %>% filter(cohort==1) %>%
+  filter(year>700) %>%  summarise(mean=mean(deathrate))
+
 ea3sa1DBHp1gl_out_annual_cohorts %>% filter(layer==1) %>% filter(cohort==1) %>%
-  filter(year>700) %>%  
-  summarise(mean=mean(deathrate))
+  filter(year>700) %>%  summarise(mean=mean(deathrate))
 ea3sa1DBHp2gl_out_annual_cohorts %>% filter(layer==1) %>% filter(cohort==1) %>%
-  filter(year>700) %>%  
-  summarise(mean=mean(deathrate))
+  filter(year>700) %>% summarise(mean=mean(deathrate))
 ea3sa1DBHp3gl_out_annual_cohorts %>% filter(layer==1) %>% filter(cohort==1) %>%
-  filter(year>700) %>%  
-  summarise(mean=mean(deathrate))
-
-# n_deadtrees for canopy
-ea1sa1DBHp1gl_out_annual_cohorts %>% filter(layer==1) %>% #filter(cohort==1) %>%
-  filter(year>700) %>%  
-  summarise(mean=mean(n_deadtrees))
-formatC(0.0001646162, format = "e") 
-ea1sa1DBHp2gl_out_annual_cohorts %>% filter(layer==1) %>% #filter(cohort==1) %>%
-  filter(year>700) %>%  
-  summarise(mean=mean(n_deadtrees))
-formatC(0.0001114484, format = "e") 
-ea1sa1DBHp3gl_out_annual_cohorts %>% filter(layer==1) %>% #filter(cohort==1) %>%
-  filter(year>700) %>%  
-  summarise(mean=mean(n_deadtrees))
-
-ggplot() +
-  geom_line(data=ea2sa1DBHp1gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='+15%'), col="#0072B2", alpha=.8,linewidth=.6) + 
-  geom_line(data=ea2sa1DBHp2gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='+15%'), col="#D55E00",alpha=.8,linewidth=.6) +
-  geom_line(data=ea2sa1DBHp3gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='+15%'), col="#009E73",alpha=.8,linewidth=.6) 
-ea2sa1DBHp1gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
-ea2sa1DBHp2gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
-ea2sa1DBHp3gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
-
-# n_deadtrees for canopy
-ea2sa1DBHp1gl_out_annual_cohorts %>% filter(layer==1) %>% #filter(cohort==1) %>%
-  filter(year>700) %>%  
-  summarise(mean=mean(n_deadtrees))
-formatC(0.0001083033, format = "e") 
-ea2sa1DBHp2gl_out_annual_cohorts %>% filter(layer==1) %>% #filter(cohort==1) %>%
-  filter(year>700) %>%  
-  summarise(mean=mean(n_deadtrees))
-ea2sa1DBHp3gl_out_annual_cohorts %>% filter(layer==1) %>% #filter(cohort==1) %>%
-  filter(year>700) %>%  
-  summarise(mean=mean(n_deadtrees)) 
-formatC(0.0001242922, format = "e") 
-
-ggplot() +
-  geom_line(data=ea3sa1DBHp1gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='+30%'), col="#0072B2",alpha=.8,linewidth=.6) + 
-  geom_line(data=ea3sa1DBHp2gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='+30%'), col="#D55E00",alpha=.8,linewidth=.6) +
-  geom_line(data=ea3sa1DBHp3gl_out_annual_tile, aes(x=year, y=n_deadtrees, linetype='+30%'), col="#009E73",alpha=.8,linewidth=.6) 
-ea3sa1DBHp1gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
-ea3sa1DBHp2gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
-ea3sa1DBHp3gl_out_annual_tile %>% filter(year>=700) %>% summarise(mean=mean(n_deadtrees)) 
-
-# n_deadtrees for canopy
-ea3sa1DBHp1gl_out_annual_cohorts %>% filter(layer==1) %>% #filter(cohort==1) %>%
-  filter(year>700) %>%  
-  summarise(mean=mean(n_deadtrees))
-formatC(0.0001133832, format = "e") 
-ea3sa1DBHp2gl_out_annual_cohorts %>% filter(layer==1) %>% #filter(cohort==1) %>%
-  filter(year>700) %>%  
-  summarise(mean=mean(n_deadtrees))
-ea3sa1DBHp3gl_out_annual_cohorts %>% filter(layer==1) %>% #filter(cohort==1) %>%
-  filter(year>700) %>%  
-  summarise(mean=mean(n_deadtrees)) 
-formatC(0.0001265985, format = "e") 
+  filter(year>700) %>%  summarise(mean=mean(deathrate))
 
 # Relative change biomass (plantC) vs. NPP ####
 
@@ -686,19 +629,6 @@ fig2h_dbh <- ggplot() +
   scale_y_continuous(limits = c(-0.25,0), breaks = c(-0.2,-0.1,0)) +
   geom_hline(yintercept =  0.0, linetype="dashed")
 fig2h_dbh
-
-# Sensitivity allometric parameter ####
-# See file 05_sensitivity.R
-# Figure S6 ####
-fig_S6 <- figS6A + figS6B + figS6C +
-  plot_layout(ncol = 3) + 
-  plot_annotation(tag_levels = 'a', tag_suffix = ")") & 
-  theme(plot.margin = unit(rep(0.13,4), "cm")) & 
-  theme(plot.tag = element_text(size = 12))#+ 
-#plot_layout(guides = "collect") & theme(legend.position = 'bottom')
-fig_S6
-ggsave(paste0(here::here(),"/manuscript/figures/fig_S6.png"), width = 9.5, height = 3.3, dpi=300)
-ggsave(paste0(here::here(), "/manuscript/figures/fig_S6.pdf"), width = 9.5, height = 3.3, dpi=300)
 
 # Cohort longevity vs. growth (dbh) ####
 

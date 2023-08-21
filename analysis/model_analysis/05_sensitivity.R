@@ -1,4 +1,4 @@
-# This script evaluates the model and compares the target variables selected
+# This script runs a sensitivity analysis with different values for the scaling allometric parameter (theta)
 
 # load packages
 library(dplyr)
@@ -8,10 +8,10 @@ library(ggplot2)
 library(multidplyr)
 library(patchwork)
 
-# DBH mortality ####
+# set theta values ####
 # DBH mortality has the shape params: p1=1.5, p2=2.5, p3=4.0
-load("~/GFDY/data/inputs_mod/df_drivers_DBH_gs.RData")
-load("~/GFDY/data/inputs_mod/settings_calib_DBH_gs_uniq_euler.RData")
+load(paste0(here::here(), "/data/inputs_mod/df_drivers_DBH_gs.RData"))
+load(paste0(here::here(), "/data/inputs_mod/settings_calib_DBH_gs_uniq_euler.RData"))
 df_drivers$params_siml[[1]]$method_mortality
 
 df_drivers$params_species[[1]]$phiRL      <-  settings_calib_DBH_gs$par_opt["phiRL"]  
@@ -20,10 +20,10 @@ df_drivers$params_tile[[1]]$tf_base       <-  settings_calib_DBH_gs$par_opt["tf_
 df_drivers$params_tile[[1]]$par_mort      <-  settings_calib_DBH_gs$par_opt["par_mort"]
 df_drivers$params_tile[[1]]$par_mort_under<-  settings_calib_DBH_gs$par_opt["par_mort_under"]
 
-load("~/GFDY/data/raw_mod/d_param_bio.rda")
+load(paste0(here::here(), "/data/raw_mod/d_param_bio.rda"))
 d_param_b1_AG <- d_param %>% dplyr::filter(equation_n==3,parameter_id==1,component_n=="Aboveground",parameter=="b1") %>% rename(SPECIES=species, b1_AG=value)
 summary(d_param_b1_AG$b1_AG)
-b1_AG <- c(2.2,2.36,2.5)
+b1_AG <- c(2.20,2.36,2.50)
 
 # run the model ####
 df_drivers$params_species[[1]]$thetaBM <- b1_AG[1]
@@ -40,91 +40,90 @@ df_calib_DBH_gs$data[[1]]$output_annual_tile %>%
   geom_line(aes(x = year, y = plantC)) +
   theme_classic()+labs(x = "Year", y = "plantC")
 
-# DBH p1 = 1.5 ####
+## DBH p1 = 1.5 ####
 
-# thetaBM1 = 2.2
+# thetaBM1 = 2.20
 # LUE control
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_thetaBM1_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_thetaBM1_out_annual_cohorts.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile, paste0(here::here(), "/data/outputs_mod/sensitivity/ea1sa1DBHp1gl_thetaBM1_out_annual_tile.csv"))
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts, paste0(here::here(), "/data/outputs_mod/sensitivity/ea1sa1DBHp1gl_thetaBM1_out_annual_cohorts.csv"))
 # LUE +15% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_thetaBM1_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_thetaBM1_out_annual_cohorts.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile, paste0(here::here(), "/data/outputs_mod/sensitivity/ea2sa1DBHp1gl_thetaBM1_out_annual_tile.csv"))
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,paste0(here::here(), "/data/outputs_mod/sensitivity/ea2sa1DBHp1gl_thetaBM1_out_annual_cohorts.csv"))
 # LUE +30% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_thetaBM1_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_thetaBM1_out_annual_cohorts.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile, paste0(here::here(), "/data/outputs_mod/sensitivity/ea3sa1DBHp1gl_thetaBM1_out_annual_tile.csv"))
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts, paste0(here::here(), "/data/outputs_mod/sensitivity/ea3sa1DBHp1gl_thetaBM1_out_annual_cohorts.csv"))
 
-# thetaBM2 = 2.5
+# thetaBM2 = 2.50
 # LUE control
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_thetaBM2_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_thetaBM2_out_annual_cohorts.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile, paste0(here::here(), "/data/outputs_mod/sensitivity/ea1sa1DBHp1gl_thetaBM2_out_annual_tile.csv"))
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts, paste0(here::here(), "/data/outputs_mod/sensitivity/ea1sa1DBHp1gl_thetaBM2_out_annual_cohorts.csv"))
 # LUE +15% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_thetaBM2_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_thetaBM2_out_annual_cohorts.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile, paste0(here::here(), "/data/outputs_mod/sensitivity/ea2sa1DBHp1gl_thetaBM2_out_annual_tile.csv"))
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts, paste0(here::here(), "/data/outputs_mod/sensitivity/ea2sa1DBHp1gl_thetaBM2_out_annual_cohorts.csv"))
 # LUE +30% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_thetaBM2_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_thetaBM2_out_annual_cohorts.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile, paste0(here::here(), "/data/outputs_mod/sensitivity/ea3sa1DBHp1gl_thetaBM2_out_annual_tile.csv"))
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts, paste0(here::here(), "/data/outputs_mod/sensitivity/ea3sa1DBHp1gl_thetaBM2_out_annual_cohorts.csv"))
 
-# DBH p2 = 2.5 ####
+## DBH p2 = 2.5 ####
 
-# thetaBM1 = 2.2
+# thetaBM1 = 2.20
 # LUE control
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_thetaBM1_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_thetaBM1_out_annual_cohorts.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile, paste0(here::here(), "/data/outputs_mod/sensitivity/ea1sa1DBHp2gl_thetaBM1_out_annual_tile.csv"))
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts, paste0(here::here(), "/data/outputs_mod/sensitivity/ea1sa1DBHp2gl_thetaBM1_out_annual_cohorts.csv"))
 # LUE +15% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_thetaBM1_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_thetaBM1_out_annual_cohorts.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile, paste0(here::here(), "/data/outputs_mod/sensitivity/ea2sa1DBHp2gl_thetaBM1_out_annual_tile.csv"))
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts, paste0(here::here(), "/data/outputs_mod/sensitivity/ea2sa1DBHp2gl_thetaBM1_out_annual_cohorts.csv"))
 # LUE +30% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_thetaBM1_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_thetaBM1_out_annual_cohorts.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile, paste0(here::here(), "/data/outputs_mod/sensitivity/ea3sa1DBHp2gl_thetaBM1_out_annual_tile.csv"))
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts, paste0(here::here(), "/data/outputs_mod/sensitivity/ea3sa1DBHp2gl_thetaBM1_out_annual_cohorts.csv"))
 
-# thetaBM2 = 2.5
+# thetaBM2 = 2.50
 # LUE control
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_thetaBM2_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_thetaBM2_out_annual_cohorts.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,  paste0(here::here(), "/data/outputs_mod/sensitivity/ea1sa1DBHp2gl_thetaBM2_out_annual_tile.csv"))
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts, paste0(here::here(), "/data/outputs_mod/sensitivity/ea1sa1DBHp2gl_thetaBM2_out_annual_cohorts.csv"))
 # LUE +15% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_thetaBM2_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_thetaBM2_out_annual_cohorts.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile, paste0(here::here(), "/data/outputs_mod/sensitivity/ea2sa1DBHp2gl_thetaBM2_out_annual_tile.csv"))
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts, paste0(here::here(), "/data/outputs_mod/sensitivity/ea2sa1DBHp2gl_thetaBM2_out_annual_cohorts.csv"))
 # LUE +30% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_thetaBM2_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_thetaBM2_out_annual_cohorts.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile, paste0(here::here(), "/data/outputs_mod/sensitivity/ea3sa1DBHp2gl_thetaBM2_out_annual_tile.csv"))
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,paste0(here::here(), "/data/outputs_mod/sensitivity/ea3sa1DBHp2gl_thetaBM2_out_annual_cohorts.csv"))
 
-# DBH p3 = 4.0 ####
+## DBH p3 = 4.0 ####
 
-# thetaBM1 = 2.2
+# thetaBM1 = 2.20
 # LUE control
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_thetaBM1_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_thetaBM1_out_annual_cohorts.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile, paste0(here::here(), "/data/outputs_mod/sensitivity/ea1sa1DBHp3gl_thetaBM1_out_annual_tile.csv"))
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts, paste0(here::here(), "/data/outputs_mod/sensitivity/ea1sa1DBHp3gl_thetaBM1_out_annual_cohorts.csv"))
 # LUE +15% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_thetaBM1_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_thetaBM1_out_annual_cohorts.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile, paste0(here::here(), "/data/outputs_mod/sensitivity/ea2sa1DBHp3gl_thetaBM1_out_annual_tile.csv"))
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts, paste0(here::here(), "/data/outputs_mod/sensitivity/ea2sa1DBHp3gl_thetaBM1_out_annual_cohorts.csv"))
 # LUE +30% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_thetaBM1_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_thetaBM1_out_annual_cohorts.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile, paste0(here::here(), "/data/outputs_mod/sensitivity/ea3sa1DBHp3gl_thetaBM1_out_annual_tile.csv"))
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts, paste0(here::here(), "/data/outputs_mod/sensitivity/ea3sa1DBHp3gl_thetaBM1_out_annual_cohorts.csv"))
 
-# thetaBM2 = 2.5
+# thetaBM2 = 2.50
 # LUE control
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_thetaBM2_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_thetaBM2_out_annual_cohorts.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile, paste0(here::here(), "/data/outputs_mod/sensitivity/ea1sa1DBHp3gl_thetaBM2_out_annual_tile.csv"))
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts, paste0(here::here(), "/data/outputs_mod/sensitivity/ea1sa1DBHp3gl_thetaBM2_out_annual_cohorts.csv"))
 # LUE +15% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_thetaBM2_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_thetaBM2_out_annual_cohorts.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile, paste0(here::here(), "/data/outputs_mod/sensitivity/ea2sa1DBHp3gl_thetaBM2_out_annual_tile.csv"))
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts, paste0(here::here(), "/data/outputs_mod/sensitivity/ea2sa1DBHp3gl_thetaBM2_out_annual_cohorts.csv"))
 # LUE +30% (modified in the model)
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_thetaBM2_out_annual_tile.csv")
-write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_thetaBM2_out_annual_cohorts.csv")
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_tile, paste0(here::here(), "/data/outputs_mod/sensitivity/ea3sa1DBHp3gl_thetaBM2_out_annual_tile.csv"))
+write.csv(df_calib_DBH_gs$data[[1]]$output_annual_cohorts, paste0(here::here(), "/data/outputs_mod/sensitivity/ea3sa1DBHp3gl_thetaBM2_out_annual_cohorts.csv"))
 
-# Read outputs ####
-## Relative change biomass (plantC) vs. NPP ####
+# read outputs ####
 
-### DBH p1 ####
-ea1sa1DBHp1gl_thetaBM0_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_out_annual_tile.csv")
-ea2sa1DBHp1gl_thetaBM0_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_out_annual_tile.csv")
-ea3sa1DBHp1gl_thetaBM0_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_out_annual_tile.csv")
-ea1sa1DBHp1gl_thetaBM1_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_thetaBM1_out_annual_tile.csv")
-ea2sa1DBHp1gl_thetaBM1_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_thetaBM1_out_annual_tile.csv")
-ea3sa1DBHp1gl_thetaBM1_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_thetaBM1_out_annual_tile.csv")
-ea1sa1DBHp1gl_thetaBM2_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp1gl_thetaBM2_out_annual_tile.csv")
-ea2sa1DBHp1gl_thetaBM2_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp1gl_thetaBM2_out_annual_tile.csv")
-ea3sa1DBHp1gl_thetaBM2_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp1gl_thetaBM2_out_annual_tile.csv")
+## DBH p1 = 1.5 ####
+ea1sa1DBHp1gl_thetaBM0_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea1sa1DBHp1gl_out_annual_tile.csv"))
+ea2sa1DBHp1gl_thetaBM0_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea2sa1DBHp1gl_out_annual_tile.csv"))
+ea3sa1DBHp1gl_thetaBM0_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea3sa1DBHp1gl_out_annual_tile.csv"))
+ea1sa1DBHp1gl_thetaBM1_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/sensitivity/ea1sa1DBHp1gl_thetaBM1_out_annual_tile.csv"))
+ea2sa1DBHp1gl_thetaBM1_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/sensitivity/ea2sa1DBHp1gl_thetaBM1_out_annual_tile.csv"))
+ea3sa1DBHp1gl_thetaBM1_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/sensitivity/ea3sa1DBHp1gl_thetaBM1_out_annual_tile.csv"))
+ea1sa1DBHp1gl_thetaBM2_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/sensitivity/ea1sa1DBHp1gl_thetaBM2_out_annual_tile.csv"))
+ea2sa1DBHp1gl_thetaBM2_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/sensitivity/ea2sa1DBHp1gl_thetaBM2_out_annual_tile.csv"))
+ea3sa1DBHp1gl_thetaBM2_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/sensitivity/ea3sa1DBHp1gl_thetaBM2_out_annual_tile.csv"))
 
 # DBH p1 - thetaBM0
 # Calculate the relative change as (Final value - initial value)/initial value
@@ -225,16 +224,16 @@ figS6A <- ggplot() +
   scale_y_continuous(limits = c(0,0.5),breaks=seq(0,0.5,0.25)) 
 figS6A
 
-### DBH p2 ####
-ea1sa1DBHp2gl_thetaBM0_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_out_annual_tile.csv")
-ea2sa1DBHp2gl_thetaBM0_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_out_annual_tile.csv")
-ea3sa1DBHp2gl_thetaBM0_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_out_annual_tile.csv")
-ea1sa1DBHp2gl_thetaBM1_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_thetaBM1_out_annual_tile.csv")
-ea2sa1DBHp2gl_thetaBM1_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_thetaBM1_out_annual_tile.csv")
-ea3sa1DBHp2gl_thetaBM1_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_thetaBM1_out_annual_tile.csv")
-ea1sa1DBHp2gl_thetaBM2_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp2gl_thetaBM2_out_annual_tile.csv")
-ea2sa1DBHp2gl_thetaBM2_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp2gl_thetaBM2_out_annual_tile.csv")
-ea3sa1DBHp2gl_thetaBM2_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp2gl_thetaBM2_out_annual_tile.csv")
+## DBH p2 = 2.5 ####
+ea1sa1DBHp2gl_thetaBM0_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea1sa1DBHp2gl_out_annual_tile.csv"))
+ea2sa1DBHp2gl_thetaBM0_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea2sa1DBHp2gl_out_annual_tile.csv"))
+ea3sa1DBHp2gl_thetaBM0_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea3sa1DBHp2gl_out_annual_tile.csv"))
+ea1sa1DBHp2gl_thetaBM1_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/sensitivity/ea1sa1DBHp2gl_thetaBM1_out_annual_tile.csv"))
+ea2sa1DBHp2gl_thetaBM1_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/sensitivity/ea2sa1DBHp2gl_thetaBM1_out_annual_tile.csv"))
+ea3sa1DBHp2gl_thetaBM1_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/sensitivity/ea3sa1DBHp2gl_thetaBM1_out_annual_tile.csv"))
+ea1sa1DBHp2gl_thetaBM2_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/sensitivity/ea1sa1DBHp2gl_thetaBM2_out_annual_tile.csv"))
+ea2sa1DBHp2gl_thetaBM2_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/sensitivity/ea2sa1DBHp2gl_thetaBM2_out_annual_tile.csv"))
+ea3sa1DBHp2gl_thetaBM2_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/sensitivity/ea3sa1DBHp2gl_thetaBM2_out_annual_tile.csv"))
 
 # DBH p2 - thetaBM0
 # Calculate the relative change as (Final value - initial value)/initial value
@@ -331,16 +330,16 @@ figS6B <- ggplot() +
   geom_abline(slope=1, intercept = 0.0, linetype="dashed") 
 figS6B
 
-### DBH p3 ####
-ea1sa1DBHp3gl_thetaBM0_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_out_annual_tile.csv")
-ea2sa1DBHp3gl_thetaBM0_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_out_annual_tile.csv")
-ea3sa1DBHp3gl_thetaBM0_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_out_annual_tile.csv")
-ea1sa1DBHp3gl_thetaBM1_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_thetaBM1_out_annual_tile.csv")
-ea2sa1DBHp3gl_thetaBM1_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_thetaBM1_out_annual_tile.csv")
-ea3sa1DBHp3gl_thetaBM1_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_thetaBM1_out_annual_tile.csv")
-ea1sa1DBHp3gl_thetaBM2_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea1sa1DBHp3gl_thetaBM2_out_annual_tile.csv")
-ea2sa1DBHp3gl_thetaBM2_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea2sa1DBHp3gl_thetaBM2_out_annual_tile.csv")
-ea3sa1DBHp3gl_thetaBM2_out_annual_tile <- read.csv("~/GFDY/data/outputs_mod/ea3sa1DBHp3gl_thetaBM2_out_annual_tile.csv")
+## DBH p3 = 4.0 ####
+ea1sa1DBHp3gl_thetaBM0_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea1sa1DBHp3gl_out_annual_tile.csv"))
+ea2sa1DBHp3gl_thetaBM0_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea2sa1DBHp3gl_out_annual_tile.csv"))
+ea3sa1DBHp3gl_thetaBM0_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/simulations/ea3sa1DBHp3gl_out_annual_tile.csv"))
+ea1sa1DBHp3gl_thetaBM1_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/sensitivity/ea1sa1DBHp3gl_thetaBM1_out_annual_tile.csv"))
+ea2sa1DBHp3gl_thetaBM1_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/sensitivity/ea2sa1DBHp3gl_thetaBM1_out_annual_tile.csv"))
+ea3sa1DBHp3gl_thetaBM1_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/sensitivity/ea3sa1DBHp3gl_thetaBM1_out_annual_tile.csv"))
+ea1sa1DBHp3gl_thetaBM2_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/sensitivity/ea1sa1DBHp3gl_thetaBM2_out_annual_tile.csv"))
+ea2sa1DBHp3gl_thetaBM2_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/sensitivity/ea2sa1DBHp3gl_thetaBM2_out_annual_tile.csv"))
+ea3sa1DBHp3gl_thetaBM2_out_annual_tile <- read.csv(paste0(here::here(), "/data/outputs_mod/sensitivity/ea3sa1DBHp3gl_thetaBM2_out_annual_tile.csv"))
 
 # DBH p3 - thetaBM0
 # Calculate the relative change as (Final value - initial value)/initial value
