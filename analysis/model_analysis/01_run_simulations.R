@@ -1,5 +1,4 @@
-# This script runs the model simulations using the forcing drivers for CH-Lae
-# and the simulation settings used in the LM3-PPA
+# This script runs the BiomeE model simulations using the forcing drivers for CH-Lae
 
 # load packages
 library(dplyr)
@@ -33,7 +32,7 @@ params_siml <- tibble( #list
       update_annualLAImax   = TRUE,
       do_closedN_run        = TRUE,
       method_photosynth     = "gs_leuning", 
-      method_mortality      = "dbh" # dbh or growthrate
+      method_mortality      = "dbh"
       )
 
 # Tile-level parameters
@@ -45,7 +44,7 @@ params_tile <- tibble(
   K2           = 0.05,  # turnover rate of slow SOM per year
   K_nitrogen   = 8.0,   # mineral Nitrogen turnover rate
   MLmixRatio   = 0.8,   # the ratio of C and N returned to litters from microbes
-  etaN         = 0.025, # loss rate with runoff
+  etaN         = 0.025, # N loss through runoff (organic and mineral)
   LMAmin       = 0.02,  # minimum LMA, boundary condition
   fsc_fine     = 1.0,   # fraction of fast turnover carbon in fine biomass
   fsc_wood     = 0.0,   # fraction of fast turnover carbon in wood biomass
@@ -147,7 +146,7 @@ df_soiltexture <- bind_rows(
 )
 
 # Forcing drivers ####
-load("~/GFDY/data/inputs_mod/forcingLAE.RData")
+load(paste0(here::here(), "/data/inputs_mod/forcingLAE.RData"))
 
 if (params_siml$method_photosynth == "gs_leuning"){
   forcingLAE <- forcingLAE %>% 
@@ -176,13 +175,12 @@ df_drivers <- tibble(sitename,
                     forcing=list(tibble(forcing)),
                     .name_repair = "unique")
 
-save(df_drivers, file = "~/GFDY/data/inputs_mod/df_drivers_DBH_gs.RData")
-save(df_drivers, file = "~/GFDY/data/inputs_mod/df_drivers_GR_gs.RData")
+save(df_drivers, file = paste0(here::here(), "/data/inputs_mod/df_drivers_DBH_gs.RData"))
 
-# Run the model ####
+# Run before calibration ####
 # DBH mortality has the shape params: p1=1.5, p2=2.5, p3=4.0
 # This first simulation is run with p2=2.5
-load("~/GFDY/data/inputs_mod/df_drivers_DBH_gs.RData")
+load(paste0(here::here(), "/data/inputs_mod/df_drivers_DBH_gs.RData"))
 simul <- df_drivers$params_siml[[1]]
 
 start <- Sys.time()
@@ -203,28 +201,5 @@ df_output$data[[1]]$output_annual_tile %>% filter(year>=750) %>%
   geom_line(aes(x = log(QMD), y = log(Density12))) +
   theme_classic()+labs(x = "log(QMD)", y = "log(Density12)")
 
-write.csv(df_output$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/preDBHp2gs_output_annual_tile.csv")
-write.csv(df_output$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/preDBHp2gs_output_annual_cohorts.csv")
-
-# Growth-rate mortality has the shape params: p1=-0.5, p2=-0.8, p3=-1.4
-# This first simulation is run with p2=-0.8
-load("~/GFDY/data/inputs_mod/df_drivers_GR_gs.RData")
-simul <- df_drivers$params_siml[[1]]
-
-start <- Sys.time()
-df_output <- runread_lm3ppa_f(
-     df_drivers,
-     makecheck = TRUE,
-     parallel = FALSE
-     )
-print(Sys.time() - start)
-
-df_output$data[[1]]$output_annual_tile %>% 
-  ggplot() +
-  geom_line(aes(x = year, y = plantC)) +
-  theme_classic()+labs(x = "Year", y = "plantC")
-
-write.csv(df_output$data[[1]]$output_annual_tile,   "~/GFDY/data/outputs_mod/preGRp2gs_output_annual_tile.csv")
-write.csv(df_output$data[[1]]$output_annual_cohorts,"~/GFDY/data/outputs_mod/preGRp2gs_output_annual_cohorts.csv")
-
-
+write.csv(df_output$data[[1]]$output_annual_tile, paste0(here::here(), "/data/outputs_mod/previous/preDBHp2gs_output_annual_tile.csv"))
+write.csv(df_output$data[[1]]$output_annual_cohorts, paste0(here::here(), "/data/outputs_mod/previous/preDBHp2gs_output_annual_cohorts.csv"))

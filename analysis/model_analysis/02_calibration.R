@@ -11,13 +11,13 @@ library(tidyverse)
 # Get ddf_obs ####
 
 ## Target 1. GPP data from FluxNet ####
-Fluxnet <- read_csv("~/GFDY/data/raw_mod/FLX_CH-Lae_FLUXNET2015_FULLSET_YY_2004-2014_1-3.csv")
+Fluxnet <- read_csv(paste0(here::here(), "/data/raw_mod/FLX_CH-Lae_FLUXNET2015_FULLSET_YY_2004-2014_1-3.csv")) 
 GPP <- Fluxnet[,c("TIMESTAMP","GPP_NT_VUT_REF")] # g C/m2/yr
 GPP <- GPP %>% mutate(GPP_KgC = GPP_NT_VUT_REF/1000) # Convert in Kg C/m2/yr as in the LM3-PPA model
 mean_annual_gpp <- mean(GPP$GPP_KgC) #Kg C/m2/yr
 
 ## Target 2. LAI ####
-lai_LAE <- read_csv("~/GFDY/data/raw_mod/MODIS_LAI_MCD15A3H_daily_CH-Lae.csv")
+lai_LAE <- read_csv(paste0(here::here(), "/data/raw_mod/MODIS_LAI_MCD15A3H_daily_CH-Lae.csv")) 
 lai_LAE <- lai_LAE %>% mutate(month=str_sub(date, 6, 7))
 lai_LAE_summer <- lai_LAE %>% dplyr::filter(month=="06"|month=="07"|month=="08")
 mean_annual_lai <- mean(lai_LAE_summer$linear, na.rm=T)
@@ -25,11 +25,11 @@ max_annual_lai <- quantile(lai_LAE_summer$linear, probs = 0.95, na.rm=T) # Use m
 
 ## Target 3. Total Stand Biomass ####
 # ln(Biomass) = ln(b0) + b1 ln(DBH); Biomass = b0*DBH^b1
-LAE_data <- read_csv("~/GFDY/data/raw_mod/20201216_Laegeren_data.csv")
+LAE_data <- read_csv(paste0(here::here(), "/data/raw_mod/20201216_Laegeren_data.csv")) 
 # Calculate DBH from UMFANG is the circumference (mm) C=2*pi*r. See there are many NA in the variable recorded BHD (dbh).
 LAE_data <- LAE_data %>% mutate(DBH_cm = UMFANG/pi)
 sort(unique(LAE_data$SPECIES))
-load("~/GFDY/data/raw_mod/d_param_bio.rda")
+load(paste0(here::here(), "/data/raw_mod/d_param_bio.rda"))
 d_param_lnb0_AG <- d_param %>% dplyr::filter(equation_n==3,parameter_id==1,component_n=="Aboveground",parameter=="lnb0") %>% rename(SPECIES=species, lnb0_AG=value)
 d_param_b1_AG <- d_param %>% dplyr::filter(equation_n==3,parameter_id==1,component_n=="Aboveground",parameter=="b1") %>% rename(SPECIES=species, b1_AG=value)
 d_param_lnb0_BG <- d_param %>% dplyr::filter(equation_n==3,parameter_id==1,component_n=="Root mass",parameter=="lnb0") %>% rename(SPECIES=species, lnb0_BG=value)
@@ -52,7 +52,7 @@ BiomassLAE <- mean(LAE_data_bio_allsps$TotalBiomass_Kg)/LAE_m2
 
 ## Target 4. Density and size distribution ####
 LAE_ha <- 1.34 # Area of Laegeren plot in ha
-LAE_data <- read_csv("~/GFDY/data/raw_mod/20201216_Laegeren_data.csv") 
+LAE_data <- read_csv(paste0(here::here(), "/data/raw_mod/20201216_Laegeren_data.csv"))
 LAE_data <- LAE_data %>% mutate(DBH_cm = UMFANG/pi)
 LAE_data %>% group_by(INVYEAR) %>% summarise(nTrees=n())
 LAE_data %>% group_by(INVYEAR) %>% summarise(nTrees=n()) %>% ungroup() %>% 
@@ -69,20 +69,21 @@ ggplot(LAE_size_dist, aes(size_bins, nTrees)) + geom_col()
 v1 <- sort(unique(LAE_nTrees$size_bins))
 sizedist <- as.numeric(c(substr(v1, 2, 5),substr(v1[5], 7, 9))) + c(0,0,0,0,0,10) # increase top trees for simulations
 
-# Prepare the observed target variables: ddf_obs ####
+# Target variables ####
+# Prepare the observed target variables: ddf_obs
 ddf_obs <- data.frame(
   variables = c("GPP","LAI","Biomass","dbh_c1","dbh_c2","dbh_c3","dbh_c4","dbh_c5"),
   targets_obs = c(mean_annual_gpp, max_annual_lai, BiomassLAE,
                   LAE_size_dist$nTrees[1],LAE_size_dist$nTrees[2],LAE_size_dist$nTrees[3],LAE_size_dist$nTrees[4],LAE_size_dist$nTrees[5])
 ) 
-save(ddf_obs, file = "~/GFDY/data/inputs_mod/ddf_obs.RData")
+save(ddf_obs, file = paste0(here::here(), "/data/inputs_mod/ddf_obs.RData"))
 
-# Calibration for DBH mortality ####
+# Calibration ####
 # DBH mortality has the shape params: p1=1.5, p2=2.5, p3=5.0
 # The calibration was done with p2=2.5
-#!!! The calibration was run in the Euler cluster as in the script euler_dbh_gs.R
-load("~/GFDY/data/inputs_mod/df_drivers_DBH_gs.RData")
-load("~/GFDY/data/inputs_mod/ddf_obs.RData")
+#!!! The calibration was run in the Euler cluster as in the script euler_cal_dbh_gs.R
+load(paste0(here::here(), "/data/inputs_mod/df_drivers_DBH_gs.RData"))
+load(paste0(here::here(), "/data/inputs_mod/ddf_obs.RData"))
 
 settings_calib_DBH_gs <- list(
   method              = "gensa",
@@ -107,37 +108,4 @@ settings_calib_DBH_gs <- calib_sofun(
   settings = settings_calib_DBH_gs
 )
 
-save(settings_calib_DBH_gs, file = "~/GFDY/data/inputs_mod/settings_calib_DBH_gs_uniq_euler.RData")
-
-# Calibration for GR mortality ####
-# Growth-rate mortality has the shape params: p1=-0.5, p2=-0.8, p3=-1.4
-# The calibration was done with p2=-0.8
-#!!! The calibration was run in the Euler cluster as in the script euler_gr_gs.R
-load("~/GFDY/data/inputs_mod/df_drivers_GR_gs.RData")
-load("~/GFDY/data/inputs_mod/ddf_obs.RData")
-
-settings_calib_GR_gs <- list(
-  method              = "gensa",
-  targetvars          = c("targets_obs"),
-  timescale           = list(targets_obs = "y"),
-  maxit               = 2000, 
-  sitenames           = "CH-Lae",
-  metric              = "rmse",
-  dir_results         = "./",
-  name                = "ORG",
-  par                 = list(phiRL = list(lower=0.5, upper=5, init=3.5),
-                             LAI_light = list(lower=2, upper=7, init=3.5),
-                             tf_base = list(lower=0.2, upper=1.5, init=1),
-                             par_mort = list(lower=0.1, upper=2, init=1),
-                             par_mort_under = list(lower=0.1, upper=2, init=1))
-)
-
-set.seed(1152)
-settings_calib_GR_gs <- calib_sofun(
-  df_drivers = df_drivers,  
-  ddf_obs = ddf_obs,
-  settings = settings_calib_GR_gs
-)
-
-save(settings_calib_GR_gs, file = "~/GFDY/data/inputs_mod/settings_calib_GR_gs_uniq_euler.RData")
-
+save(settings_calib_DBH_gs, file = paste0(here::here(), "/data/inputs_mod/settings_calib_DBH_gs_uniq_euler.RData"))

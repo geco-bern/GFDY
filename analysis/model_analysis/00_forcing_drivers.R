@@ -1,13 +1,17 @@
-# This script prepares the forcing data for CH-Lae simulations
+# This script prepares the forcing data for model simulations
 
 # load packages
 library(rsofun)
 library(dplyr)
+library(stringr)
+library(lubridate)
 library(readr)
+if(!require(devtools)){install.packages("devtools")}
+devtools::install_github("geco-bern/ingestr")
 library(ingestr)
 
 # Meteo data ####
-FLX_HH_LAE <- read_csv("~/GFDY/data/raw_mod/FLX_CH-Lae_FLUXNET2015_FULLSET_HH_2004-2014_1-3.csv") %>%
+FLX_HH_LAE <- read_csv(paste0(here::here(), "/data/raw_mod/FLX_CH-Lae_FLUXNET2015_FULLSET_HH_2004-2014_1-3.csv")) %>%
   dplyr::select(TIMESTAMP_START,PPFD_IN,SW_IN_F,TA_F,TS_F_MDS_1,RH,P_F,WS_F,PA_F,SWC_F_MDS_1) %>% 
   dplyr::mutate_all(funs(ifelse(.==-9999, NA, .))) %>% 
   mutate(YEAR=str_sub(TIMESTAMP_START, 1, 4)) %>% 
@@ -54,7 +58,7 @@ FluxForcing <- FluxForcing %>%
   mutate(RAIN = RAIN / dt_secs)
 FluxForcing <- FluxForcing[,-c(1:4)]
 
-# CO2 for one specific site ####
+# CO2 ####
 df_co2 <- ingestr::ingest_bysite(
   sitename  = "CH-Lae",
   source  = "co2_mlo",
@@ -73,8 +77,7 @@ FluxForcing <- FluxForcing %>%
   #group_by(sitename) %>% 
   #tidyr::nest()
 
-# Save forcing data ####
+# Forcing data ####
 FluxForcing <- FluxForcing %>% relocate(aCO2_AW, .after = PRESSURE) 
 forcingLAE <- FluxForcing
-save(forcingLAE, file = "~/GFDY/data/inputs_mod/forcingLAE.RData")
-
+save(forcingLAE, file = paste0(here::here(), "/data/inputs_mod/forcingLAE.RData"))
