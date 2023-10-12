@@ -11,10 +11,20 @@ While enhanced tree growth over the last decades has been reported in forests ac
 
 This repository includes the scripts to analyse the links between growth and biomass.
 
-We use observations from Swiss forests and simulations from a demography vegetation model (LM3-PPA).
+We use observations from Swiss forests and simulations from a demography vegetation model (BiomeE).
 
 The repository is organized as follows:
 - analysis - includes the scripts for data analysis and model simulations.
 - data - includes model outputs.
 - manuscript - includes figures and other outputs.
 - R - includes code used in the cluster.
+
+
+## Model simulations
+
+Model simulations for this project were run using the rsofun code version from https://github.com/lauramarques/rsofun/tree/GFDY
+
+
+## Project results
+
+Results of this project are published in Marqués et al. 2023. AGU Advances.

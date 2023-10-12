@@ -1,0 +1,31 @@
+# History files
+.Rhistory
+
+# Session Data files
+.RData
+
+# User-specific files
+.Ruserdata
+
+# RStudio files
+.Rproj.user
+
+# Raw data files
+data/raw_mod/
+data/raw_obs/
+data/inputs_mod/
+data/inputs_obs/
+data/outputs_mod/previous/
+data/outputs_mod/sensitivity/
+data/outputs_obs/
+
+# Other stuff
+extra/
+repo_info
+
+# macOS operating system
+.DS_Store
+R/.DS_Store
+data/.DS_Store
+analysis/.DS_Store
+manuscript/.DS_Store

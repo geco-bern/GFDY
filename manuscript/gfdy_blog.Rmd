@@ -1,0 +1,34 @@
+---
+title: "Forest growth acceleration translates into enhanced biomass stocks"
+output: html_document
+date: "2023-09-20"
+---
+
+Forest demographic processes are being altered by global change. Elevated atmospheric carbon dioxide has been reported to enhance photosynthesis and tree growth rates. Different studies have reported increased tree growth globally over the last decades (Brienen et al., 2015; Hubau et al., 2020) but the implications for long-term carbon storage in forests remain unknown. Tree growth enhancement could be translated into an increase in biomass stocks or could be associated with a reduction in tree longevity compensating for any potential change in biomass. These links between growth and mortality have been difficult to study because forests are commonly affected by past management and environmental changes. Scarce empirical evidence exists for how changing drivers affect these processes due to data and modelling limitations.
+
+In our study recently published in AGU Advances (Marqués et al., 2023), we investigated whether accelerated tree growth leads to increases in forest biomass by combining forest observations and a vegetation demography model. We found that unmanaged forests in Switzerland have been thickening over the past six decades. Model simulations agree with observations and show that, in the absence of other disturbances, enhanced tree growth persistently increases biomass stocks despite simultaneous decreases in carbon residence time and tree longevity. Our analyses reconcile previous contrasting results of reductions of tree longevity with model predictions of biomass increases and with our finding of observed trends towards denser forests in response to growth.
+
+
+
+We evaluated empirical and theoretical support for the GFDY hypothesis. We used long-term forest data from unmanaged stands in Switzerland to evaluate whether the STL has shifted through time and whether variations in the STL are influenced by stand-level growth. To investigate growth-STL changes, we first quantified growth trends across unmanaged forests in Switzerland. Then, using a vegetation demography model (BiomeE, Weng et al. 2015, 2019) that combines tree-level physiology and C balance with the simulation of competition for light and mortality, we explored the underlying mechanisms and investigated under which conditions persistent biomass stock increases result from growth enhancements.
+
+
+
+
+### Full article
+Marqués, L., Weng, E., Bugmann, H., Forrester, D.I., Rohner, B., Hobi, M. L., Trotsiuk, V. and Stocker, B.D. ree growth enhancement drives a persistent biomass gain in unmanaged temperate forests, AGU Advances, 2023
+
+## Data availability
+Data analyses and evaluations were based on data from the Swiss National Forest Inventory (NFI), the Experimental Forest Management (EFM), and the Natural Forest Reserves (NFR) and are available upon request to the specific networks.
+
+## Open access code
+Code for the data analyses and model simulations is available at the GitHub repository geco-bern/GFDY: v2.0, DOI 10.5281/zenodo.8271848.
+
+
+
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+
