@@ -28,3 +28,4 @@ Model simulations for this project were run using the rsofun code version from h
 ## Project results
 
 Results of this project are published in Marqués et al. 2023. AGU Advances.
+Marqués, L., Weng, E., Bugmann, H., Forrester, D.I., Rohner, B., Hobi, M. L., Trotsiuk, V. and Stocker, B.D. Tree growth enhancement drives a persistent biomass gain in unmanaged temperate forests, AGU Advances, 2023
