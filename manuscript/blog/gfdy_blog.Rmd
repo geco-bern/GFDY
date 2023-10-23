@@ -1,0 +1,60 @@
+---
+title: "Understanding the *growth-biomass* links in mature forests"
+output: html_document
+date: "2023-09-20"
+---
+
+![](INSERT LINK fig1.png)
+
+Forest demographic processes are being altered by global change. Elevated atmospheric carbon dioxide has been reported to enhance photosynthesis and tree growth rates. Different studies have reported increased tree growth globally over the last decades (Brienen et al., 2015; Hubau et al., 2020) but the implications for long-term carbon storage in forests remain unknown. Tree growth enhancement could be translated into an increase in biomass stocks or could be associated with a reduction in tree longevity, compensating for any potential change in biomass, as has been established by the ***grow-fast-die-young*** hypothesis (*GFDY*). In our study recently published in AGU Advances [(Marqués et al., 2023)](https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2022AV000859), we investigated whether accelerated tree growth leads to increased biomass stocks. These links between growth and biomass have been difficult to study because on the one hand, it is an observational challenge - what we can record today is very much affected by the history of the stand development and past disturbances. And in the other hand, although we know which mechanisms are at play, scarce empirical evidence exists for how changing drivers affect these processes making difficult to evaluate their net effect.
+
+We can formulate this question in quantitative terms asking what is the relative change in biomass (*dB/B*) per unit relative change in growth (*dG/G*)? We can start with a NULL model and consider that the relative change in growth is equal to the relative change in biomass, that is the 1:1 line. We refer to this linear response as the ***constant turnover*** where biomass at the steady state depends on growth and on turnover rate. But based on what we know from observations and how we understand the mechanisms, we can expect an ***accelerated turnover***, which leads to a non-linear response where the relative increase in biomass is smaller than the relative increase in growth. During stand development, a large number of small seedlings grow to the point that canopy closes and mutual shading sets in. As a consequence, smaller individuals suffer light limitation and at some point die. So, an emergence relationship appears between the number of individuals in the stand and the average size. In the log-log scale this leads to a negative relation called the self-thinning line (STL). As the stands mature, density-driven mortality kicks in and the surviving trees continue growing. If the ***GFDY*** hypothesis holds, this will imply that trees just progress faster along the STL with a ***constant self-thinning*** where no or only a very small change in stand-level biomass would result from enhanced growth. 
+
+![](INSERT LINK fig2.png)
+
+We evaluated empirical and theoretical support for the GFDY hypothesis. Fist, we used long-term forest data from unmanaged stands in Switzerland to evaluate responses of the STL to growth enhancement. We selected only data from plots where no management was recorded during and before the censuses. To minimize the effects of natural past disturbances, we further retained only plots for which the stand density was in the upper 75th percentile of average plot-level tree sizes. We found that the negative relationship between the number and the size of trees has not remained stable but shifted upward over time, i.e., for a given QMD, forest stands tend to have become denser through time. Further, the self-thinning relationship also exhibited a change as a function of growth anomalies, derived from stand-level growth, indicating also a spatial change across forest plots. The positive effect of both *calendar year* and *growth anomalies* on the intercept of the STL indicates that the relationship between biomass and density has not been stationary but has shifted significantly over the past decades. 
+
+![](INSERT LINK fig3.png)
+![](https://github.com/geco-bern/GFDY/blob/master/manuscript/figures/fig_2.png)
+
+Second, using a cohort-based vegetation demography model (BiomeE, [Weng et al. 2015)](https://bg.copernicus.org/articles/12/2655/2015/) which simulates forest demography and biogeochemical processes, we explored under which conditions persistent biomass stock increases result from growth enhancements.
+
+
+
+
+
+![](INSERT LINK fig4.png)
+
+
+
+
+
+
+
+
+
+
+We evaluated empirical and theoretical support for the GFDY hypothesis. We used long-term forest data from unmanaged stands in Switzerland to evaluate whether the STL has shifted through time and whether variations in the STL are influenced by stand-level growth. To investigate growth-STL changes, we first quantified growth trends across unmanaged forests in Switzerland. Then, using a vegetation demography model (BiomeE, Weng et al. 2015, 2019) that combines tree-level physiology and C balance with the simulation of competition for light and mortality, we explored the underlying mechanisms and investigated under which conditions persistent biomass stock increases result from growth enhancements.
+
+
+
+by combining forest observations and a vegetation demography model. We found that unmanaged forests in Switzerland have been thickening over the past six decades. Model simulations agree with observations and show that, in the absence of other disturbances, enhanced tree growth persistently increases biomass stocks despite simultaneous decreases in carbon residence time and tree longevity. Our analyses reconcile previous contrasting results of reductions of tree longevity with model predictions of biomass increases and with our finding of observed trends towards denser forests in response to growth.
+
+
+
+Found a trend towards “denser" forests, linked to growth changes - consistent with theory-based predictions.
+Tree growth enhancements lead to biomass increments despite reductions in carbon residence time and tree longevity  Not mutually exclusive.
+Reconciles reports of tree longevity reductions with model predictions of persistent biomass increases.
+Need to constrain the ratio of their relative changes.
+Need long-term monitoring of undisturbed forests to better understand the growth-biomass link …… and constrain influential model parameters.
+
+
+### Full article
+Marqués, L., Weng, E., Bugmann, H., Forrester, D. I., Rohner, B., Hobi, M. L., et al. (2023). Tree growth enhancement drives a persistent biomass gain in unmanaged temperate forests. AGU Advances, 4, e2022AV000859. https://doi.org/10.1029/2022AV000859
+
+## Data availability
+Data analyses and evaluations were based on data from the Swiss National Forest Inventory (NFI), the Experimental Forest Management (EFM), and the Natural Forest Reserves (NFR) and are available upon request to the specific networks.
+
+## Open access code
+Code for the data analyses and model simulations of this study is available at the GitHub repository geco-bern/GFDY, https://doi.org/10.5281/zenodo.7326085.
+
